@@ -17,9 +17,9 @@ function obj_length (obj) {
 }
 
 function obj_p (x) {
-    return ((obj_length (x) > 0) &&
-            !(typeof x === 'string') &&
-            !(x instanceof Array))
+    return (!(typeof x === "string") &&
+            !(x instanceof Array) &&
+            (obj_length (x) > 0))
 }
 
 class subst_t {
@@ -116,9 +116,40 @@ class subst_t {
 }
 
 class conj_t {
-    constructor (arg) {
-        this.arg = arg
+    constructor (term) {
+        this.term = term
         this.if = null;
+    }
+}
+
+function term_to_data (term) {
+    return term_to_data_with_var_map (term, new Map)
+}
+
+function term_to_data_with_var_map (term, var_map) {
+    if (term instanceof Array) {
+        let array = []
+        for (let x of term) {
+            array.push (term_to_data_with_var_map (x, var_map))
+        }
+        return array
+    } else if (obj_p (term)) {
+        let obj = {}
+        for (let k in term) {
+            obj [k] = term_to_data_with_var_map (term [k], var_map)
+        }
+        return obj
+    } else if ((typeof term === "string") &&
+               (term.startsWith ("?"))) {
+        let name = term.slice (1)
+        let v = var_map.get (name)
+        if (v === undefined) {
+            v = new var_t (name)
+            var_map.set (name, v)
+        }
+        return v
+    } else {
+        return term
     }
 }
 
@@ -128,10 +159,10 @@ export class rule_t {
         this.conj_array = []
     }
 
-    // -- data_t
+    // -- term_t
     // -> [effect]
-    i (data) {
-        this.conj_array.push (new conj_t (data))
+    i (term) {
+        this.conj_array.push (new conj_t (term))
         return this
     }
 
@@ -219,9 +250,9 @@ class deduction_t {
 }
 
 class prop_t {
-    constructor (rule, arg, prop_array) {
+    constructor (rule, data, prop_array) {
         this.rule = rule
-        this.arg = arg
+        this.data = data
         this.prop_array = prop_array
     }
 
@@ -230,18 +261,19 @@ class prop_t {
     apply (subst) {
         let matrix = []
         for (let conj of this.rule.conj_array) {
-            if (typeof conj.if === 'function') {
-                // need a dup of conj.arg to get fresh var_t
-                let new_subst = subst.unify (conj.arg, this.arg)
+            if (typeof conj.if === "function") {
+                let data = term_to_data (conj.term)
+                let new_subst = subst.unify (data, this.data)
                 if (new_subst !== null) {
-                    let new_prop = conj.if.bind (conj.arg) ()
+                    let new_prop = conj.if.bind (data) ()
                     matrix.push ([
                         this.prop_array.concat ([new_prop]),
                         new_subst,
                     ])
                 }
             } else {
-                let new_subst = subst.unify (conj.arg, this.arg)
+                let data = term_to_data (conj.term)
+                let new_subst = subst.unify (data, this.data)
                 if (new_subst !== null) {
                     matrix.push ([
                         this.prop_array,
@@ -256,9 +288,10 @@ class prop_t {
     // -- prop_t
     // -> prop_t
     and (prop) {
-        let new_prop = new prop_t (this)
-        new_prop.prop_array.push (prop)
-        return new_prop
+        return new prop_t (
+            this.rule,
+            this.data,
+            this.prop_array.concat ([prop]))
     }
 }
 
@@ -272,58 +305,3 @@ export class var_t {
 }
 
 var_t.var_counter = 0
-
-let job = new rule_t
-let salary = new rule_t
-let supervisor = new rule_t
-let address = new rule_t
-
-job.i ({
-    name: "Bitdiddle Ben",
-    dept: "computer wizard",
-})
-salary.i ({
-    name: "Bitdiddle Ben",
-    num: 40000,
-})
-supervisor.i ({
-    slave: "Bitdiddle Ben",
-    master: "Warbucks Oliver",
-})
-address.i ({
-    name: "Bitdiddle Ben",
-    addr: "Slunerville Ridge Road 10",
-})
-address.i ({
-    name: "Hacker Alyssa P",
-    addr: "Cambridge Mass Ave 78",
-})
-address.i ({ name: "Xie", addr: "#1 street" })
-address.i ({ name: "Xie", addr: "#2 street" })
-address.i ({ name: "Xie", addr: "#3 street" })
-
-let bigshot = new rule_t
-
-bigshot.i ({
-    name: "?name",
-    dept: "?dept",
-}) .if (() => {
-    let master = new var_t ("?master")
-    return job.o ({ name: this.name, dept: this.dept })
-        .and (supervisor.not ({ slave: this.name, master }))
-        .and (job.not ({ name: master, dept: this.dept }))
-})
-
-
-console.log (job)
-console.log (bigshot)
-
-let searching = address.search ({
-    name: "Xie",
-    addr: new var_t ("addr"),
-})
-
-console.log (searching.next_subst ())
-console.log (searching.next_subst ())
-console.log (searching.next_subst ())
-console.log (searching.next_subst ())
