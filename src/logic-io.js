@@ -28,9 +28,10 @@ class subst_t {
     }
 
     extend (v, x) {
-        let map = new Map (this.map)
-        map.set (v, x)
-        return map
+        let subst = new subst_t;
+        subst.map = new Map (this.map)
+        subst.map.set (v, x)
+        return subst
     }
 
     find (v) {
@@ -189,6 +190,16 @@ export class rule_t {
             new deduction_t (new subst_t, [this.o (data)])
         ])
     }
+
+    // -- numebr_t
+    // -> -- term_t -> array_t (subst_t)
+    q (n) {
+        return (term) => {
+            let data = term_to_data (term)
+            let searching = this.search (data)
+            return searching.take_subst (n)
+        }
+    }
 }
 
 class searching_t {
@@ -216,6 +227,20 @@ class searching_t {
             }
         }
         return null
+    }
+
+    take_subst (n) {
+        let array = []
+        while (n > 0) {
+            let subst = this.next_subst ()
+            if (subst === null) {
+                break
+            } else {
+                array.push (subst)
+            }
+            n--
+        }
+        return array
     }
 }
 
