@@ -1,5 +1,27 @@
 "use strict"
 
+function obj_keys (obj) {
+    let keys = []
+    for (let k in obj) {
+        keys.push (k)
+    }
+    return keys
+}
+
+function obj_length (obj) {
+    let n = 0
+    for (let _ in obj) {
+        n++
+    }
+    return n
+}
+
+function obj_p (x) {
+    return ((obj_length (x) > 0) &&
+            !(typeof x === 'string') &&
+            !(x instanceof Array))
+}
+
 class subst_t {
     constructor () {
         this.map = new Map;
@@ -41,6 +63,9 @@ class subst_t {
         } else if ((x instanceof Array) &&
                    (y instanceof Array)) {
             return this.unify_array (x, y)
+        } else if (obj_p (x) &&
+                   obj_p (y)) {
+            return this.unify_obj (x, y)
         } else if (x === y) {
             return this
         } else {
@@ -48,7 +73,29 @@ class subst_t {
         }
     }
 
-    // unify_obj (xs, ys)
+    unify_obj (x, y) {
+        let x_length = obj_length (x)
+        let y_length = obj_length (y)
+        if (x_length >= y_length) {
+            return this.cover_obj (x, y)
+        } else {
+            return this.cover_obj (y, x)
+        }
+    }
+
+    cover_obj (x, y) {
+        let subst = this
+        for (let k in y) {
+            if (x [k] === undefined) {
+                return null
+            }
+            subst = subst.unify (x [k], y [k])
+            if (subst === null) {
+                return null
+            }
+        }
+        return subst
+    }
 
     unify_array (xs, ys) {
         let subst = this
@@ -271,9 +318,10 @@ bigshot.i ({
 console.log (job)
 console.log (bigshot)
 
-let searching = address.search ([
-    "Xie", new var_t ("address")
-])
+let searching = address.search ({
+    name: "Xie",
+    addr: new var_t ("addr"),
+})
 
 console.log (searching.next_subst ())
 console.log (searching.next_subst ())
