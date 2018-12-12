@@ -1,0 +1,11 @@
+{
+    "name": "logic-lion",
+    "version": "0.0.1",
+    "author": "Xie Yuheng",
+    "main": "dist/lion.js",
+    "module": "src/lion.js",
+    "license": "GPL-3.0-or-later",
+    "scripts": {
+        "bundle": "rollup -i src/lion.js -o dist/lion.js --sourcemap --format umd --name hyperapp"
+    }
+}

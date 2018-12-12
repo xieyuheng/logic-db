@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+t () {
+    tangle src
+    npm run bundle
+    node dist/lion.js
+}
+
+main () {
+    for TASK in $@
+    do
+        $TASK
+    done
+}
+
+main $@
