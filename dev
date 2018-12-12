@@ -3,7 +3,7 @@
 t () {
     tangle src
     npm run bundle
-    node dist/lion.js
+    node dist/logic-io.js
 }
 
 main () {

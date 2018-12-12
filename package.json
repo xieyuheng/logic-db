@@ -1,11 +1,16 @@
 {
-    "name": "logic-lion",
+    "name": "logic-io",
     "version": "0.0.1",
     "author": "Xie Yuheng",
-    "main": "dist/lion.js",
-    "module": "src/lion.js",
+    "main": "dist/logic-io.js",
+    "module": "src/logic-io.js",
     "license": "GPL-3.0-or-later",
     "scripts": {
-        "bundle": "rollup -i src/lion.js -o dist/lion.js --sourcemap --format umd --name hyperapp"
+        "bundle": "rollup -i src/logic-io.js -o dist/logic-io.js --sourcemap --format umd --name hyperapp"
+    },
+    "dependencies": {
+        "cuid": "^2.1.4",
+        "shortid": "^2.2.14",
+        "uuid": "^3.3.2"
     }
 }
