@@ -290,7 +290,7 @@ class prop_t {
                 let data = term_to_data (conj.term)
                 let new_subst = subst.unify (data, this.data)
                 if (new_subst !== null) {
-                    let new_prop = conj.if.bind (data) ()
+                    let new_prop = conj.if (data)
                     matrix.push ([
                         this.prop_array.concat ([new_prop]),
                         new_subst,

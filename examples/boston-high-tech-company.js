@@ -120,17 +120,7 @@ salary.i ({
 })
 
 
-// let bigshot = new rule_t
-
-// bigshot.i ({
-//     name: "?name",
-//     dept: "?dept",
-// }) .if (() => {
-//     let master = new var_t ("master")
-//     return job.o ({ name: this.name, dept: this.dept })
-//         .and (supervisor.not ({ slave: this.name, master }))
-//         .and (job.not ({ name: master, dept: this.dept }))
-// })
+// query
 
 console.log (
     address.q (1) ({
@@ -145,5 +135,22 @@ console.log (
         name: "?name",
         dept: "computer",
         role: "?role",
+    })
+)
+
+
+let computer_dept_slave = new rule_t
+
+computer_dept_slave.i ({
+    slave: "?slave",
+}) .if ((data) => {
+    let z = new var_t
+    return job.o ({ name: data.slave, dept: "computer" })
+        .and (supervisor.o ({ slave: data.slave, master: z }))
+})
+
+console.log (
+    computer_dept_slave.q (10) ({
+        slave: "?slave",
     })
 )
