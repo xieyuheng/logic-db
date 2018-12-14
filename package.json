@@ -5,7 +5,8 @@
     "main": "dist/logic-io.js",
     "module": "src/logic-io.js",
     "license": "GPL-3.0-or-later",
-    "scripts": {
-        "bundle": "rollup -i src/logic-io.js -o dist/logic-io.js --sourcemap --format umd --name hyperapp"
+    "devDependencies": {
+        "esm": "^3.0.84",
+        "rollup": "^0.67.4"
     }
 }

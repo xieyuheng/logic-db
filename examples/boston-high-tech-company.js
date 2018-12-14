@@ -1,4 +1,4 @@
-let { rule_t, var_t } = require ("logic-io")
+let { rule_t, var_t } = require ("..")
 
 let job = new rule_t
 let salary = new rule_t

@@ -2,8 +2,8 @@
 
 t () {
     tangle src
-    npm run bundle
-    node dist/logic-io.js
+    npx rollup --config
+    node -r esm dist/logic-io.js
 }
 
 main () {

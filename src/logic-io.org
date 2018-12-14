@@ -1,9 +1,13 @@
 #+property: tangle logic-io.js
 #+title: logic-io
+- finish clause-and-effect in logic-labs
+- clause-and-effect as docs
+- the-reasoned-schemer as docs
 - occur_check
 - reify
-- `.not` and js predicate
-- use import in node
+- `.not`
+- `.pred` -- learn from eval in prolog
+- as database -- learn more about db -- by web projects
 * prolog
 
   #+begin_src js
