@@ -149,6 +149,16 @@ computer_dept_slave.i ({
         .and (supervisor.o ({ slave: data.slave, master: z }))
 })
 
+////
+computer_dept_slave.i ({
+    slave: "?slave",
+}) .if ((data) => {
+    let z = new var_t
+    let x = new var_t
+    return job.o ({ name: data.slave, dept: "computer" })
+        .and (supervisor.o ({ slave: data.slave, master: z }))
+})
+
 console.log (
     computer_dept_slave.q (10) ({
         slave: "?slave",

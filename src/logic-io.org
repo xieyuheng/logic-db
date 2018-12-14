@@ -6,8 +6,15 @@
 - occur_check
 - reify
 - `.not`
-- `.pred` -- learn from eval in prolog
+- `.pred` -- native predicate
+- `.eqv_with_bind`
+  native function return value to unify a var_t
+  // syntax for prolog's `is` -- worst case
+  // .eqv_with_bind (y, { a, x, b }, (data) => (data.a * data.x + data.b))
+  // .eqv_with_bind (y, {}, (_) => (1 * 2 + 3))
+- `.bind`
 - as database -- learn more about db -- by web projects
+- try typescript again
 * prolog
 
   #+begin_src js
