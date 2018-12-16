@@ -259,6 +259,9 @@ class deduction_t {
                 deduction_queue.push (
                     new deduction_t (
                         subst,
+                        //// about searching again
+                        // push front |   depth first
+                        // push back  | breadth first
                         this.prop_queue.concat (prop_array)))
             }
             return {

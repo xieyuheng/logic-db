@@ -1,5 +1,7 @@
-#+property: tangle logic-io.js
-#+title: logic-io
+#+property: tangle logic-db.js
+#+title: logic-db
+- use class for logic object ?
+- how to be useful for both frontend and backend ?
 - finish clause-and-effect in logic-labs
 - clause-and-effect as docs
 - the-reasoned-schemer as docs
@@ -317,6 +319,9 @@
                   deduction_queue.push (
                       new deduction_t (
                           subst,
+                          //// about searching again
+                          // push front |   depth first
+                          // push back  | breadth first
                           this.prop_queue.concat (prop_array)))
               }
               return {

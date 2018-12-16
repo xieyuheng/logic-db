@@ -1,9 +1,9 @@
 {
-    "name": "logic-io",
+    "name": "logic-db",
     "version": "0.0.1",
     "author": "Xie Yuheng",
-    "main": "dist/logic-io.js",
-    "module": "src/logic-io.js",
+    "main": "dist/logic-db.js",
+    "module": "src/logic-db.js",
     "license": "GPL-3.0-or-later",
     "devDependencies": {
         "esm": "^3.0.84",

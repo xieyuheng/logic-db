@@ -1,4 +1,4 @@
-let { rule_t, var_t } = require ("..")
+let { rule_t, var_t } = require ("../..")
 
 let job = new rule_t
 let salary = new rule_t
@@ -148,6 +148,14 @@ computer_dept_slave.i ({
     return job.o ({ name: data.slave, dept: "computer" })
         .and (supervisor.o ({ slave: data.slave, master: z }))
 })
+
+// computer_dept_slave.i ({
+//     slave: "?slave",
+// }) .if ((data, prop) => {
+//     let z = new var_t
+//     prop.and (job.o ({ name: data.slave, dept: "computer" }))
+//         .and (supervisor.o ({ slave: data.slave, master: z }))
+// })
 
 console.log (
     computer_dept_slave.q (10) ({
