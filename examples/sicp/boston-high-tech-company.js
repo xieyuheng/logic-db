@@ -1,9 +1,9 @@
-let { rule_t, var_t } = require ("../..")
+let logic = require ("../..")
 
-let job = new rule_t
-let salary = new rule_t
-let supervisor = new rule_t
-let address = new rule_t
+let job = new logic.db_t
+let salary = new logic.db_t
+let address = new logic.db_t
+let supervisor = new logic.db_t
 
 
 job.i ({
@@ -17,16 +17,16 @@ salary.i ({
     amount: 40000,
 })
 
-supervisor.i ({
-    slave: "Bitdiddle Ben",
-    master: "Warbucks Oliver",
-})
-
 address.i ({
     name: "Bitdiddle Ben",
     town: "Slunerville",
     road: "Ridge Road",
     door: 10,
+})
+
+supervisor.i ({
+    slave: "Bitdiddle Ben",
+    master: "Warbucks Oliver",
 })
 
 
@@ -139,23 +139,15 @@ console.log (
 )
 
 
-let computer_dept_slave = new rule_t
+let computer_dept_slave = new logic.db_t
 
 computer_dept_slave.i ({
     slave: "?slave",
-}) .if ((data) => {
-    let z = new var_t
-    return job.o ({ name: data.slave, dept: "computer" })
+}) .cond ((data, prop) => {
+    let z = new logic.var_t
+    prop.and (job.o ({ name: data.slave, dept: "computer" }))
         .and (supervisor.o ({ slave: data.slave, master: z }))
 })
-
-// computer_dept_slave.i ({
-//     slave: "?slave",
-// }) .if ((data, prop) => {
-//     let z = new var_t
-//     prop.and (job.o ({ name: data.slave, dept: "computer" }))
-//         .and (supervisor.o ({ slave: data.slave, master: z }))
-// })
 
 console.log (
     computer_dept_slave.q (10) ({

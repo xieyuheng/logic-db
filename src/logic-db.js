@@ -114,12 +114,46 @@ class subst_t {
         }
         return subst
     }
+
+    deep_walk (x) {
+        x = this.walk (x)
+        if (x instanceof var_t) {
+            return x
+        } else if (x instanceof Array) {
+            let y = []
+            for (let e of x) {
+                y.push (this.deep_walk (e))
+            }
+            return y
+        } else if (obj_p (x)) {
+            let y = {}
+            for (let k in x) {
+                y [k] = this.deep_walk (x [k])
+            }
+            return y
+        } else {
+            return x
+        }
+    }
+
+    // localize_by_data (x) {}
+
+    // reify (x) {
+    //     x = this.deep_walk (x)
+    //     let new_subst = new subst_t
+    //     let local_subst = new_subst.localize_by_data (x)
+    //     return local_subst.deep_walk (x)
+    // }
+
+    reify (x) {
+        return this.deep_walk (x)
+    }
 }
 
-class conj_t {
+class fact_t {
     constructor (term) {
         this.term = term
-        this.if = null;
+        this.cond = null;
     }
 }
 
@@ -154,25 +188,25 @@ function term_to_data_with_var_map (term, var_map) {
     }
 }
 
-export class rule_t {
+export class db_t {
     constructor () {
-        // : array_t (conj_t)
-        this.conj_array = []
+        // : array_t (fact_t)
+        this.fact_array = []
     }
 
     // -- term_t
     // -> [effect]
     i (term) {
-        this.conj_array.push (new conj_t (term))
+        this.fact_array.push (new fact_t (term))
         return this
     }
 
     // -- -> [effect]
-    if (fun) {
-        let conj = this.conj_array.pop ()
-        if (conj !== undefined) {
-            conj.if = fun
-            this.conj_array.push (conj)
+    cond (fun) {
+        let fact = this.fact_array.pop ()
+        if (fact !== undefined) {
+            fact.cond = fun
+            this.fact_array.push (fact)
         }
         return this
     }
@@ -195,10 +229,29 @@ export class rule_t {
     // -> -- term_t -> array_t (subst_t)
     q (n) {
         return (term) => {
-            let data = term_to_data (term)
+            let var_map = new Map
+            let data = term_to_data_with_var_map (term, var_map)
             let searching = this.search (data)
-            return searching.take_subst (n)
+            let solutions = searching
+                .take_subst (n)
+                .map ((subst) => {
+                    let sol = {}
+                    for (let name of var_map.keys ()) {
+                        sol [name] = subst.reify (
+                            var_map.get (name))
+                    }
+                    return sol
+                })
+            let query_res = new query_res_t
+            query_res.solutions = solutions
+            return query_res
         }
+    }
+}
+
+class query_res_t {
+    constructor () {
+        this.solutions = []
     }
 }
 
@@ -278,8 +331,8 @@ class deduction_t {
 }
 
 class prop_t {
-    constructor (rule, data, prop_array) {
-        this.rule = rule
+    constructor (db, data, prop_array) {
+        this.db = db
         this.data = data
         this.prop_array = prop_array
     }
@@ -288,19 +341,21 @@ class prop_t {
     // -> array_t ([array_t (prop_t), subst_t])
     apply (subst) {
         let matrix = []
-        for (let conj of this.rule.conj_array) {
-            if (typeof conj.if === "function") {
-                let data = term_to_data (conj.term)
+        for (let fact of this.db.fact_array) {
+            if (typeof fact.cond === "function") {
+                let data = term_to_data (fact.term)
                 let new_subst = subst.unify (data, this.data)
                 if (new_subst !== null) {
-                    let new_prop = conj.if (data)
+                    let prop = new prop_t (
+                        this.db, this.data, [])
+                    fact.cond (data, prop)
                     matrix.push ([
-                        this.prop_array.concat ([new_prop]),
+                        this.prop_array.concat (prop.prop_array),
                         new_subst,
                     ])
                 }
             } else {
-                let data = term_to_data (conj.term)
+                let data = term_to_data (fact.term)
                 let new_subst = subst.unify (data, this.data)
                 if (new_subst !== null) {
                     matrix.push ([
@@ -316,10 +371,8 @@ class prop_t {
     // -- prop_t
     // -> prop_t
     and (prop) {
-        return new prop_t (
-            this.rule,
-            this.data,
-            this.prop_array.concat ([prop]))
+        this.prop_array.push (prop)
+        return this
     }
 }
 
