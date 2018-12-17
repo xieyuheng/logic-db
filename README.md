@@ -38,10 +38,13 @@ job.q (2) ({
 })
 ```
 
+## Docs
+
+[docs](https://logic-db.surge.sh)
+
 ## Examples
 
-To view the examples,  
-clone the logic-db repo and install the dependencies :
+To view the examples, clone the logic-db repo and install the dependencies :
 
 ```bash
 $ git clone git://github.com/xieyuheng/logic-db
