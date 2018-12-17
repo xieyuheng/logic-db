@@ -173,3 +173,22 @@ console.log (
         dept: "?dept",
     })
 )
+
+let not_so_poor = new logic.db_t
+
+not_so_poor.i ({
+    name: "?name",
+    amount: "?amount",
+}) .cond ((data) => {
+    return salary.o ({ name: data.name, amount: data.amount })
+        .pred_with_bind ({
+            amount: data.amount
+        }, (bind) => bind.amount > 30000)
+})
+
+console.log (
+    not_so_poor.q (10) ({
+        name: "?name",
+        amount: "?amount",
+    })
+)

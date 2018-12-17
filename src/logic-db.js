@@ -349,12 +349,28 @@ class deduction_t {
 class prop_t {
     constructor () {}
 
-    and (prop) {
-        return new and_prop_t (this, prop)
+    and (that) {
+        return new and_prop_t (this, that)
     }
 
     not (prop) {
-        return new and_prop_t (this, new not_prop_t (prop))
+        let that = new not_prop_t (prop)
+        return new and_prop_t (this, that)
+    }
+
+    eqv (v, data) {
+        let that = new eqv_prop_t (v, data)
+        return new and_prop_t (this, that)
+    }
+
+    eqv_with_bind (v, bind, fun) {
+        let that = new eqv_with_bind_prop_t (v, bind, fun)
+        return new and_prop_t (this, that)
+    }
+
+    pred_with_bind (bind, pred) {
+        let that = new pred_with_bind_prop_t (bind, pred)
+        return new and_prop_t (this, that)
     }
 }
 
@@ -417,6 +433,72 @@ class not_prop_t extends prop_t {
         ])
         let next_subst = searching.next_subst ()
         if (next_subst === null) {
+            return [[[], subst]]
+        } else {
+            return []
+        }
+    }
+}
+
+class eqv_prop_t extends prop_t {
+    constructor (v, data) {
+        super ()
+        this.v = v
+        this.data = data
+    }
+
+    // -- subst_t
+    // -> array_t ([array_t (prop_t), subst_t])
+    apply (subst) {
+        let new_subst = subst.unify (this.v, this.data)
+        if (new_subst !== null) {
+            return [[[], new_subst]]
+        } else {
+            return []
+        }
+    }
+}
+
+class eqv_with_bind_prop_t extends prop_t {
+    constructor (v, bind, fun) {
+        super ()
+        this.v = v
+        this.bind = bind
+        this.fun = fun
+    }
+
+    // -- subst_t
+    // -> array_t ([array_t (prop_t), subst_t])
+    apply (subst) {
+        let bind = {}
+        for (let k in this.bind) {
+            bind [k] = subst.deep_walk (this.bind [k])
+        }
+        let data = this.fun (bind)
+        let new_subst = subst.unify (this.v, data)
+        if (new_subst !== null) {
+            return [[[], new_subst]]
+        } else {
+            return []
+        }
+    }
+}
+
+class pred_with_bind_prop_t extends prop_t {
+    constructor (bind, pred) {
+        super ()
+        this.bind = bind
+        this.pred = pred
+    }
+
+    // -- subst_t
+    // -> array_t ([array_t (prop_t), subst_t])
+    apply (subst) {
+        let bind = {}
+        for (let k in this.bind) {
+            bind [k] = subst.deep_walk (this.bind [k])
+        }
+        if (this.pred (bind)) {
             return [[[], subst]]
         } else {
             return []
