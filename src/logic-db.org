@@ -1,10 +1,9 @@
 #+property: tangle logic-db.js
 #+title: logic-db
+- occur_check
 - how to be useful for both frontend and backend ?
 - clause-and-effect as docs
 - the-reasoned-schemer as docs
-- occur_check
-- `.not`
 - `.eqv_with_bind`
   native function return value to unify a var_t
   // syntax for prolog's `is` -- worst case
@@ -264,21 +263,13 @@
           return new prop_t (this, data, [])
       }
 
-      // -- data_t
-      // -> searching_t
-      search (data) {
-          return new searching_t ([
-              new deduction_t (new subst_t, [this.o (data)])
-          ])
-      }
-
       // -- numebr_t
       // -> -- term_t -> array_t (subst_t)
       q (n) {
           return (term) => {
               let var_map = new Map
               let data = term_to_data_with_var_map (term, var_map)
-              let searching = this.search (data)
+              let searching = this.o (data) .search (new subst_t)
               let solutions = searching
                   .take_subst (n)
                   .map ((subst) => {
@@ -397,18 +388,30 @@
       constructor (db, data, prop_array) {
           this.db = db
           this.data = data
+          this.sign = true
           this.prop_array = prop_array
+      }
+
+      // --
+      // -> searching_t
+      search (subst) {
+          return new searching_t ([
+              new deduction_t (subst, [this])
+          ])
       }
 
       // -- subst_t
       // -> array_t ([array_t (prop_t), subst_t])
       apply (subst) {
+          if (this.sign === false) {
+              return this.apply_not (subst)
+          }
           let matrix = []
           for (let fact of this.db.fact_array) {
-              if (typeof fact.cond === "function") {
-                  let data = term_to_data (fact.term)
-                  let new_subst = subst.unify (data, this.data)
-                  if (new_subst !== null) {
+              let data = term_to_data (fact.term)
+              let new_subst = subst.unify (data, this.data)
+              if (new_subst !== null) {
+                  if (typeof fact.cond === "function") {
                       let prop = new prop_t (
                           this.db, this.data, [])
                       fact.cond (data, prop)
@@ -416,24 +419,42 @@
                           this.prop_array.concat (prop.prop_array),
                           new_subst,
                       ])
-                  }
-              } else {
-                  let data = term_to_data (fact.term)
-                  let new_subst = subst.unify (data, this.data)
-                  if (new_subst !== null) {
+                  } else {
                       matrix.push ([
                           this.prop_array,
                           new_subst,
                       ])
                   }
+              } else if ((new_subst === null) &&
+                         (this.sign === false)) {
+
               }
           }
           return matrix
       }
 
+      apply_not (subst) {
+          let prop = new prop_t (this.db, this.data, this.prop_array)
+          let searching = prop.search (subst)
+          let next_subst = searching.next_subst ()
+          if (next_subst === null) {
+              return [[[], subst]]
+          } else {
+              return []
+          }
+      }
+
       // -- prop_t
       // -> prop_t
       and (prop) {
+          this.prop_array.push (prop)
+          return this
+      }
+
+      // -- prop_t
+      // -> prop_t
+      not (prop) {
+          prop.sign = false
           this.prop_array.push (prop)
           return this
       }

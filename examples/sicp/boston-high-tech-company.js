@@ -154,3 +154,22 @@ console.log (
         slave: "?slave",
     })
 )
+
+let bigshot = new logic.db_t
+
+bigshot.i ({
+    name: "?name",
+    dept: "?dept",
+}) .cond ((data, prop) => {
+    let z = new logic.var_t
+    prop.and (job.o ({ name: data.name, dept: data.dept }))
+        .not (supervisor.o ({ slave: data.name, master: z })
+              .and (job.o ({ name: z, dept: data.dept })))
+})
+
+console.log (
+    bigshot.q (100) ({
+        name: "?name",
+        dept: "?dept",
+    })
+)
