@@ -7,6 +7,7 @@
     "license": "GPL-3.0-or-later",
     "devDependencies": {
         "esm": "^3.0.84",
-        "rollup": "^0.67.4"
+        "rollup": "^0.67.4",
+        "vuepress": "^1.0.0-alpha.29"
     }
 }

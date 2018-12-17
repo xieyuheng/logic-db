@@ -40,22 +40,21 @@ job.q (2) ({
 
 ## Docs
 
-[docs](https://logic-db.surge.sh)
+- [online docs](https://logic-db.surge.sh)
 
-## Examples
-
-To view the examples, clone the logic-db repo and install the dependencies :
+- To view docs locally :
 
 ```bash
 $ git clone git://github.com/xieyuheng/logic-db
 $ cd logic-db
 $ npm install
+$ npx vuepress dev ./docs
 ```
 
-Run example :
+- To run examples :
 
 ```bash
-$ node examples/sicp/boston-high-tech-company.js
+$ node docs/sicp/boston-high-tech-company.js
 ```
 
 ## Contributing
