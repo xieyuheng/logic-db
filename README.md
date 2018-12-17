@@ -49,7 +49,7 @@ clone the logic-db repo and install the dependencies :
 ```bash
 $ git clone git://github.com/xieyuheng/logic-db
 $ cd logic-db
-$ npm install logic-db
+$ npm install
 ```
 
 Run example :
