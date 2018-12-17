@@ -143,9 +143,9 @@ let computer_dept_slave = new logic.db_t
 
 computer_dept_slave.i ({
     slave: "?slave",
-}) .cond ((data, prop) => {
+}) .cond ((data) => {
     let z = new logic.var_t
-    prop.and (job.o ({ name: data.slave, dept: "computer" }))
+    return job.o ({ name: data.slave, dept: "computer" })
         .and (supervisor.o ({ slave: data.slave, master: z }))
 })
 
@@ -160,9 +160,9 @@ let bigshot = new logic.db_t
 bigshot.i ({
     name: "?name",
     dept: "?dept",
-}) .cond ((data, prop) => {
+}) .cond ((data) => {
     let z = new logic.var_t
-    prop.and (job.o ({ name: data.name, dept: data.dept }))
+    return job.o ({ name: data.name, dept: data.dept })
         .not (supervisor.o ({ slave: data.name, master: z })
               .and (job.o ({ name: z, dept: data.dept })))
 })

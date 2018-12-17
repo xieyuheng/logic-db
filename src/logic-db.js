@@ -136,15 +136,6 @@ class subst_t {
         }
     }
 
-    // localize_by_data (x) {}
-
-    // reify (x) {
-    //     x = this.deep_walk (x)
-    //     let new_subst = new subst_t
-    //     let local_subst = new_subst.localize_by_data (x)
-    //     return local_subst.deep_walk (x)
-    // }
-
     reify (x) {
         return this.deep_walk (x)
     }
@@ -214,7 +205,7 @@ export class db_t {
     // -- data_t
     // -> prop_t
     o (data) {
-        return new prop_t (this, data, [])
+        return new unit_prop_t (this, data)
     }
 
     // -- numebr_t
@@ -223,7 +214,9 @@ export class db_t {
         return (term) => {
             let var_map = new Map
             let data = term_to_data_with_var_map (term, var_map)
-            let searching = this.o (data) .search (new subst_t)
+            let searching = new searching_t ([
+                new deduction_t (new subst_t, [this.o (data)])
+            ])
             let solutions = searching
                 .take_subst (n)
                 .map ((subst) => {
@@ -322,20 +315,12 @@ class deduction_t {
     }
 }
 
-class prop_t {
+class old_prop_t {
     constructor (db, data, prop_array) {
         this.db = db
         this.data = data
         this.sign = true
         this.prop_array = prop_array
-    }
-
-    // --
-    // -> searching_t
-    search (subst) {
-        return new searching_t ([
-            new deduction_t (subst, [this])
-        ])
     }
 
     // -- subst_t
@@ -350,11 +335,9 @@ class prop_t {
             let new_subst = subst.unify (data, this.data)
             if (new_subst !== null) {
                 if (typeof fact.cond === "function") {
-                    let prop = new prop_t (
-                        this.db, this.data, [])
-                    fact.cond (data, prop)
+                    let prop = fact.cond (data)
                     matrix.push ([
-                        this.prop_array.concat (prop.prop_array),
+                        this.prop_array.concat ([prop]),
                         new_subst,
                     ])
                 } else {
@@ -373,7 +356,9 @@ class prop_t {
 
     apply_not (subst) {
         let prop = new prop_t (this.db, this.data, this.prop_array)
-        let searching = prop.search (subst)
+        let searching = new searching_t ([
+            new deduction_t (subst, [prop])
+        ])
         let next_subst = searching.next_subst ()
         if (next_subst === null) {
             return [[[], subst]]
@@ -395,6 +380,84 @@ class prop_t {
         prop.sign = false
         this.prop_array.push (prop)
         return this
+    }
+}
+
+class prop_t {
+    constructor () {}
+
+    and (prop) {
+        return new and_prop_t (this, prop)
+    }
+
+    not (prop) {
+        return new and_prop_t (this, new not_prop_t (prop))
+    }
+}
+
+class unit_prop_t extends prop_t {
+    constructor (db, data) {
+        super ()
+        this.db = db
+        this.data = data
+    }
+
+    // -- subst_t
+    // -> array_t ([array_t (prop_t), subst_t])
+    apply (subst) {
+        let matrix = []
+        for (let fact of this.db.fact_array) {
+            let data = term_to_data (fact.term)
+            let new_subst = subst.unify (data, this.data)
+            if (new_subst !== null) {
+                if (typeof fact.cond === "function") {
+                    let prop = fact.cond (data)
+                    matrix.push ([[prop], new_subst])
+                } else {
+                    matrix.push ([[], new_subst])
+                }
+            }
+        }
+        return matrix
+    }
+}
+
+class and_prop_t extends prop_t {
+    constructor (lhs, rhs) {
+        super ()
+        this.lhs = lhs
+        this.rhs = rhs
+    }
+
+    // -- subst_t
+    // -> array_t ([array_t (prop_t), subst_t])
+    apply (subst) {
+        let matrix = this.lhs.apply (subst)
+        for (let [ prop_array, subst ] of matrix) {
+            prop_array.push (this.rhs)
+        }
+        return matrix
+    }
+}
+
+class not_prop_t extends prop_t {
+    constructor (prop) {
+        super ()
+        this.prop = prop
+    }
+
+    // -- subst_t
+    // -> array_t ([array_t (prop_t), subst_t])
+    apply (subst) {
+        let searching = new searching_t ([
+            new deduction_t (subst, [this.prop])
+        ])
+        let next_subst = searching.next_subst ()
+        if (next_subst === null) {
+            return [[[], subst]]
+        } else {
+            return []
+        }
     }
 }
 

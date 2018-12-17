@@ -1,15 +1,15 @@
 #+property: tangle logic-db.js
 #+title: logic-db
 - occur_check
-- how to be useful for both frontend and backend ?
-- clause-and-effect as docs
-- the-reasoned-schemer as docs
 - `.eqv_with_bind`
   native function return value to unify a var_t
   // syntax for prolog's `is` -- worst case
   // .eqv_with_bind (y, { a, x, b }, (data) => (data.a * data.x + data.b))
   // .eqv_with_bind (y, {}, (_) => (1 * 2 + 3))
 - `.pred` -- native predicate
+- how to be useful for both frontend and backend ?
+- clause-and-effect as docs
+- the-reasoned-schemer as docs
 - as database -- learn more about db -- by web projects
 * prolog
 
@@ -170,15 +170,6 @@
           }
       }
 
-      // localize_by_data (x) {}
-
-      // reify (x) {
-      //     x = this.deep_walk (x)
-      //     let new_subst = new subst_t
-      //     let local_subst = new_subst.localize_by_data (x)
-      //     return local_subst.deep_walk (x)
-      // }
-
       reify (x) {
           return this.deep_walk (x)
       }
@@ -260,7 +251,7 @@
       // -- data_t
       // -> prop_t
       o (data) {
-          return new prop_t (this, data, [])
+          return new unit_prop_t (this, data)
       }
 
       // -- numebr_t
@@ -269,7 +260,9 @@
           return (term) => {
               let var_map = new Map
               let data = term_to_data_with_var_map (term, var_map)
-              let searching = this.o (data) .search (new subst_t)
+              let searching = new searching_t ([
+                  new deduction_t (new subst_t, [this.o (data)])
+              ])
               let solutions = searching
                   .take_subst (n)
                   .map ((subst) => {
@@ -383,83 +376,99 @@
 
 * prop_t
 
-  #+begin_src js
-  class prop_t {
-      constructor (db, data, prop_array) {
-          this.db = db
-          this.data = data
-          this.sign = true
-          this.prop_array = prop_array
-      }
+*** prop_t
 
-      // --
-      // -> searching_t
-      search (subst) {
-          return new searching_t ([
-              new deduction_t (subst, [this])
-          ])
-      }
+    #+begin_src js
+    class prop_t {
+        constructor () {}
 
-      // -- subst_t
-      // -> array_t ([array_t (prop_t), subst_t])
-      apply (subst) {
-          if (this.sign === false) {
-              return this.apply_not (subst)
-          }
-          let matrix = []
-          for (let fact of this.db.fact_array) {
-              let data = term_to_data (fact.term)
-              let new_subst = subst.unify (data, this.data)
-              if (new_subst !== null) {
-                  if (typeof fact.cond === "function") {
-                      let prop = new prop_t (
-                          this.db, this.data, [])
-                      fact.cond (data, prop)
-                      matrix.push ([
-                          this.prop_array.concat (prop.prop_array),
-                          new_subst,
-                      ])
-                  } else {
-                      matrix.push ([
-                          this.prop_array,
-                          new_subst,
-                      ])
-                  }
-              } else if ((new_subst === null) &&
-                         (this.sign === false)) {
+        and (prop) {
+            return new and_prop_t (this, prop)
+        }
 
-              }
-          }
-          return matrix
-      }
+        not (prop) {
+            return new and_prop_t (this, new not_prop_t (prop))
+        }
+    }
+    #+end_src
 
-      apply_not (subst) {
-          let prop = new prop_t (this.db, this.data, this.prop_array)
-          let searching = prop.search (subst)
-          let next_subst = searching.next_subst ()
-          if (next_subst === null) {
-              return [[[], subst]]
-          } else {
-              return []
-          }
-      }
+*** unit_prop_t
 
-      // -- prop_t
-      // -> prop_t
-      and (prop) {
-          this.prop_array.push (prop)
-          return this
-      }
+    #+begin_src js
+    class unit_prop_t extends prop_t {
+        constructor (db, data) {
+            super ()
+            this.db = db
+            this.data = data
+        }
 
-      // -- prop_t
-      // -> prop_t
-      not (prop) {
-          prop.sign = false
-          this.prop_array.push (prop)
-          return this
-      }
-  }
-  #+end_src
+        // -- subst_t
+        // -> array_t ([array_t (prop_t), subst_t])
+        apply (subst) {
+            let matrix = []
+            for (let fact of this.db.fact_array) {
+                let data = term_to_data (fact.term)
+                let new_subst = subst.unify (data, this.data)
+                if (new_subst !== null) {
+                    if (typeof fact.cond === "function") {
+                        let prop = fact.cond (data)
+                        matrix.push ([[prop], new_subst])
+                    } else {
+                        matrix.push ([[], new_subst])
+                    }
+                }
+            }
+            return matrix
+        }
+    }
+    #+end_src
+
+*** and_prop_t
+
+    #+begin_src js
+    class and_prop_t extends prop_t {
+        constructor (lhs, rhs) {
+            super ()
+            this.lhs = lhs
+            this.rhs = rhs
+        }
+
+        // -- subst_t
+        // -> array_t ([array_t (prop_t), subst_t])
+        apply (subst) {
+            let matrix = this.lhs.apply (subst)
+            for (let [ prop_array, subst ] of matrix) {
+                prop_array.push (this.rhs)
+            }
+            return matrix
+        }
+    }
+    #+end_src
+
+*** not_prop_t
+
+    #+begin_src js
+    class not_prop_t extends prop_t {
+        constructor (prop) {
+            super ()
+            this.prop = prop
+        }
+
+        // -- subst_t
+        // -> array_t ([array_t (prop_t), subst_t])
+        apply (subst) {
+            let searching = new searching_t ([
+                new deduction_t (subst, [this.prop])
+            ])
+            let next_subst = searching.next_subst ()
+            if (next_subst === null) {
+                return [[[], subst]]
+            } else {
+                return []
+            }
+        }
+    }
+    #+end_src
 
 * var_t
 
