@@ -4,12 +4,9 @@ Aims :
 - combine logic programming and database
 - practical and simple API
 
-About Logic Programming :
+Features :
 - embedded in js -- minimal extra syntax
 - can be used without server -- for simple client web app
-
-About Database :
-- [todo]
 
 ## Getting Start
 
