@@ -5,8 +5,8 @@ Aims :
 - practical and simple API
 
 About Logic Programming :
-- embedded in js -- no extra syntax
-- can be used in browser (client side js)
+- embedded in js -- minimal extra syntax
+- can be used without server -- for simple client web app
 
 About Database :
 - [todo]
