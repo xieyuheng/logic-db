@@ -1,9 +1,9 @@
 #+property: tangle logic-db.js
 #+title: logic-db
-- how to be useful for both frontend and backend ?
+- sicp as docs
 - clause-and-effect as docs
 - the-reasoned-schemer as docs
-- as database -- learn more about db -- by web projects
+- as database
 * prolog
 
   #+begin_src js

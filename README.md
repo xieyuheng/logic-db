@@ -1,5 +1,46 @@
 # logic-db
 
+Aims :
+- combine logic programming and database
+- practical and simple API
+
+About Logic Programming :
+- embedded in js -- no extra syntax
+- can be used in browser (client side js)
+
+About Database :
+- [todo]
+
+## Getting Start
+
+```bash
+$ npm install logic-db
+```
+
+```js
+let logic = require ("logic-db")
+
+let job = new logic.db_t
+
+job.i ({
+    name: "Hacker Alyssa P",
+    dept: "computer",
+    role: "programmer",
+})
+
+job.i ({
+    name: "Tweakit Lem E",
+    dept: "computer",
+    role: "technician",
+})
+
+job.q (2) ({
+    name: "?name",
+    dept: "?dept",
+    role: "?role"
+})
+```
+
 ## Examples
 
 To view the examples,  
@@ -8,7 +49,7 @@ clone the logic-db repo and install the dependencies :
 ```bash
 $ git clone git://github.com/xieyuheng/logic-db
 $ cd logic-db
-$ npm install
+$ npm install logic-db
 ```
 
 Run example :
