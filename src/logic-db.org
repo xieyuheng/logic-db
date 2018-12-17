@@ -1,6 +1,5 @@
 #+property: tangle logic-db.js
 #+title: logic-db
-- occur_check
 - `.eqv_with_bind`
   native function return value to unify a var_t
   // syntax for prolog's `is` -- worst case
@@ -84,6 +83,29 @@
           return x
       }
 
+      var_occur_p (v, x) {
+          x = this.walk (x)
+          if (x instanceof var_t) {
+              return x === v
+          } else if (x instanceof Array) {
+              for (let e of x) {
+                  if (this.var_occur_p (v, e)) {
+                      return true
+                  }
+              }
+              return false
+          } else if (obj_p (x)) {
+              for (let k in x) {
+                  if (this.var_occur_p (v, x [k])) {
+                      return true
+                  }
+              }
+              return false
+          } else {
+              return false
+          }
+      }
+
       unify (x, y) {
           x = this.walk (x)
           y = this.walk (y)
@@ -92,9 +114,17 @@
               (x === y)) {
               return this
           } else if (x instanceof var_t) {
-              return this.extend (x, y)
+              if (this.var_occur_p (x, y)) {
+                  return null
+              } else {
+                  return this.extend (x, y)
+              }
           } else if (y instanceof var_t) {
-              return this.extend (y, x)
+              if (this.var_occur_p (y, x)) {
+                  return null
+              } else {
+                  return this.extend (y, x)
+              }
           } else if ((x instanceof Array) &&
                      (y instanceof Array)) {
               return this.unify_array (x, y)

@@ -50,6 +50,29 @@ class subst_t {
         return x
     }
 
+    var_occur_p (v, x) {
+        x = this.walk (x)
+        if (x instanceof var_t) {
+            return x === v
+        } else if (x instanceof Array) {
+            for (let e of x) {
+                if (this.var_occur_p (v, e)) {
+                    return true
+                }
+            }
+            return false
+        } else if (obj_p (x)) {
+            for (let k in x) {
+                if (this.var_occur_p (v, x [k])) {
+                    return true
+                }
+            }
+            return false
+        } else {
+            return false
+        }
+    }
+
     unify (x, y) {
         x = this.walk (x)
         y = this.walk (y)
@@ -58,9 +81,17 @@ class subst_t {
             (x === y)) {
             return this
         } else if (x instanceof var_t) {
-            return this.extend (x, y)
+            if (this.var_occur_p (x, y)) {
+                return null
+            } else {
+                return this.extend (x, y)
+            }
         } else if (y instanceof var_t) {
-            return this.extend (y, x)
+            if (this.var_occur_p (y, x)) {
+                return null
+            } else {
+                return this.extend (y, x)
+            }
         } else if ((x instanceof Array) &&
                    (y instanceof Array)) {
             return this.unify_array (x, y)
@@ -312,74 +343,6 @@ class deduction_t {
                 subst: this.subst,
             }
         }
-    }
-}
-
-class old_prop_t {
-    constructor (db, data, prop_array) {
-        this.db = db
-        this.data = data
-        this.sign = true
-        this.prop_array = prop_array
-    }
-
-    // -- subst_t
-    // -> array_t ([array_t (prop_t), subst_t])
-    apply (subst) {
-        if (this.sign === false) {
-            return this.apply_not (subst)
-        }
-        let matrix = []
-        for (let fact of this.db.fact_array) {
-            let data = term_to_data (fact.term)
-            let new_subst = subst.unify (data, this.data)
-            if (new_subst !== null) {
-                if (typeof fact.cond === "function") {
-                    let prop = fact.cond (data)
-                    matrix.push ([
-                        this.prop_array.concat ([prop]),
-                        new_subst,
-                    ])
-                } else {
-                    matrix.push ([
-                        this.prop_array,
-                        new_subst,
-                    ])
-                }
-            } else if ((new_subst === null) &&
-                       (this.sign === false)) {
-
-            }
-        }
-        return matrix
-    }
-
-    apply_not (subst) {
-        let prop = new prop_t (this.db, this.data, this.prop_array)
-        let searching = new searching_t ([
-            new deduction_t (subst, [prop])
-        ])
-        let next_subst = searching.next_subst ()
-        if (next_subst === null) {
-            return [[[], subst]]
-        } else {
-            return []
-        }
-    }
-
-    // -- prop_t
-    // -> prop_t
-    and (prop) {
-        this.prop_array.push (prop)
-        return this
-    }
-
-    // -- prop_t
-    // -> prop_t
-    not (prop) {
-        prop.sign = false
-        this.prop_array.push (prop)
-        return this
     }
 }
 
