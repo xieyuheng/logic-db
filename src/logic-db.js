@@ -246,7 +246,7 @@ export class db_t {
             let var_map = new Map
             let data = term_to_data_with_var_map (term, var_map)
             let searching = new searching_t ([
-                new deduction_t (new subst_t, [this.o (data)])
+                new prop_row_t (new subst_t, [this.o (data)])
             ])
             let solutions = searching
                 .take_subst (n)
@@ -272,22 +272,22 @@ class query_res_t {
 }
 
 class searching_t {
-    constructor (deduction_queue) {
-        this.deduction_queue = deduction_queue
+    constructor (prop_matrix) {
+        this.prop_matrix = prop_matrix
     }
 
     next_subst () {
-        while (this.deduction_queue.length !== 0) {
-            let deduction = this.deduction_queue.shift ()
-            let res = deduction.step ()
+        while (this.prop_matrix.length !== 0) {
+            let prop_row = this.prop_matrix.shift ()
+            let res = prop_row.step ()
             if (res.tag === "qed") {
                 return res.subst
             } else if (res.tag === "more") {
-                for (let deduction of res.deduction_queue) {
+                for (let prop_row of res.prop_matrix) {
                     //// about searching
                     // push front |   depth first
                     // push back  | breadth first
-                    this.deduction_queue.push (deduction)
+                    this.prop_matrix.push (prop_row)
                 }
             } else {
                 console.log (
@@ -313,7 +313,7 @@ class searching_t {
     }
 }
 
-class deduction_t {
+class prop_row_t {
     constructor (subst, prop_queue) {
         this.subst = subst
         this.prop_queue = prop_queue
@@ -322,20 +322,21 @@ class deduction_t {
     step () {
         if (this.prop_queue.length !== 0) {
             let prop = this.prop_queue.shift ()
-            let prop_matrix = prop.apply (this.subst)
-            let deduction_queue = []
-            for (let [ prop_array, subst ] of prop_matrix) {
-                deduction_queue.push (
-                    new deduction_t (
-                        subst,
+            let delta_matrix = prop.apply (this.subst)
+            let prop_matrix = []
+            for (let prop_row of delta_matrix) {
+                prop_matrix.push (
+                    new prop_row_t (
+                        prop_row.subst,
                         //// about searching again
                         // push front |   depth first
                         // push back  | breadth first
-                        this.prop_queue.concat (prop_array)))
+                        this.prop_queue.concat (
+                            prop_row.prop_queue)))
             }
             return {
                 tag: "more",
-                deduction_queue,
+                prop_matrix,
             }
         } else {
             return {
@@ -382,7 +383,7 @@ class unit_prop_t extends prop_t {
     }
 
     // -- subst_t
-    // -> array_t ([array_t (prop_t), subst_t])
+    // -> array_t (prop_row_t)
     apply (subst) {
         let matrix = []
         for (let fact of this.db.fact_array) {
@@ -391,9 +392,11 @@ class unit_prop_t extends prop_t {
             if (new_subst !== null) {
                 if (typeof fact.cond === "function") {
                     let prop = fact.cond (data)
-                    matrix.push ([[prop], new_subst])
+                    matrix.push (
+                        new prop_row_t (new_subst, [prop]))
                 } else {
-                    matrix.push ([[], new_subst])
+                    matrix.push (
+                        new prop_row_t (new_subst, []))
                 }
             }
         }
@@ -409,11 +412,11 @@ class and_prop_t extends prop_t {
     }
 
     // -- subst_t
-    // -> array_t ([array_t (prop_t), subst_t])
+    // -> array_t (prop_row_t)
     apply (subst) {
         let matrix = this.lhs.apply (subst)
-        for (let [ prop_array, subst ] of matrix) {
-            prop_array.push (this.rhs)
+        for (let prop_row of matrix) {
+            prop_row.prop_queue.push (this.rhs)
         }
         return matrix
     }
@@ -426,14 +429,14 @@ class not_prop_t extends prop_t {
     }
 
     // -- subst_t
-    // -> array_t ([array_t (prop_t), subst_t])
+    // -> array_t (prop_row_t)
     apply (subst) {
         let searching = new searching_t ([
-            new deduction_t (subst, [this.prop])
+            new prop_row_t (subst, [this.prop])
         ])
         let next_subst = searching.next_subst ()
         if (next_subst === null) {
-            return [[[], subst]]
+            return [new prop_row_t (subst, [])]
         } else {
             return []
         }
@@ -448,11 +451,11 @@ class eqv_prop_t extends prop_t {
     }
 
     // -- subst_t
-    // -> array_t ([array_t (prop_t), subst_t])
+    // -> array_t (prop_row_t)
     apply (subst) {
         let new_subst = subst.unify (this.v, this.data)
         if (new_subst !== null) {
-            return [[[], new_subst]]
+            return [new prop_row_t (new_subst, [])]
         } else {
             return []
         }
@@ -468,7 +471,7 @@ class eqv_with_bind_prop_t extends prop_t {
     }
 
     // -- subst_t
-    // -> array_t ([array_t (prop_t), subst_t])
+    // -> array_t (prop_row_t)
     apply (subst) {
         let bind = {}
         for (let k in this.bind) {
@@ -477,7 +480,7 @@ class eqv_with_bind_prop_t extends prop_t {
         let data = this.fun (bind)
         let new_subst = subst.unify (this.v, data)
         if (new_subst !== null) {
-            return [[[], new_subst]]
+            return [new prop_row_t (new_subst, [])]
         } else {
             return []
         }
@@ -492,14 +495,14 @@ class pred_with_bind_prop_t extends prop_t {
     }
 
     // -- subst_t
-    // -> array_t ([array_t (prop_t), subst_t])
+    // -> array_t (prop_row_t)
     apply (subst) {
         let bind = {}
         for (let k in this.bind) {
             bind [k] = subst.deep_walk (this.bind [k])
         }
         if (this.pred (bind)) {
-            return [[[], subst]]
+            return [new prop_row_t (subst, [])]
         } else {
             return []
         }
