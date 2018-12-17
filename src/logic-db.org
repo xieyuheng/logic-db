@@ -1,9 +1,6 @@
 #+property: tangle logic-db.js
 #+title: logic-db
-- sicp as docs
-- clause-and-effect as docs
-- the-reasoned-schemer as docs
-- as database
+
 * prolog
 
   #+begin_src js
