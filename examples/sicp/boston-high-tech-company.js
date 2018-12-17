@@ -143,10 +143,10 @@ let computer_dept_slave = new logic.db_t
 
 computer_dept_slave.i ({
     slave: "?slave",
-}) .cond ((data) => {
+}) .cond ((the) => {
     let z = new logic.var_t
-    return job.o ({ name: data.slave, dept: "computer" })
-        .and (supervisor.o ({ slave: data.slave, master: z }))
+    return job.o ({ name: the.slave, dept: "computer" })
+        .and (supervisor.o ({ slave: the.slave, master: z }))
 })
 
 console.log (
@@ -160,11 +160,11 @@ let bigshot = new logic.db_t
 bigshot.i ({
     name: "?name",
     dept: "?dept",
-}) .cond ((data) => {
+}) .cond ((the) => {
     let z = new logic.var_t
-    return job.o ({ name: data.name, dept: data.dept })
-        .not (supervisor.o ({ slave: data.name, master: z })
-              .and (job.o ({ name: z, dept: data.dept })))
+    return job.o ({ name: the.name, dept: the.dept })
+        .not (supervisor.o ({ slave: the.name, master: z })
+              .and (job.o ({ name: z, dept: the.dept })))
 })
 
 console.log (
@@ -179,10 +179,10 @@ let not_so_poor = new logic.db_t
 not_so_poor.i ({
     name: "?name",
     amount: "?amount",
-}) .cond ((data) => {
-    return salary.o ({ name: data.name, amount: data.amount })
+}) .cond ((the) => {
+    return salary.o ({ name: the.name, amount: the.amount })
         .pred_with_bind ({
-            amount: data.amount
+            amount: the.amount
         }, (bind) => bind.amount > 30000)
 })
 
