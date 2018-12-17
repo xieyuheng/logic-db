@@ -1,7 +1,7 @@
-# logic-db
+# logic db
 
 Aims :
-- combine logic programming and database
+- combine logic programming and database in js
 - practical and simple API
 
 Features :
