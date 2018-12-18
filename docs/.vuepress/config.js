@@ -12,6 +12,7 @@ module.exports = {
             "/",
             { title: "SICP", children: [
                 "/sicp/",
+                "/sicp/a-boston-high-tech-company",
             ] },
             { title: "C&E", children: [
                 "/clause-and-effect/",
