@@ -5,7 +5,7 @@ tangle: worksheet-01-party-pairs.js
 # Party pairs
 
 ``` js
-let logic = require ("../..")
+let logic = require ("logic-db")
 
 let male = new logic.db_t
 

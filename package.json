@@ -1,6 +1,6 @@
 {
     "name": "logic-db",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "author": "Xie Yuheng",
     "main": "dist/logic-db.js",
     "module": "src/logic-db.js",

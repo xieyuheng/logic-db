@@ -11,7 +11,7 @@ Features :
 ## Getting Start
 
 ```bash
-$ npm install logic-db
+npm install logic-db
 ```
 
 ```js
@@ -45,16 +45,18 @@ job.q (2) ({
 - To view docs locally :
 
 ```bash
-$ git clone git://github.com/xieyuheng/logic-db
-$ cd logic-db
-$ npm install
-$ npx vuepress dev ./docs
+git clone git://github.com/xieyuheng/logic-db
+cd logic-db
+npm install
+npx vuepress dev ./docs
 ```
 
 - To run examples :
 
 ```bash
-$ node docs/sicp/a-boston-high-tech-company.js
+cd docs
+npm install
+node sicp/a-boston-high-tech-company.js
 ```
 
 ## Contributing

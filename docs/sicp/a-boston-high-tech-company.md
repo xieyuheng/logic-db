@@ -5,7 +5,7 @@ tangle: a-boston-high-tech-company.js
 # A Boston High Tech Company
 
 ``` js
-let logic = require ("../..")
+let logic = require ("logic-db")
 
 let job = new logic.db_t
 let salary = new logic.db_t

@@ -8,7 +8,8 @@ build () {
 
 t () {
     build
-    tangle -r docs
+    tangle docs/clause-and-effect/
+    tangle docs/sicp/
     for FILE in $(find docs/clause-and-effect/ docs/sicp/ | grep "\.js")
     do
         echo "// > $FILE"

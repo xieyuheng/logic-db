@@ -1,5 +1,5 @@
 module.exports = {
-    title: "logic | db",
+    title: "logic-db",
     description: "combine logic programming and database in js",
     themeConfig: {
         repo: "xieyuheng/logic-db",

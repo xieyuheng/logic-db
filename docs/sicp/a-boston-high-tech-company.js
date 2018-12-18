@@ -1,4 +1,4 @@
-let logic = require ("../..")
+let logic = require ("logic-db")
 
 let job = new logic.db_t
 let salary = new logic.db_t
