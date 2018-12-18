@@ -20,6 +20,12 @@ t () {
     done
 }
 
+docs-up () {
+    t
+    npx vuepress build docs
+    npx surge docs/.vuepress/dist
+}
+
 main () {
     for TASK in $@
     do
