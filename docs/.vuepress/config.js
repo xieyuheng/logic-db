@@ -7,28 +7,16 @@ module.exports = {
         docsDir: "docs",
         docsBranch: "master",
         editLinks: true,
-        editLinkText: "Help to improve docs!",
-        nav: [
-            { text: "Home", link: "/" },
-            { text: "Guide", link: "/guide/" },
-        ],
-        displayAllHeaders: true,
         sidebar: [
-            "/guide/install",
-            "/guide/",
-            {
-                title: "Logic Programming",
-                children: [
-                    "/guide/logic-programming",
-                ]
-            },
-            {
-                title: "Database",
-                children: [
-                    "/guide/database",
-                ]
-            },
+            "/installation",
+            "/",
+            { title: "SICP", children: [
+                "/sicp/",
+            ] },
+            { title: "C&E", children: [
+                "/clause-and-effect/",
+                "/clause-and-effect/worksheet-01-party-pairs",
+            ] },
         ],
-
     },
 }

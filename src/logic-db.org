@@ -309,6 +309,10 @@
       constructor () {
           this.solutions = []
       }
+
+      log () {
+          console.log (this)
+      }
   }
   #+end_src
 

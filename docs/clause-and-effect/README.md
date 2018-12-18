@@ -1,4 +1,5 @@
 # Clause and effect
 
-- "Clause and effect: Prolog programming for the working programmer"
-  - by William F. Cloeksin, 1997
+"Clause and effect: Prolog programming for the working programmer"  
+is a book by William F. Cloeksin,
+published at 1997.

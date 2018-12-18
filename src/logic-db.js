@@ -269,6 +269,10 @@ class query_res_t {
     constructor () {
         this.solutions = []
     }
+
+    log () {
+        console.log (this)
+    }
 }
 
 class searching_t {
