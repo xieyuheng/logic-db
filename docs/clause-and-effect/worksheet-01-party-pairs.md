@@ -27,9 +27,10 @@ pair.i ({
         .and (female.o (the.female))
 })
 
+pair.assert ({ male: "bertram", female: "lucinda" })
+pair.assert_not ({ male: "apollo", female: "daphne" })
+
 pair.query_log (10) ({ male: "percival", female: "?female" })
-pair.query_log (10) ({ male: "apollo", female: "daphne" })
-pair.query_log (10) ({ male: "bertram", female: "lucinda" })
 pair.query_log (10) ({ male: "camilla", female: "?female" })
 pair.query_log (10) ({ male: "?male", female: "lucinda" })
 pair.query_log (10) ({ male: "?x", female: "?x" })

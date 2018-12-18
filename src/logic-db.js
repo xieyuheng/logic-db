@@ -273,6 +273,24 @@ export class db_t {
             return query_res
         }
     }
+
+    assert (term) {
+        let query_res = this.query (1) (term)
+        if (query_res.solutions.length === 0) {
+            console.log (`- db.assert fail`)
+            console.log (`  term = ${term}`)
+            console.log (`  db = ${this}`)
+        }
+    }
+
+    assert_not (term) {
+        let query_res = this.query (1) (term)
+        if (query_res.solutions.length !== 0) {
+            console.log (`- db.assert_not fail`)
+            console.log (`  term = ${term}`)
+            console.log (`  db = ${this}`)
+        }
+    }
 }
 
 class query_res_t {

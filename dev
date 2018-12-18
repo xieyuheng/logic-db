@@ -1,9 +1,22 @@
 #!/usr/bin/env bash
 
-t () {
+build () {
     tangle src
     npx rollup --config
     node -r esm dist/logic-db.js
+}
+
+t () {
+    build
+    tangle -r docs
+    for FILE in $(find docs/clause-and-effect/ docs/sicp/ | grep "\.js")
+    do
+        echo "// > $FILE"
+        if ! node $FILE
+        then
+            exit 1
+        fi
+    done
 }
 
 main () {
