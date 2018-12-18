@@ -40,7 +40,7 @@ job.q (2) ({
 
 ## Docs
 
-- [online docs](https://logic-db.surge.sh)
+- [Online Docs (at surge.sh)](https://logic-db.surge.sh)
 
 - To view docs locally :
 
