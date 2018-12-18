@@ -54,7 +54,7 @@ $ npx vuepress dev ./docs
 - To run examples :
 
 ```bash
-$ node docs/sicp/boston-high-tech-company.js
+$ node docs/sicp/a-boston-high-tech-company.js
 ```
 
 ## Contributing

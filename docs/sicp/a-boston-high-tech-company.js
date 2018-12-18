@@ -121,17 +121,17 @@ salary.i ({
 
 // query
 
-address.q (1) ({
+address.query_log (1) ({
     name: "Bitdiddle Ben",
     road: "?road",
     door: "?door",
-}) .log ()
+})
 
-job.q (10) ({
+job.query_log (10) ({
     name: "?name",
     dept: "computer",
     role: "?role",
-}) .log ()
+})
 
 let computer_dept_slave = new logic.db_t
 
@@ -143,9 +143,9 @@ computer_dept_slave.i ({
         .and (supervisor.o ({ slave: the.slave, master: z }))
 })
 
-computer_dept_slave.q (10) ({
+computer_dept_slave.query_log (10) ({
     slave: "?slave",
-}) .log ()
+})
 
 let bigshot = new logic.db_t
 
@@ -159,10 +159,10 @@ bigshot.i ({
               .and (job.o ({ name: z, dept: the.dept })))
 })
 
-bigshot.q (100) ({
+bigshot.query_log (100) ({
     name: "?name",
     dept: "?dept",
-}) .log ()
+})
 
 let not_so_poor = new logic.db_t
 
@@ -176,7 +176,7 @@ not_so_poor.i ({
         }, (bind) => bind.amount > 30000)
 })
 
-not_so_poor.q (10) ({
+not_so_poor.query_log (10) ({
     name: "?name",
     amount: "?amount",
-}) .log ()
+})

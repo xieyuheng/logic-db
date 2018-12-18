@@ -241,7 +241,7 @@ export class db_t {
 
     // -- numebr_t
     // -> -- term_t -> array_t (subst_t)
-    q (n) {
+    query (n) {
         return (term) => {
             let var_map = new Map
             let data = term_to_data_with_var_map (term, var_map)
@@ -260,6 +260,16 @@ export class db_t {
                 })
             let query_res = new query_res_t
             query_res.solutions = solutions
+            return query_res
+        }
+    }
+
+    // -- numebr_t
+    // -> -- term_t -> array_t (subst_t)
+    query_log (n) {
+        return (term) => {
+            let query_res = this.query (n) (term)
+            query_res.log ()
             return query_res
         }
     }
