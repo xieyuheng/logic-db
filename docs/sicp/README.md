@@ -1,4 +1,4 @@
-# Logic programming examples in SICP
+# Logic programming in SICP
 
 [**Structure and Interpretation of Computer Programs (SICP)**](https://en.wikipedia.org/wiki/Structure_and_Interpretation_of_Computer_Programs)
 is a classic text in computer science.
