@@ -173,32 +173,32 @@ class subst_t {
 }
 
 class fact_t {
-    constructor (term) {
-        this.term = term
+    constructor (pattern) {
+        this.pattern = pattern
         this.cond = null;
     }
 }
 
-function term_to_data (term) {
-    return term_to_data_with_var_map (term, new Map)
+function pattern_to_data (pattern) {
+    return pattern_to_data_with_var_map (pattern, new Map)
 }
 
-function term_to_data_with_var_map (term, var_map) {
-    if (term instanceof Array) {
+function pattern_to_data_with_var_map (pattern, var_map) {
+    if (pattern instanceof Array) {
         let array = []
-        for (let x of term) {
-            array.push (term_to_data_with_var_map (x, var_map))
+        for (let x of pattern) {
+            array.push (pattern_to_data_with_var_map (x, var_map))
         }
         return array
-    } else if (obj_p (term)) {
+    } else if (obj_p (pattern)) {
         let obj = {}
-        for (let k in term) {
-            obj [k] = term_to_data_with_var_map (term [k], var_map)
+        for (let k in pattern) {
+            obj [k] = pattern_to_data_with_var_map (pattern [k], var_map)
         }
         return obj
-    } else if ((typeof term === "string") &&
-               (term.startsWith ("?"))) {
-        let name = term.slice (1)
+    } else if ((typeof pattern === "string") &&
+               (pattern.startsWith ("?"))) {
+        let name = pattern.slice (1)
         let v = var_map.get (name)
         if (v === undefined) {
             v = new var_t (name)
@@ -206,7 +206,7 @@ function term_to_data_with_var_map (term, var_map) {
         }
         return v
     } else {
-        return term
+        return pattern
     }
 }
 
@@ -216,10 +216,10 @@ class db_t {
         this.fact_array = []
     }
 
-    // -- term_t
+    // -- pattern_t
     // -> [effect]
-    i (term) {
-        this.fact_array.push (new fact_t (term))
+    i (pattern) {
+        this.fact_array.push (new fact_t (pattern))
         return this
     }
 
@@ -240,11 +240,11 @@ class db_t {
     }
 
     // -- numebr_t
-    // -> -- term_t -> array_t (subst_t)
+    // -> -- pattern_t -> array_t (subst_t)
     query (n) {
-        return (term) => {
+        return (pattern) => {
             let var_map = new Map
-            let data = term_to_data_with_var_map (term, var_map)
+            let data = pattern_to_data_with_var_map (pattern, var_map)
             let searching = new searching_t ([
                 new prop_row_t (new subst_t, [this.o (data)])
             ])
@@ -265,29 +265,29 @@ class db_t {
     }
 
     // -- numebr_t
-    // -> -- term_t -> array_t (subst_t)
+    // -> -- pattern_t -> array_t (subst_t)
     query_log (n) {
-        return (term) => {
-            let query_res = this.query (n) (term)
+        return (pattern) => {
+            let query_res = this.query (n) (pattern)
             query_res.log ()
             return query_res
         }
     }
 
-    assert (term) {
-        let query_res = this.query (1) (term)
+    assert (pattern) {
+        let query_res = this.query (1) (pattern)
         if (query_res.solutions.length === 0) {
             console.log (`- db.assert fail`)
-            console.log (`  term = ${term}`)
+            console.log (`  pattern = ${pattern}`)
             console.log (`  db = ${this}`)
         }
     }
 
-    assert_not (term) {
-        let query_res = this.query (1) (term)
+    assert_not (pattern) {
+        let query_res = this.query (1) (pattern)
         if (query_res.solutions.length !== 0) {
             console.log (`- db.assert_not fail`)
-            console.log (`  term = ${term}`)
+            console.log (`  pattern = ${pattern}`)
             console.log (`  db = ${this}`)
         }
     }
@@ -419,7 +419,7 @@ class unit_prop_t extends prop_t {
     eval (subst) {
         let matrix = []
         for (let fact of this.db.fact_array) {
-            let data = term_to_data (fact.term)
+            let data = pattern_to_data (fact.pattern)
             let new_subst = subst.unify (data, this.data)
             if (new_subst !== null) {
                 if (typeof fact.cond === "function") {

@@ -10,7 +10,7 @@ for a thriving high-technology company in the Boston area.
 
 The language provides pattern-directed access to personnel information and can also take advantage of general rules in order to make logical deductions.
 
-## A sample data base
+## A sample database
 
 The personnel database contains assertions
 about company personnel.
@@ -263,7 +263,7 @@ supervisor.i ({
 })
 ```
 
-The data base also contains assertions about
+The database also contains assertions about
 which kinds of jobs can be done
 by people holding other kinds of jobs.
 
@@ -328,6 +328,58 @@ can_do_job.i ({
 ```
 
 ## Simple queries
+
+The query language allows users
+to retrieve information from the database.
+For example, to find all computer programmers one can say
+
+``` js
+job.query_log (10) ({
+    name: "?coder",
+    dept: "computer",
+    role: "programmer",
+})
+```
+
+The system will respond with the following solutions:
+
+``` js
+{
+    solutions: [
+        { coder: "Hacker Alyssa P" },
+        { coder: "Fect Cy D" },
+    ]
+}
+```
+
+The input query specifies that
+we are looking for entries in the database
+that match a certain pattern.
+
+`"?coder"` is a pattern variable,
+
+The general form of a pattern variable is a string,
+taken to be the name of the variable,
+preceded by a question mark.
+
+The system responds to a simple query
+by showing all entries in the data base
+that match the specified pattern.
+
+A pattern can have more than one variable.
+For example, the following query
+will list all the employees' addresses.
+
+``` js
+address.query_log (100) ({
+    name: "?name",
+    town: "?town",
+    road: "?road",
+    door: "?door",
+})
+```
+
+[TODO]
 
 ``` js
 address.query_log (1) ({

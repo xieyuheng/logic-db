@@ -255,6 +255,26 @@ can_do_job.i ({
     },
 })
 
+job.query_log (10) ({
+    name: "?coder",
+    dept: "computer",
+    role: "programmer",
+})
+
+{
+    solutions: [
+        { coder: "Hacker Alyssa P" },
+        { coder: "Fect Cy D" },
+    ]
+}
+
+address.query_log (100) ({
+    name: "?name",
+    town: "?town",
+    road: "?road",
+    door: "?door",
+})
+
 address.query_log (1) ({
     name: "Bitdiddle Ben",
     road: "?road",
