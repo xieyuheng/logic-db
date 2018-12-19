@@ -31,7 +31,7 @@ job.i ({
     role: "technician",
 })
 
-job.q (2) ({
+job.query (2) ({
     name: "?name",
     dept: "?dept",
     role: "?role"

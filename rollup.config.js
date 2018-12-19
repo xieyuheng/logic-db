@@ -1,9 +1,9 @@
 module.exports = {
-    input: "src/logic-db.js",
+    input: "index.js",
     output: {
         name: "logic-db",
         sourcemap: true,
-        file: "dist/logic-db.js",
+        file: "dist/index.js",
         format: "umd",
     }
 }

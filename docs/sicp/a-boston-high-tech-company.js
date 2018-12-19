@@ -5,7 +5,6 @@ let salary = new logic.db_t
 let address = new logic.db_t
 let supervisor = new logic.db_t
 
-
 job.i ({
     name: "Bitdiddle Ben",
     dept: "computer",
@@ -14,21 +13,15 @@ job.i ({
 
 salary.i ({
     name: "Bitdiddle Ben",
-    amount: 40000,
+    amount: 60000,
 })
 
 address.i ({
     name: "Bitdiddle Ben",
-    town: "Slunerville",
+    town: "Slumerville",
     road: "Ridge Road",
     door: 10,
 })
-
-supervisor.i ({
-    slave: "Bitdiddle Ben",
-    master: "Warbucks Oliver",
-})
-
 
 address.i ({
     name: "Hacker Alyssa P",
@@ -45,11 +38,35 @@ job.i ({
 
 salary.i ({
     name: "Hacker Alyssa P",
-    amount: 35000,
+    amount: 40000,
 })
 
 supervisor.i ({
     slave: "Hacker Alyssa P",
+    master: "Bitdiddle Ben",
+})
+
+
+address.i ({
+    name: "Fect Cy D",
+    town: "Cambridge",
+    road: "Ames Street",
+    door: 3,
+})
+
+job.i ({
+    name: "Fect Cy D",
+    dept: "computer",
+    role: "programmer",
+})
+
+salary.i ({
+    name: "Fect Cy D",
+    amount: 35000,
+})
+
+supervisor.i ({
+    slave: "Fect Cy D",
     master: "Bitdiddle Ben",
 })
 
@@ -69,7 +86,7 @@ job.i ({
 
 salary.i ({
     name: "Tweakit Lem E",
-    amount: 15000,
+    amount: 25000,
 })
 
 supervisor.i ({
@@ -77,10 +94,9 @@ supervisor.i ({
     master: "Bitdiddle Ben",
 })
 
-
 address.i ({
     name: "Reasoner Louis",
-    town: "Slunerville",
+    town: "Slumerville",
     road: "Pine Tree Road",
     door: 80,
 })
@@ -93,7 +109,7 @@ job.i ({
 
 salary.i ({
     name: "Reasoner Louis",
-    amount: 20000,
+    amount: 30000,
 })
 
 supervisor.i ({
@@ -101,6 +117,10 @@ supervisor.i ({
     master: "Hacker Alyssa P",
 })
 
+supervisor.i ({
+    slave: "Bitdiddle Ben",
+    master: "Warbucks Oliver",
+})
 
 address.i ({
     name: "Warbucks Oliver",
@@ -116,10 +136,124 @@ job.i ({
 
 salary.i ({
     name: "Warbucks Oliver",
-    amount: 100000,
+    amount: 150000,
 })
 
-// query
+address.i ({
+    name: "Scrooge Eben",
+    town: "Weston",
+    road: "Shady Lane",
+    door: 10,
+})
+
+job.i ({
+    name: "Scrooge Eben",
+    dept: "accounting",
+    role: "chief accountant",
+})
+
+salary.i ({
+    name: "Scrooge Eben",
+    amount: 75000,
+})
+
+supervisor.i ({
+    slave: "Scrooge Eben",
+    master: "Warbucks Oliver",
+})
+
+
+address.i ({
+    name: "Cratchet Robert",
+    town: "Allston",
+    road: "N Harvard Street",
+    door: 16,
+})
+
+job.i ({
+    name: "Cratchet Robert",
+    dept: "accounting",
+    role: "scrivener",
+})
+
+salary.i ({
+    name: "Cratchet Robert",
+    amount: 18000,
+})
+
+supervisor.i ({
+    slave: "Cratchet Robert",
+    master: "Scrooge Eben",
+})
+
+address.i ({
+    name: "Aull DeWitt",
+    town: "Slumerville",
+    road: "Onion Square",
+    door: 5,
+})
+
+job.i ({
+    name: "Aull DeWitt",
+    dept: "administration",
+    role: "secretary",
+})
+
+salary.i ({
+    name: "Aull DeWitt",
+    amount: 25000,
+})
+
+supervisor.i ({
+    slave: "Aull DeWitt",
+    master: "Warbucks Oliver",
+})
+
+let can_do_job = new logic.db_t
+
+can_do_job.i ({
+    can: {
+        dept: "computer",
+        role: "wizard",
+    },
+    job: {
+        dept: "computer",
+        role: "programmer",
+    },
+})
+
+can_do_job.i ({
+    can: {
+        dept: "computer",
+        role: "wizard",
+    },
+    job: {
+        dept: "computer",
+        role: "technician",
+    },
+})
+
+can_do_job.i ({
+    can: {
+        dept: "computer",
+        role: "programmer",
+    },
+    job: {
+        dept: "computer",
+        role: "programmer trainee",
+    },
+})
+
+can_do_job.i ({
+    can: {
+        dept: "administration",
+        role: "secretary",
+    },
+    job: {
+        dept: "administration",
+        role: "big wheel",
+    },
+})
 
 address.query_log (1) ({
     name: "Bitdiddle Ben",
@@ -173,7 +307,7 @@ not_so_poor.i ({
     return salary.o ({ name: the.name, amount: the.amount })
         .pred_with_bind ({
             amount: the.amount
-        }, (bind) => bind.amount > 30000)
+        }, (bind) => bind.amount >= 40000)
 })
 
 not_so_poor.query_log (10) ({

@@ -3,7 +3,6 @@
 build () {
     tangle src
     npx rollup --config
-    node -r esm dist/logic-db.js
 }
 
 t () {

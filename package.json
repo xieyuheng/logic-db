@@ -2,11 +2,11 @@
     "name": "logic-db",
     "version": "0.0.2",
     "author": "Xie Yuheng",
-    "main": "dist/logic-db.js",
-    "module": "src/logic-db.js",
+    "main": "dist/index.js",
     "license": "GPL-3.0-or-later",
     "devDependencies": {
         "esm": "^3.0.84",
+        "lab": "^18.0.1",
         "rollup": "^0.67.4",
         "surge": "^0.20.1",
         "vuepress": "^0.14.8"

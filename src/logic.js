@@ -210,7 +210,7 @@ function term_to_data_with_var_map (term, var_map) {
     }
 }
 
-export class db_t {
+class db_t {
     constructor () {
         // : array_t (fact_t)
         this.fact_array = []
@@ -354,7 +354,7 @@ class prop_row_t {
     step () {
         if (this.prop_queue.length !== 0) {
             let prop = this.prop_queue.shift ()
-            let delta_matrix = prop.apply (this.subst)
+            let delta_matrix = prop.eval (this.subst)
             let prop_matrix = []
             for (let prop_row of delta_matrix) {
                 prop_matrix.push (
@@ -416,7 +416,7 @@ class unit_prop_t extends prop_t {
 
     // -- subst_t
     // -> array_t (prop_row_t)
-    apply (subst) {
+    eval (subst) {
         let matrix = []
         for (let fact of this.db.fact_array) {
             let data = term_to_data (fact.term)
@@ -445,8 +445,8 @@ class and_prop_t extends prop_t {
 
     // -- subst_t
     // -> array_t (prop_row_t)
-    apply (subst) {
-        let matrix = this.lhs.apply (subst)
+    eval (subst) {
+        let matrix = this.lhs.eval (subst)
         for (let prop_row of matrix) {
             prop_row.prop_queue.push (this.rhs)
         }
@@ -462,7 +462,7 @@ class not_prop_t extends prop_t {
 
     // -- subst_t
     // -> array_t (prop_row_t)
-    apply (subst) {
+    eval (subst) {
         let searching = new searching_t ([
             new prop_row_t (subst, [this.prop])
         ])
@@ -484,7 +484,7 @@ class eqv_prop_t extends prop_t {
 
     // -- subst_t
     // -> array_t (prop_row_t)
-    apply (subst) {
+    eval (subst) {
         let new_subst = subst.unify (this.v, this.data)
         if (new_subst !== null) {
             return [new prop_row_t (new_subst, [])]
@@ -504,7 +504,7 @@ class eqv_with_bind_prop_t extends prop_t {
 
     // -- subst_t
     // -> array_t (prop_row_t)
-    apply (subst) {
+    eval (subst) {
         let bind = {}
         for (let k in this.bind) {
             bind [k] = subst.deep_walk (this.bind [k])
@@ -528,7 +528,7 @@ class pred_with_bind_prop_t extends prop_t {
 
     // -- subst_t
     // -> array_t (prop_row_t)
-    apply (subst) {
+    eval (subst) {
         let bind = {}
         for (let k in this.bind) {
             bind [k] = subst.deep_walk (this.bind [k])
@@ -541,7 +541,7 @@ class pred_with_bind_prop_t extends prop_t {
     }
 }
 
-export class var_t {
+class var_t {
     constructor (name) {
         this.uuid = var_t.var_counter++
         if (name !== undefined) {
@@ -551,3 +551,5 @@ export class var_t {
 }
 
 var_t.var_counter = 0
+
+export default { db_t, var_t }

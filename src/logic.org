@@ -1,6 +1,11 @@
-#+property: tangle logic-db.js
-#+title: logic-db
-
+#+property: tangle logic.js
+#+title: logic
+- error handling
+- use stream and cache in db_t
+  - different types of db_t -- use sum type here
+- connection_t
+  connection_t.db ["<name>"]
+- schema in db_t
 * prolog
 
   #+begin_src js
@@ -246,7 +251,7 @@
 * db_t
 
   #+begin_src js
-  export class db_t {
+  class db_t {
       constructor () {
           // : array_t (fact_t)
           this.fact_array = []
@@ -402,7 +407,7 @@
       step () {
           if (this.prop_queue.length !== 0) {
               let prop = this.prop_queue.shift ()
-              let delta_matrix = prop.apply (this.subst)
+              let delta_matrix = prop.eval (this.subst)
               let prop_matrix = []
               for (let prop_row of delta_matrix) {
                   prop_matrix.push (
@@ -474,7 +479,7 @@
 
         // -- subst_t
         // -> array_t (prop_row_t)
-        apply (subst) {
+        eval (subst) {
             let matrix = []
             for (let fact of this.db.fact_array) {
                 let data = term_to_data (fact.term)
@@ -507,8 +512,8 @@
 
         // -- subst_t
         // -> array_t (prop_row_t)
-        apply (subst) {
-            let matrix = this.lhs.apply (subst)
+        eval (subst) {
+            let matrix = this.lhs.eval (subst)
             for (let prop_row of matrix) {
                 prop_row.prop_queue.push (this.rhs)
             }
@@ -528,7 +533,7 @@
 
         // -- subst_t
         // -> array_t (prop_row_t)
-        apply (subst) {
+        eval (subst) {
             let searching = new searching_t ([
                 new prop_row_t (subst, [this.prop])
             ])
@@ -554,7 +559,7 @@
 
         // -- subst_t
         // -> array_t (prop_row_t)
-        apply (subst) {
+        eval (subst) {
             let new_subst = subst.unify (this.v, this.data)
             if (new_subst !== null) {
                 return [new prop_row_t (new_subst, [])]
@@ -578,7 +583,7 @@
 
         // -- subst_t
         // -> array_t (prop_row_t)
-        apply (subst) {
+        eval (subst) {
             let bind = {}
             for (let k in this.bind) {
                 bind [k] = subst.deep_walk (this.bind [k])
@@ -606,7 +611,7 @@
 
         // -- subst_t
         // -> array_t (prop_row_t)
-        apply (subst) {
+        eval (subst) {
             let bind = {}
             for (let k in this.bind) {
                 bind [k] = subst.deep_walk (this.bind [k])
@@ -623,7 +628,7 @@
 * var_t
 
   #+begin_src js
-  export class var_t {
+  class var_t {
       constructor (name) {
           this.uuid = var_t.var_counter++
           if (name !== undefined) {
@@ -633,4 +638,10 @@
   }
 
   var_t.var_counter = 0
+  #+end_src
+
+* export
+
+  #+begin_src js
+  export default { db_t, var_t }
   #+end_src
