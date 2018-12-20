@@ -367,33 +367,45 @@ by showing all entries in the data base
 that match the specified pattern.
 
 A pattern can have more than one variable.
-For example, the following query
-will list all the employees' addresses.
 
 ``` js
+// employees' addresses
 address.query_log (100) ({
     name: "?name",
     town: "?town",
     road: "?road",
     door: "?door",
 })
-```
 
-[TODO]
-
-``` js
-address.query_log (1) ({
-    name: "Bitdiddle Ben",
-    road: "?road",
-    door: "?door",
-})
-
-job.query_log (10) ({
+// employees at computer dept
+job.query_log (100) ({
     name: "?name",
     dept: "computer",
-    role: "?role",
+})
+```
+
+We can use `.assert` to assert
+there is at least one solution of the query,
+or use `.assert_not` to assert there is no solution.
+
+``` js
+job.assert ({
+    name: "Hacker Alyssa P",
+    role: "programmer",
 })
 
+supervisor.assert_not ({
+    slave: "?x",
+    master: "?x",
+})
+```
+## Compound queries
+
+We create new `logic.db_t` to specify compound queries.
+
+`.and`
+
+``` js
 let computer_dept_slave = new logic.db_t
 
 computer_dept_slave.i ({
@@ -407,7 +419,11 @@ computer_dept_slave.i ({
 computer_dept_slave.query_log (10) ({
     slave: "?slave",
 })
+```
 
+`.not`
+
+``` js
 let bigshot = new logic.db_t
 
 bigshot.i ({
@@ -424,7 +440,11 @@ bigshot.query_log (100) ({
     name: "?name",
     dept: "?dept",
 })
+```
 
+`.pred_with_bind`
+
+``` js
 let not_so_poor = new logic.db_t
 
 not_so_poor.i ({

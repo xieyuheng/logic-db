@@ -268,6 +268,7 @@ job.query_log (10) ({
     ]
 }
 
+// employees' addresses
 address.query_log (100) ({
     name: "?name",
     town: "?town",
@@ -275,16 +276,20 @@ address.query_log (100) ({
     door: "?door",
 })
 
-address.query_log (1) ({
-    name: "Bitdiddle Ben",
-    road: "?road",
-    door: "?door",
-})
-
-job.query_log (10) ({
+// employees at computer dept
+job.query_log (100) ({
     name: "?name",
     dept: "computer",
-    role: "?role",
+})
+
+job.assert ({
+    name: "Hacker Alyssa P",
+    role: "programmer",
+})
+
+supervisor.assert_not ({
+    slave: "?x",
+    master: "?x",
 })
 
 let computer_dept_slave = new logic.db_t
