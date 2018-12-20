@@ -396,6 +396,11 @@ class prop_t {
         return new and_prop_t (this, that)
     }
 
+    not_eqv (v, data) {
+        let that = new not_eqv_prop_t (v, data)
+        return new and_prop_t (this, that)
+    }
+
     eqv_with_bind (v, bind, fun) {
         let that = new eqv_with_bind_prop_t (v, bind, fun)
         return new and_prop_t (this, that)
@@ -490,6 +495,25 @@ class eqv_prop_t extends prop_t {
             return [new prop_row_t (new_subst, [])]
         } else {
             return []
+        }
+    }
+}
+
+class not_eqv_prop_t extends prop_t {
+    constructor (v, data) {
+        super ()
+        this.v = v
+        this.data = data
+    }
+
+    // -- subst_t
+    // -> array_t (prop_row_t)
+    eval (subst) {
+        let new_subst = subst.unify (this.v, this.data)
+        if (new_subst !== null) {
+            return []
+        } else {
+            return [new prop_row_t (subst, [])]
         }
     }
 }
