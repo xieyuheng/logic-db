@@ -18,6 +18,7 @@ module.exports = {
             { title: "C&E", children: [
                 "/clause-and-effect/",
                 "/clause-and-effect/worksheet-01-party-pairs",
+                "/clause-and-effect/worksheet-02-drinking-pairs",
             ] },
         ],
     },
