@@ -6,7 +6,8 @@ function cons (x, y) { return { car: x, cdr: y } }
 
 // prepare the nat
 //   for we can not deal with native js number logically yet ...
-//   I am sorry about this, and I will fix this soon
+//   this should be fixed by constraint programming.
+//   I am apologize for this, and I will fix this soon.
 
 let zero = "zero"
 function succ (n) { return { prev: n } }

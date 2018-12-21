@@ -27,6 +27,10 @@ module.exports = {
                     "worksheet-03-affordable-journeys",
                 "/clause-and-effect/" +
                     "worksheet-04-acyclic-directed-graph",
+                "/clause-and-effect/" +
+                    "worksheet-05-member",
+                "/clause-and-effect/" +
+                    "worksheet-06-length-of-a-list",
             ] },
         ],
     },
