@@ -7,7 +7,7 @@ list_length([_ | T], N) :-
 %%   simple implementation of this
 %%   requires a deep first search of `list_length(T, Nt)`
 
-%% list_length([], 0) .
+%% list_length([], 0).
 %% list_length([_ | T], N) :-
 %%   N is Nt + 1, list_length(T, Nt).
 
