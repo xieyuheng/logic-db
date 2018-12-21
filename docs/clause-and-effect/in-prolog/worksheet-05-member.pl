@@ -3,7 +3,7 @@ member(X, [H | T]) :- member(X, T).
 
 %% member(john, [paul, john]).
 %% member(X, [paul, john]).
-%% member(joe, [marx, darwin, freud])
+%% member(joe, [marx, darwin, freud]).
 %% member(foo, X).
 
 mystery(X, A, B) :- member(X, A), member(X, B).
