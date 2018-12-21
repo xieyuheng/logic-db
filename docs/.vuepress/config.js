@@ -12,13 +12,21 @@ module.exports = {
             "/",
             { title: "SICP", children: [
                 "/sicp/",
-                "/sicp/a-boston-high-tech-company",
-                "/sicp/logic-as-programs",
+                "/sicp/" +
+                    "a-boston-high-tech-company",
+                "/sicp/" +
+                    "logic-as-programs",
             ] },
             { title: "C&E", children: [
                 "/clause-and-effect/",
-                "/clause-and-effect/worksheet-01-party-pairs",
-                "/clause-and-effect/worksheet-02-drinking-pairs",
+                "/clause-and-effect/" +
+                    "worksheet-01-party-pairs",
+                "/clause-and-effect/" +
+                    "worksheet-02-drinking-pairs",
+                "/clause-and-effect/" +
+                    "worksheet-03-affordable-journeys",
+                "/clause-and-effect/" +
+                    "worksheet-04-acyclic-directed-graph",
             ] },
         ],
     },
