@@ -16,8 +16,8 @@ pair.i ({
     male: "?male",
     female: "?female",
 }) .cond ((the) => {
-    return male.o (the.male)
-        .and (female.o (the.female))
+    return male.o (the.var.male)
+        .and (female.o (the.var.female))
 })
 
 pair.assert ({ male: "bertram", female: "lucinda" })

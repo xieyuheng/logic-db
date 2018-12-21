@@ -55,9 +55,9 @@ function cons (x, y) { return { car: x, cdr: y } }
         result: { car: "?car", cdr: "?result_cdr" },
     }) .cond ((the) => {
         return append.o ({
-            ante: the.ante.cdr,
-            succ: the.succ,
-            result: the.result.cdr,
+            ante: the.var.ante_cdr,
+            succ: the.var.succ,
+            result: the.var.result_cdr,
         })
     })
 
@@ -123,13 +123,10 @@ function cons (x, y) { return { car: x, cdr: y } }
         result: { car: "?car", cdr: "?result_cdr" },
     }) .cond ((the) => {
         return merge.o ({
-            ante: the.ante,
-            succ: the.succ.cdr,
-            result: the.result.cdr,
-        }) .pred_with_bind ({
-            ante_car: the.ante.car,
-            succ_car: the.succ.car,
-        }, (bind) => bind.ante_car > bind.succ_car)
+            ante: the.data.ante,
+            succ: the.var.succ_cdr,
+            result: the.var.result_cdr,
+        }) .pred ((subst) => subst.get (the.var.ante_car) > subst.get (the.var.car))
     })
 
     merge.i ({
@@ -138,13 +135,10 @@ function cons (x, y) { return { car: x, cdr: y } }
         result: { car: "?car", cdr: "?result_cdr" },
     }) .cond ((the) => {
         return merge.o ({
-            ante: the.ante.cdr,
-            succ: the.succ,
-            result: the.result.cdr,
-        }) .pred_with_bind ({
-            ante_car: the.ante.car,
-            succ_car: the.succ.car,
-        }, (bind) => bind.ante_car < bind.succ_car)
+            ante: the.var.ante_cdr,
+            succ: the.data.succ,
+            result: the.var.result_cdr,
+        }) .pred ((subst) => subst.get (the.var.succ_car) > subst.get (the.var.car))
     })
 
     merge.query_log (1) ({
