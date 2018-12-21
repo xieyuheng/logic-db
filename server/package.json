@@ -1,0 +1,10 @@
+{
+    "name": "logic-db-server",
+    "version": "0.0.1",
+    "description": "",
+    "main": "index.js",
+    "license": "GPL-3.0-or-later",
+    "devDependencies": {
+        "lab": "^18.0.1"
+    }
+}
