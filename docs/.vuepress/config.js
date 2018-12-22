@@ -31,6 +31,10 @@ module.exports = {
                     "worksheet-05-member",
                 "/clause-and-effect/" +
                     "worksheet-06-length-of-a-list",
+                "/clause-and-effect/" +
+                    "worksheet-08-maximum-of-a-list",
+                "/clause-and-effect/" +
+                    "worksheet-09-searching-a-cyclic-graph",
             ] },
         ],
     },
