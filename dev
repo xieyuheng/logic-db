@@ -22,7 +22,7 @@ t () {
 docs-up () {
     t
     npx vuepress build docs
-    npx surge docs/.vuepress/dist
+    npx surge docs/.vuepress/dist logic-db.surge.sh
 }
 
 main () {
