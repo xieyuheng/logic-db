@@ -5,7 +5,7 @@
     "main": "dist/index.js",
     "license": "GPL-3.0-or-later",
     "devDependencies": {
-        "esm": "^3.2.25",
+        "esm": "^3.1.0",
         "lab": "^18.0.2",
         "rollup": "^1.27.0",
         "surge": "^0.21.3",
