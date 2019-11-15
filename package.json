@@ -5,10 +5,10 @@
     "main": "dist/index.js",
     "license": "GPL-3.0-or-later",
     "devDependencies": {
-        "esm": "^3.0.84",
-        "lab": "^18.0.1",
-        "rollup": "^0.67.4",
-        "surge": "^0.20.1",
-        "vuepress": "^0.14.8"
+        "esm": "^3.2.25",
+        "lab": "^18.0.2",
+        "rollup": "^1.27.0",
+        "surge": "^0.21.3",
+        "vuepress": "^1.2.0"
     }
 }
