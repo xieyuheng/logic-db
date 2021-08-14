@@ -1,8 +1,9 @@
+import { Logical } from "../api"
 import ty from "@xieyuheng/ty"
 import { Schema } from "@xieyuheng/ty"
 
 export class Table<T> {
-  private rows: Array<T> = []
+  private rows: Array<Logical<T>> = []
 
   name: string
   schema: Schema<T>
@@ -17,7 +18,7 @@ export class Table<T> {
     return new Table({ name, schema })
   }
 
-  i(data: T): void {
+  i(data: Logical<T>): void {
     this.rows.push(data)
   }
 }

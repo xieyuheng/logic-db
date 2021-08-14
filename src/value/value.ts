@@ -10,10 +10,6 @@ export class Var {
   }
 }
 
-export function p(name: string): Var {
-  return new Var(name)
-}
-
 export type Value =
   | Var
   | null

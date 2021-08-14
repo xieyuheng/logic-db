@@ -1,4 +1,5 @@
 import ty from "@xieyuheng/ty"
+import { p } from "../api"
 import { Table } from "../table"
 
 const user = Table.create({
@@ -10,9 +11,26 @@ const user = Table.create({
 })
 
 user.i({ id: 1, name: "xieyuheng" })
-user.i({ id: 2, name: "xieyuheng" })
+user.i({ id: 2, name: p`name` })
 
-// user.relation({ id: 1, name: p("x") }, (v) => [
-//   { id: 1, name: p("x") },
-//   { id: 1, name: p("x") },
+// user.i({ id: 1, name: p`x` }, (v) => [
+//   { id: 1, name: p`x` },
+//   { id: 1, name: p`x` },
 // ])
+
+const users = Table.create({
+  name: "users",
+  schema: ty.array(
+    ty.object({
+      id: ty.number(),
+      name: ty.string(),
+    })
+  ),
+})
+
+users.i([
+  { id: 1, name: "xieyuheng" },
+  { id: 2, name: "yuhengxie" },
+  { id: p`id`, name: p`name` },
+  p`user`,
+])
