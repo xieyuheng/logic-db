@@ -31,7 +31,7 @@ export class Subst {
 
   walk(value: Value): Value {
     while (value instanceof Var) {
-      let found = this.find(value)
+      const found = this.find(value)
       if (found === undefined) {
         return value
       } else {
