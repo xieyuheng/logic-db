@@ -96,21 +96,34 @@ export class Subst {
   }
 
   private unifyObject(
-    x: { [key: string]: Value },
-    y: { [key: string]: Value }
+    xs: { [key: string]: Value },
+    ys: { [key: string]: Value }
   ): Subst | null {
-    if (Object.keys(x).length >= Object.keys(y).length) {
-      return this.coverObject(x, y)
+    if (Object.keys(xs).length >= Object.keys(ys).length) {
+      return this.coverObject(xs, ys)
     } else {
-      return this.coverObject(y, x)
+      return this.coverObject(ys, xs)
     }
   }
 
   private coverObject(
-    x: { [key: string]: Value },
-    y: { [key: string]: Value }
+    xs: { [key: string]: Value },
+    ys: { [key: string]: Value }
   ): Subst | null {
-    throw new Error("TODO")
+    let subst: Subst | null = this
+
+    for (let k in ys) {
+      if (xs[k] === undefined) {
+        return null
+      }
+
+      subst = subst.unify(xs[k], ys[k])
+      if (subst === null) {
+        return null
+      }
+    }
+
+    return subst
   }
 
   private unifyArray(xs: Array<Value>, ys: Array<Value>): Subst | null {

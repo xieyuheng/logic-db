@@ -1,4 +1,3 @@
-- `Subst.coverObject`
 - `Subst.deepWalk`
 
 - `Fact`
