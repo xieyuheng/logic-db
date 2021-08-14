@@ -1,4 +1,14 @@
-- `Subst`
+- `Subst.clone`
+- `Subst.extend`
+- `Subst.find`
+- `Subst.walk`
+- `Subst.occur`
+- `Subst.unify`
+- `Subst.coverObject`
+- `Subst.unifyObject`
+- `Subst.unifyArray`
+- `Subst.deepWalk`
+
 - `Fact`
 
 - `Searching`
