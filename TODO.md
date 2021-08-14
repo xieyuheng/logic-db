@@ -1,4 +1,3 @@
-- `Subst.unify`
 - `Subst.coverObject`
 - `Subst.unifyObject`
 - `Subst.unifyArray`

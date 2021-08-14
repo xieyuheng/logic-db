@@ -65,4 +65,44 @@ export class Subst {
       return false
     }
   }
+
+  unify(x: Value, y: Value): Subst | null {
+    x = this.walk(x)
+    y = this.walk(y)
+
+    if (x instanceof Var && y instanceof Var && x === y) {
+      return this
+    } else if (x instanceof Var) {
+      if (this.occur(x, y)) {
+        return null
+      } else {
+        return this.extend(x, y)
+      }
+    } else if (y instanceof Var) {
+      if (this.occur(y, x)) {
+        return null
+      } else {
+        return this.extend(y, x)
+      }
+    } else if (x instanceof Array && y instanceof Array) {
+      return this.unifyArray(x, y)
+    } else if (isObject(x) && isObject(y)) {
+      return this.unifyObject(x, y)
+    } else if (x === y) {
+      return this
+    } else {
+      return null
+    }
+  }
+
+  unifyObject(
+    x: { [key: string]: Value },
+    y: { [key: string]: Value }
+  ): Subst | null {
+    throw new Error("TODO")
+  }
+
+  unifyArray(x: Array<Value>, y: Array<Value>): Subst | null {
+    throw new Error("TODO")
+  }
 }
