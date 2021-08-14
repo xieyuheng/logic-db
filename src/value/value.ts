@@ -1,13 +1,17 @@
 export class Var {
   id: number
-  name?: string
+  name: string
 
   static counter = 0
 
-  constructor(name?: string) {
+  constructor(name: string) {
     this.id = Var.counter++
     this.name = name
   }
+}
+
+export function v(name: string): Var {
+  return new Var(name)
 }
 
 export type Value =

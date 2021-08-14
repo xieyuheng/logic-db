@@ -1,4 +1,5 @@
 import { Value, Var, isObject } from "../value"
+import * as ut from "../ut"
 
 export class Subst {
   // NOTE no side-effect
@@ -165,20 +166,25 @@ export class Subst {
   }
 
   reify(x: Value): Value {
-    x = this.walk(x)
+    return this.deepWalk(x)
+  }
 
-    if (x instanceof Var) {
-      return x
-    } else if (x instanceof Array) {
-      return x.map((e) => this.deepWalk(e))
-    } else if (isObject(x)) {
-      const y: { [key: string]: Value } = {}
-      for (let k in x) {
-        y[k] = this.deepWalk(x[k])
-      }
-      return y
-    } else {
-      return x
+  // NOTE for testing
+  assertFound(v: Var, value: Value): void {
+    const found = this.find(v)
+
+    if (found === undefined) {
+      throw new Error([`I can not find var: ${JSON.stringify(v)}`].join("\n"))
+    }
+
+    if (!ut.equal(found, value)) {
+      throw new Error(
+        [
+          `I expect to found value: ${JSON.stringify(value)}`,
+          `  var: ${JSON.stringify(v)}`,
+          `  found: ${JSON.stringify(found)}`,
+        ].join("\n")
+      )
     }
   }
 }
