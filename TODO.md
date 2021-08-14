@@ -1,4 +1,3 @@
-- `Subst.walk`
 - `Subst.occur`
 - `Subst.unify`
 - `Subst.coverObject`

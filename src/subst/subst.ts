@@ -28,4 +28,17 @@ export class Subst {
   find(v: Var): Value | undefined {
     return this.map.get(v)
   }
+
+  walk(value: Value): Value {
+    while (value instanceof Var) {
+      let found = this.find(value)
+      if (found === undefined) {
+        return value
+      } else {
+        value = found
+      }
+    }
+
+    return value
+  }
 }
