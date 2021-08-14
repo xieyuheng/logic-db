@@ -1,11 +1,26 @@
-- `Fact`
+- table
+  - fact
+  - inference rule
+    - conclusion
+    - premises
+
+# Proposition
+
+- unit -- relation
+- and
+- or
+- not
+- eqv
+- eqv with proposition
+- not eqv
+- low level predicate
 
 # searching
 
+- row of propositions
+
 - `Searching`
 - `Ctx`
-- `prop_row_t`
-- `prop_t`
 
 # later
 
