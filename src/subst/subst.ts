@@ -24,4 +24,8 @@ export class Subst {
     subst.map.set(v, value)
     return subst
   }
+
+  find(v: Var): Value | undefined {
+    return this.map.get(v)
+  }
 }

@@ -1,4 +1,3 @@
-- `Subst.find`
 - `Subst.walk`
 - `Subst.occur`
 - `Subst.unify`
