@@ -1,5 +1,3 @@
-- `Subst.clone`
-- `Subst.extend`
 - `Subst.find`
 - `Subst.walk`
 - `Subst.occur`

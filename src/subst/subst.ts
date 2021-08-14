@@ -3,9 +3,9 @@ import { Value, Var } from "../value"
 export class Subst {
   // NOTE no side-effect
 
-  map: Map<Value, Value>
+  private map: Map<Var, Value>
 
-  constructor(map: Map<Value, Value>) {
+  constructor(map: Map<Var, Value>) {
     this.map = map
   }
 
@@ -17,5 +17,11 @@ export class Subst {
   clone(): Subst {
     const map = new Map(this.map)
     return new Subst(map)
+  }
+
+  extend(v: Var, value: Value): Subst {
+    const subst = this.clone()
+    subst.map.set(v, value)
+    return subst
   }
 }
