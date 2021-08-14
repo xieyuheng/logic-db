@@ -1,4 +1,3 @@
-- `Subst.occur`
 - `Subst.unify`
 - `Subst.coverObject`
 - `Subst.unifyObject`

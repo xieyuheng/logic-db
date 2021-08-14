@@ -19,3 +19,7 @@ export type Value =
   | number
   | Array<Value>
   | { [key: string]: Value }
+
+export function isObject(x: Value): x is { [key: string]: Value } {
+  return typeof x === "object" && x !== null && !(x instanceof Array)
+}
