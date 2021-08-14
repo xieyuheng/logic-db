@@ -2,7 +2,7 @@
 - `Fact`
 
 - `Searching`
-- `Var`
+
 - `Ctx`
 - `prop_row_t`
 - `prop_t`
