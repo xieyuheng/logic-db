@@ -1,63 +1,8 @@
 # logic db
 
-Aims :
-- combine logic programming and database in js
+Aims:
+- combine logic programming and database in ts/js
 - practical and simple API
-
-Features :
-- embedded in js -- minimal extra syntax
-- can be used without server -- for simple client web app
-
-## Getting Start
-
-```bash
-npm install logic-db
-```
-
-```js
-let logic = require ("logic-db")
-
-let job = new logic.db_t
-
-job.i ({
-    name: "Hacker Alyssa P",
-    dept: "computer",
-    role: "programmer",
-})
-
-job.i ({
-    name: "Tweakit Lem E",
-    dept: "computer",
-    role: "technician",
-})
-
-job.query (2) ({
-    name: "?name",
-    dept: "?dept",
-    role: "?role"
-})
-```
-
-## Docs
-
-- [Online Docs (at surge.sh)](https://logic-db.surge.sh)
-
-- To view docs locally :
-
-```bash
-git clone git://github.com/xieyuheng/logic-db
-cd logic-db
-npm install
-npx vuepress dev ./docs
-```
-
-- To run examples :
-
-```bash
-cd docs
-npm install
-node sicp/a-boston-high-tech-company.js
-```
 
 ## Contributing
 
