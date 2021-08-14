@@ -99,7 +99,11 @@ export class Subst {
     x: { [key: string]: Value },
     y: { [key: string]: Value }
   ): Subst | null {
-    throw new Error("TODO")
+    if (Object.keys(x).length >= Object.keys(y).length) {
+      return this.coverObject(x, y)
+    } else {
+      return this.coverObject(y, x)
+    }
   }
 
   private coverObject(
