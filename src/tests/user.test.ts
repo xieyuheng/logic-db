@@ -14,8 +14,8 @@ user.i({ id: 1, name: "xieyuheng" })
 user.i({ id: 2, name: p`name` })
 
 // user.i({ id: 1, name: p`x` }, (v) => [
-//   { id: 1, name: p`x` },
-//   { id: 1, name: p`x` },
+//   { id: 1, name: v`x` },
+//   { id: 1, name: v`x` },
 // ])
 
 const users = Table.create({

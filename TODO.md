@@ -1,8 +1,9 @@
 - table
-  - fact
-  - inference rule
-    - conclusion
-    - premises
+  - clause
+    - fact
+    - inference rule
+      - conclusion
+      - premises
 
 # Proposition
 
