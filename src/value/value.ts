@@ -10,7 +10,7 @@ export class Var {
   }
 }
 
-export function v(name: string): Var {
+export function p(name: string): Var {
   return new Var(name)
 }
 

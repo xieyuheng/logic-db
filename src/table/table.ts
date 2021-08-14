@@ -2,10 +2,22 @@ import ty from "@xieyuheng/ty"
 import { Schema } from "@xieyuheng/ty"
 
 export class Table<T> {
-  rows: Array<T> = []
+  private rows: Array<T> = []
+
+  name: string
+  schema: Schema<T>
+
+  constructor(opts: { name: string; schema: Schema<T> }) {
+    this.name = opts.name
+    this.schema = opts.schema
+  }
+
+  static create<T>(opts: { name: string; schema: Schema<T> }): Table<T> {
+    const { name, schema } = opts
+    return new Table({ name, schema })
+  }
+
+  i(data: T): void {
+    this.rows.push(data)
+  }
 }
-
-// const user = table.create("user", )
-
-// user.fact({ id: 1, name: "xieyuheng"})
-// user.fact({ id: 2, name: "xieyuheng"})
