@@ -1,12 +1,21 @@
 - `Fact`
 
-- `Searching`
+# searching
 
+- `Searching`
 - `Ctx`
 - `prop_row_t`
 - `prop_t`
 
+# later
+
 - `Db`
+- `Db` -- stream
+- `Db` -- cache
+- `Db` -- index
+- `Connection`
+
+- error handling
 
 # prolog's syntax design
 
