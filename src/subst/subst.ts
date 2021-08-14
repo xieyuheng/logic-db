@@ -145,4 +145,40 @@ export class Subst {
 
     return subst
   }
+
+  deepWalk(x: Value): Value {
+    x = this.walk(x)
+
+    if (x instanceof Var) {
+      return x
+    } else if (x instanceof Array) {
+      return x.map((e) => this.deepWalk(e))
+    } else if (isObject(x)) {
+      const y: { [key: string]: Value } = {}
+      for (let k in x) {
+        y[k] = this.deepWalk(x[k])
+      }
+      return y
+    } else {
+      return x
+    }
+  }
+
+  reify(x: Value): Value {
+    x = this.walk(x)
+
+    if (x instanceof Var) {
+      return x
+    } else if (x instanceof Array) {
+      return x.map((e) => this.deepWalk(e))
+    } else if (isObject(x)) {
+      const y: { [key: string]: Value } = {}
+      for (let k in x) {
+        y[k] = this.deepWalk(x[k])
+      }
+      return y
+    } else {
+      return x
+    }
+  }
 }

@@ -1,5 +1,3 @@
-- `Subst.deepWalk`
-
 - `Fact`
 
 - `Searching`
