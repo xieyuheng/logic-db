@@ -1,6 +1,5 @@
 - `Subst.coverObject`
 - `Subst.unifyObject`
-- `Subst.unifyArray`
 - `Subst.deepWalk`
 
 - `Fact`

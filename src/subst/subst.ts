@@ -95,14 +95,37 @@ export class Subst {
     }
   }
 
-  unifyObject(
+  private unifyObject(
     x: { [key: string]: Value },
     y: { [key: string]: Value }
   ): Subst | null {
     throw new Error("TODO")
   }
 
-  unifyArray(x: Array<Value>, y: Array<Value>): Subst | null {
+  private coverObject(
+    x: { [key: string]: Value },
+    y: { [key: string]: Value }
+  ): Subst | null {
     throw new Error("TODO")
+  }
+
+  private unifyArray(xs: Array<Value>, ys: Array<Value>): Subst | null {
+    let subst: Subst | null = this
+
+    if (xs.length !== ys.length) {
+      return null
+    }
+
+    let i = 0
+    while (i < xs.length) {
+      subst = subst.unify(xs[i], ys[i])
+      if (subst === null) {
+        return null
+      } else {
+        i++
+      }
+    }
+
+    return subst
   }
 }
