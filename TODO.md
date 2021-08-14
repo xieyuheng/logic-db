@@ -1,12 +1,13 @@
 - `Subst`
 - `Fact`
-- `Table`
-- `Db`
+
 - `Searching`
 - `Var`
 - `Ctx`
 - `prop_row_t`
 - `prop_t`
+
+- `Db`
 
 # prolog's syntax design
 
