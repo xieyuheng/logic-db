@@ -31,12 +31,10 @@ const affordable = new Table({
   schema: ty.tuple(ty.string(), ty.string()),
 })
 
-// TODO wrong results
-
-affordable.i([v`x`, v`y`], (v) => {
-  const z = v`z`
-  return [adjacent.o([v`x`, z]), adjacent.o([z, v`y`])]
-})
+affordable.i([v`x`, v`y`], (v) => [
+  adjacent.o([v`x`, v`z`]),
+  adjacent.o([v`z`, v`y`]),
+])
 
 console.log(affordable.query([v`to-kent`, "kent"]))
 console.log(affordable.query(["sussex", v`to-sussex`]))
