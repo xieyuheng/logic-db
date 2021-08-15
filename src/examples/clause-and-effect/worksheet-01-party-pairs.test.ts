@@ -34,6 +34,8 @@ console.log(pair.query({ male: "bertram", female: "lucinda" }))
 console.log(pair.query({ male: "bertram", female: "x" }))
 console.log(pair.query({ male: v`male`, female: v`female` }))
 
+// TODO
+
 // pair.assert({ male: "bertram", female: "lucinda" })
 // pair.assert_not({ male: "apollo", female: "daphne" })
 
