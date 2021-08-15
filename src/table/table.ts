@@ -8,8 +8,7 @@ import ty from "@xieyuheng/ty"
 import { Schema } from "@xieyuheng/ty"
 
 export class Table<T> {
-  private clauses: Array<Clause<T>> = []
-
+  clauses: Array<Clause<T>> = []
   name: string
   schema: Schema<T>
 
@@ -25,9 +24,9 @@ export class Table<T> {
 
   i(data: Logical<T>, premises?: (v: Ctx) => Array<Goal>): void {
     if (premises) {
-      this.clauses.push(Clauses.Rule.create({ conclusion: data, premises }))
+      this.clauses.push(Clauses.Rule.create({ data, premises }))
     } else {
-      this.clauses.push(Clauses.Fact.create({ conclusion: data }))
+      this.clauses.push(Clauses.Fact.create({ data }))
     }
   }
 

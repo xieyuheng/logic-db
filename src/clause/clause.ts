@@ -1,1 +1,5 @@
-export abstract class Clause<T> {}
+import { Logical } from "../api"
+
+export abstract class Clause<T> {
+  abstract data: Logical<T>
+}

@@ -25,9 +25,12 @@ const pair = new Table({
   }),
 })
 
-// pair.i({ male: p`male`, female: p`female` }, (v) => [
-//   [male.o(v`male`), female.o(v`female`)],
-// ])
+pair.i({ male: p`male`, female: p`female` }, (v) => [
+  // male.o(v`male`),
+  // female.o(v`female`),
+  male.o(`TODO`),
+  female.o(`TODO`),
+])
 
 // pair.assert({ male: "bertram", female: "lucinda" })
 // pair.assert_not({ male: "apollo", female: "daphne" })

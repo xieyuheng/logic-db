@@ -1,3 +1,9 @@
+import { Subst } from "../subst"
+
 export class Ctx {
-  // TODO
+  subst: Subst
+
+  constructor(subst: Subst) {
+    this.subst = subst
+  }
 }

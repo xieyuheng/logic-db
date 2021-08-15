@@ -2,14 +2,14 @@ import { Clause } from "../clause"
 import { Logical } from "../api"
 
 export class Fact<T> extends Clause<T> {
-  conclusion: Logical<T>
+  data: Logical<T>
 
-  constructor(opts: { conclusion: Logical<T> }) {
+  constructor(opts: { data: Logical<T> }) {
     super()
-    this.conclusion = opts.conclusion
+    this.data = opts.data
   }
 
-  static create<T>(opts: { conclusion: Logical<T> }): Fact<T> {
+  static create<T>(opts: { data: Logical<T> }): Fact<T> {
     return new Fact(opts)
   }
 }
