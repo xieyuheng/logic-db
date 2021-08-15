@@ -1,11 +1,13 @@
 - `Ctx`
 
+- goals -- eq
+- goals -- ne
+
 - goals -- and
 - goals -- or
 - goals -- not
-- goals -- eqv
+
 - goals -- eqv with proposition
-- goals -- not eqv
 - goals -- low level predicate
 
 # later
