@@ -1,5 +1,3 @@
-- `Searching` -- `take`
-
 - `Table.query`
 
 - `Ctx`

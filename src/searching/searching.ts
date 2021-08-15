@@ -24,6 +24,17 @@ export class Searching {
   }
 
   take(limit: number): Array<Subst> {
-    return []
+    const array = []
+    while (limit > 0) {
+      let subst = this.next()
+      if (subst === null) {
+        break
+      } else {
+        array.push(subst)
+      }
+      limit--
+    }
+
+    return array
   }
 }
