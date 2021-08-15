@@ -1,20 +1,15 @@
-- table
-  - clause
-    - fact
-    - inference rule
-      - conclusion
-      - premises
+- goal -- be able to evaluate
 
-# Proposition
+# Goal
 
-- unit -- relation
-- and
-- or
-- not
-- eqv
-- eqv with proposition
-- not eqv
-- low level predicate
+- goals -- unit-goal
+- goals -- and
+- goals -- or
+- goals -- not
+- goals -- eqv
+- goals -- eqv with proposition
+- goals -- not eqv
+- goals -- low level predicate
 
 # searching
 
