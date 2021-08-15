@@ -1,5 +1,3 @@
-- goal -- be able to evaluate
-
 # Goal
 
 - goals -- unit-goal

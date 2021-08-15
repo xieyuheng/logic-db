@@ -1,6 +1,8 @@
 import { Logical } from "../api"
 import { Ctx } from "../ctx"
 import { Clause } from "../clause"
+import { Goal } from "../goal"
+import * as Goals from "../goals"
 import * as Clauses from "../clauses"
 import ty from "@xieyuheng/ty"
 import { Schema } from "@xieyuheng/ty"
@@ -22,11 +24,15 @@ export class Table<T> {
   }
 
   i(data: Logical<T>, premises?: (v: Ctx) => Array<Goal>): void {
-    this.clauses.push(Clauses.Fact.create({ conclusion: data }))
+    if (premises) {
+      this.clauses.push(Clauses.Rule.create({ conclusion: data, premises }))
+    } else {
+      this.clauses.push(Clauses.Fact.create({ conclusion: data }))
+    }
   }
 
   o(data: Logical<T>): Goal {
-    return new Goal()
+    return Goals.UnitGoal.create({ table: this, data })
   }
 
   query(pattern: Logical<T>, opts?: { limit?: number }) {
@@ -50,5 +56,3 @@ export class Table<T> {
     // return query_res
   }
 }
-
-class Goal {}
