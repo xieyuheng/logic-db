@@ -1,7 +1,10 @@
 import { Logical } from "../api"
+import { Searching } from "../searching"
 import { Ctx } from "../ctx"
 import { Clause } from "../clause"
-import { Goal } from "../goal"
+import { Subst } from "../subst"
+import { Value } from "../value"
+import { Goal, GoalQueue } from "../goal"
 import * as Goals from "../goals"
 import * as Clauses from "../clauses"
 import ty from "@xieyuheng/ty"
@@ -34,24 +37,10 @@ export class Table<T> {
     return Goals.UnitGoal.create({ table: this, data })
   }
 
-  query(pattern: Logical<T>, opts?: { limit?: number }) {
-    // let var_map = new Map
-    // let data = pattern_to_data_with_var_map (pattern, var_map)
-    // let searching = new searching_t ([
-    //   new prop_row_t (new subst_t, [this.o (data)])
-    // ])
-    // let solutions = searching
-    //   .take_subst(opts?.limit)
-    //   .map ((subst) => {
-    //     let sol = {}
-    //     for (let name of var_map.keys ()) {
-    //       sol [name] = subst.reify (
-    //         var_map.get (name))
-    //     }
-    //     return sol
-    //   })
-    // let query_res = new query_res_t
-    // query_res.solutions = solutions
-    // return query_res
+  query(data: Logical<T>, opts?: { limit?: number }): Array<Value> {
+    const searching = new Searching([
+      new GoalQueue(Subst.create(), [this.o(data)]),
+    ])
+    return searching.take(opts?.limit || 10).map((subst) => subst.reify(data))
   }
 }

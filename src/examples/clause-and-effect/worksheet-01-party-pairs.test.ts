@@ -32,6 +32,8 @@ pair.i({ male: p`male`, female: p`female` }, (v) => [
   female.o(`TODO`),
 ])
 
+console.log(pair.query({ male: "bertram", female: "lucinda" }))
+
 // pair.assert({ male: "bertram", female: "lucinda" })
 // pair.assert_not({ male: "apollo", female: "daphne" })
 
