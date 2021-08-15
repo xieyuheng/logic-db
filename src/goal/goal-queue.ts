@@ -14,19 +14,13 @@ export class GoalQueue {
     const goal = this.goals.shift()
     if (goal === undefined) return null
     const matrix = goal.evaluate(this.subst)
-    const queues = []
-    for (const queue of matrix.queues) {
-      queues.push(
-        new GoalQueue(
-          queue.subst,
-          // NOTE about searching again
-          // push front |   depth first
-          // push back  | breadth first
-          this.goals.concat(queue.goals)
-        )
-      )
-    }
-
+    const queues = matrix.queues.map(
+      // NOTE about searching again
+      // push front |   depth first
+      // push back  | breadth first
+      // NOTE `concat` is like push back
+      (queue) => new GoalQueue(queue.subst, this.goals.concat(queue.goals))
+    )
     return new GoalMatix(queues)
   }
 }

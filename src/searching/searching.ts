@@ -14,12 +14,10 @@ export class Searching {
       if (queue === undefined) return null
       const matrix = queue.step()
       if (matrix === null) return queue.subst
-      for (const queue of matrix.queues) {
-        // NOTE about searching
-        // push front |   depth first
-        // push back  | breadth first
-        this.matrix.queues.push(queue)
-      }
+      // NOTE about searching
+      // push front |   depth first
+      // push back  | breadth first
+      this.matrix.queues.push(...matrix.queues)
     }
   }
 
