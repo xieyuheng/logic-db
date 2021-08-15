@@ -43,3 +43,29 @@ export function extractVars(value: Value): { [key: string]: Var } {
     return {}
   }
 }
+
+export function freshenValue(
+  value: Value,
+  vars: Map<number, Var> = new Map()
+): Value {
+  if (value instanceof Var) {
+    const found = vars.get(value.id)
+    if (found) {
+      return found
+    } else {
+      const v = new Var(value.name)
+      vars.set(v.id, v)
+      return v
+    }
+  } else if (value instanceof Array) {
+    return value.map((e) => freshenValue(e, vars))
+  } else if (isObject(value)) {
+    let obj: Value = {}
+    for (const k in value) {
+      obj[k] = freshenValue(value[k], vars)
+    }
+    return obj
+  } else {
+    return value
+  }
+}

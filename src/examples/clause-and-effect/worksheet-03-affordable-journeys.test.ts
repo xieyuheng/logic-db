@@ -23,8 +23,8 @@ const adjacent = new Table({
   schema: ty.tuple(ty.string(), ty.string()),
 })
 
-adjacent.i([v`x`, v`y`], (v) => [border.o([v`y`, v`x`])])
 adjacent.i([v`x`, v`y`], (v) => [border.o([v`x`, v`y`])])
+adjacent.i([v`x`, v`y`], (v) => [border.o([v`y`, v`x`])])
 
 const affordable = new Table({
   name: "affordable",

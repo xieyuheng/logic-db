@@ -1,7 +1,7 @@
 import { Goal, GoalQueue } from "../goal"
 import * as Clauses from "../clauses"
 import { Table } from "../table"
-import { Var, extractVars } from "../value"
+import { Var, extractVars, freshenValue } from "../value"
 import { Ctx } from "../ctx"
 import { Logical, VariableFinder } from "../api"
 import { Subst } from "../subst"
@@ -24,13 +24,14 @@ export class UnitGoal<T> extends Goal {
     const queues: Array<GoalQueue> = []
 
     for (const clause of this.table.clauses) {
-      const newSubst = subst.unify(clause.data, this.data)
+      const data = freshenValue(clause.data)
+      const newSubst = subst.unify(data, this.data)
       if (newSubst !== null) {
         if (clause instanceof Clauses.Fact) {
           queues.push(new GoalQueue(newSubst, []))
         } else if (clause instanceof Clauses.Rule) {
           const ctx = new Ctx(newSubst)
-          const vars = extractVars(clause.data)
+          const vars = extractVars(data)
           const v: VariableFinder = (strs) => vars[strs[0]] || new Var(strs[0])
           queues.push(new GoalQueue(newSubst, clause.premises(v, ctx)))
         } else {
