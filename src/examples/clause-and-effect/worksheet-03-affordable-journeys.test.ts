@@ -39,5 +39,5 @@ affordable.i([v`x`, v`y`], (v) => {
 })
 
 console.log(affordable.query([v`to-kent`, "kent"]))
-// console.log(affordable.query(["sussex", v`to-sussex`]))
-// console.log(affordable.query([v`x`, v`y`]))
+console.log(affordable.query(["sussex", v`to-sussex`]))
+console.log(affordable.query([v`x`, v`y`]))
