@@ -1,5 +1,3 @@
-- goal-queue -- step
-
 - goals -- and
 - goals -- or
 - goals -- not
