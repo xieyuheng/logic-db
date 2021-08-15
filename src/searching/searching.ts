@@ -1,23 +1,23 @@
-import { GoalMatrix } from "../goal"
+import { GoalQueue } from "../goal"
 import { Subst } from "../subst"
 
 export class Searching {
-  matrix: GoalMatrix
+  queues: Array<GoalQueue>
 
-  constructor(matrix: GoalMatrix) {
-    this.matrix = matrix
+  constructor(queues: Array<GoalQueue>) {
+    this.queues = queues
   }
 
   next(): Subst | null {
     while (true) {
-      const queue = this.matrix.queues.shift()
+      const queue = this.queues.shift()
       if (queue === undefined) return null
-      const matrix = queue.step()
-      if (matrix === null) return queue.subst
+      const queues = queue.step()
+      if (queues === null) return queue.subst
       // NOTE about searching
       // push front |   depth first
       // push back  | breadth first
-      this.matrix.queues.push(...matrix.queues)
+      this.queues.push(...queues)
     }
   }
 

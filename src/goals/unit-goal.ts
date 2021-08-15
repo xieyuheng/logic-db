@@ -1,4 +1,4 @@
-import { Goal, GoalQueue, GoalMatrix } from "../goal"
+import { Goal, GoalQueue } from "../goal"
 import * as Clauses from "../clauses"
 import { Table } from "../table"
 import { Ctx } from "../ctx"
@@ -19,7 +19,7 @@ export class UnitGoal<T> extends Goal {
     return new UnitGoal(opts)
   }
 
-  evaluate(subst: Subst): GoalMatrix {
+  evaluate(subst: Subst): Array<GoalQueue> {
     const queues: Array<GoalQueue> = []
 
     for (const clause of this.table.clauses) {
@@ -36,6 +36,6 @@ export class UnitGoal<T> extends Goal {
       }
     }
 
-    return new GoalMatrix(queues)
+    return queues
   }
 }
