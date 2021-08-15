@@ -44,6 +44,6 @@ export class Table<T> {
     const searching = new Searching([
       new GoalQueue(Subst.create(), [this.o(data)]),
     ])
-    return searching.take(opts?.limit || 10).map((subst) => subst.reify(data))
+    return searching.take(opts?.limit || 100).map((subst) => subst.reify(data))
   }
 }

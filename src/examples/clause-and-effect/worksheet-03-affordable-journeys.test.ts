@@ -23,24 +23,21 @@ const adjacent = new Table({
   schema: ty.tuple(ty.string(), ty.string()),
 })
 
-adjacent.i([v`x`, v`y`], (v) => [border.o([v`x`, v`y`])])
 adjacent.i([v`x`, v`y`], (v) => [border.o([v`y`, v`x`])])
-
-// adjacent.i([v`x`, v`y`], (v) => [
-//   [border.o([v`x`, v`y`])],
-//   [border.o([v`y`, v`x`])],
-// ])
+adjacent.i([v`x`, v`y`], (v) => [border.o([v`x`, v`y`])])
 
 const affordable = new Table({
   name: "affordable",
   schema: ty.tuple(ty.string(), ty.string()),
 })
 
-affordable.i([v`x`, v`y`], (v) => [
-  adjacent.o([v`x`, v`z`]),
-  adjacent.o([v`z`, v`y`]),
-])
+// TODO wrong results
+
+affordable.i([v`x`, v`y`], (v) => {
+  const z = v`z`
+  return [adjacent.o([v`x`, z]), adjacent.o([z, v`y`])]
+})
 
 console.log(affordable.query([v`to-kent`, "kent"]))
-console.log(affordable.query(["sussex", v`to-sussex`]))
-console.log(affordable.query([v`x`, v`y`]))
+// console.log(affordable.query(["sussex", v`to-sussex`]))
+// console.log(affordable.query([v`x`, v`y`]))
