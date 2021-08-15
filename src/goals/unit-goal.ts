@@ -30,9 +30,9 @@ export class UnitGoal<T> extends Goal {
         if (clause instanceof Clauses.Fact) {
           queues.push(new GoalQueue(newSubst, []))
         } else if (clause instanceof Clauses.Rule) {
-          const ctx = new Ctx(newSubst)
           const vars = extractVars(data)
-          const v: VariableFinder = (strs) => vars[strs[0]] || new Var(strs[0])
+          const v = createVariableFinder(vars)
+          const ctx = new Ctx(newSubst)
           queues.push(new GoalQueue(newSubst, clause.premises(v, ctx)))
         } else {
           throw new Error(`Unknown clause type: ${clause.constructor.name}`)
@@ -41,5 +41,19 @@ export class UnitGoal<T> extends Goal {
     }
 
     return queues
+  }
+}
+
+// NOTE side-effect on vars
+function createVariableFinder(vars: { [key: string]: Var }): VariableFinder {
+  return (strs) => {
+    const found = vars[strs[0]]
+    if (found !== undefined) {
+      return found
+    } else {
+      const variable = new Var(strs[0])
+      vars[variable.name] = variable
+      return variable
+    }
   }
 }

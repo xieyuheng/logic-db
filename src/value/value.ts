@@ -44,13 +44,14 @@ export function extractVars(value: Value): { [key: string]: Var } {
   }
 }
 
+// NOTE side-effect on vars
 export function freshenValue(
   value: Value,
   vars: Map<number, Var> = new Map()
 ): Value {
   if (value instanceof Var) {
     const found = vars.get(value.id)
-    if (found) {
+    if (found !== undefined) {
       return found
     } else {
       const v = new Var(value.name)
