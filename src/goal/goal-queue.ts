@@ -19,7 +19,7 @@ export class GoalQueue {
       queues.push(
         new GoalQueue(
           queue.subst,
-          //// about searching again
+          // NOTE about searching again
           // push front |   depth first
           // push back  | breadth first
           this.goals.concat(queue.goals)

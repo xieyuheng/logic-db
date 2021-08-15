@@ -13,9 +13,9 @@ export class Searching {
       const queue = this.matrix.queues.shift()
       if (queue === undefined) return null
       const matrix = queue.step()
-      if (!matrix) return queue.subst
+      if (matrix === null) return queue.subst
       for (const queue of matrix.queues) {
-        //// about searching
+        // NOTE about searching
         // push front |   depth first
         // push back  | breadth first
         this.matrix.queues.push(queue)
