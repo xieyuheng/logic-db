@@ -1,4 +1,4 @@
-import { Logical } from "../api"
+import { Logical, VariableFinder } from "../api"
 import { Searching } from "../searching"
 import { Ctx } from "../ctx"
 import { Clause } from "../clause"
@@ -25,7 +25,10 @@ export class Table<T> {
     return new Table({ name, schema })
   }
 
-  i(data: Logical<T>, premises?: (v: Ctx) => Array<Goal>): void {
+  i(
+    data: Logical<T>,
+    premises?: (v: VariableFinder, ctx: Ctx) => Array<Goal>
+  ): void {
     if (premises) {
       this.clauses.push(Clauses.Rule.create({ data, premises }))
     } else {

@@ -23,3 +23,23 @@ export type Value =
 export function isObject(x: Value): x is { [key: string]: Value } {
   return typeof x === "object" && x !== null && !(x instanceof Array)
 }
+
+export function extractVars(value: Value): { [key: string]: Var } {
+  if (value instanceof Var) {
+    return { [value.name]: value }
+  } else if (value instanceof Array) {
+    let vars = {}
+    for (const e of value) {
+      vars = { ...vars, ...extractVars(e) }
+    }
+    return vars
+  } else if (isObject(value)) {
+    let vars = {}
+    for (const k in value) {
+      vars = { ...vars, ...extractVars(value[k]) }
+    }
+    return vars
+  } else {
+    return {}
+  }
+}

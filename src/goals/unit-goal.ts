@@ -1,8 +1,9 @@
 import { Goal, GoalQueue } from "../goal"
 import * as Clauses from "../clauses"
 import { Table } from "../table"
+import { Var, extractVars } from "../value"
 import { Ctx } from "../ctx"
-import { Logical } from "../api"
+import { Logical, VariableFinder } from "../api"
 import { Subst } from "../subst"
 
 export class UnitGoal<T> extends Goal {
@@ -29,7 +30,9 @@ export class UnitGoal<T> extends Goal {
           queues.push(new GoalQueue(newSubst, []))
         } else if (clause instanceof Clauses.Rule) {
           const ctx = new Ctx(newSubst)
-          queues.push(new GoalQueue(newSubst, clause.premises(ctx)))
+          const vars = extractVars(clause.data)
+          const v: VariableFinder = (strs) => vars[strs[0]] || new Var(strs[0])
+          queues.push(new GoalQueue(newSubst, clause.premises(v, ctx)))
         } else {
           throw new Error(`Unknown clause type: ${clause.constructor.name}`)
         }
