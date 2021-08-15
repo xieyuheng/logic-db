@@ -1,6 +1,6 @@
-import { GoalMatix } from "../goal"
+import { GoalMatrix } from "../goal"
 import { Subst } from "../subst"
 
 export abstract class Goal {
-  abstract evaluate(subst: Subst): GoalMatix
+  abstract evaluate(subst: Subst): GoalMatrix
 }

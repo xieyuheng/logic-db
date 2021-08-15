@@ -1,10 +1,10 @@
-import { GoalMatix } from "../goal"
+import { GoalMatrix } from "../goal"
 import { Subst } from "../subst"
 
 export class Searching {
-  matrix: GoalMatix
+  matrix: GoalMatrix
 
-  constructor(matrix: GoalMatix) {
+  constructor(matrix: GoalMatrix) {
     this.matrix = matrix
   }
 

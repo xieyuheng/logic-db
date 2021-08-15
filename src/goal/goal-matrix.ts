@@ -1,6 +1,6 @@
 import { GoalQueue } from "../goal"
 
-export class GoalMatix {
+export class GoalMatrix {
   queues: Array<GoalQueue>
 
   constructor(queues: Array<GoalQueue>) {

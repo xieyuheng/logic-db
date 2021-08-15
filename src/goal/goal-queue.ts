@@ -1,4 +1,4 @@
-import { Goal, GoalMatix } from "../goal"
+import { Goal, GoalMatrix } from "../goal"
 import { Subst } from "../subst"
 
 export class GoalQueue {
@@ -10,7 +10,7 @@ export class GoalQueue {
     this.goals = goals
   }
 
-  step(): GoalMatix | null {
+  step(): GoalMatrix | null {
     const goal = this.goals.shift()
     if (goal === undefined) return null
     const matrix = goal.evaluate(this.subst)
@@ -21,6 +21,6 @@ export class GoalQueue {
       // NOTE `concat` is like push back
       (queue) => new GoalQueue(queue.subst, this.goals.concat(queue.goals))
     )
-    return new GoalMatix(queues)
+    return new GoalMatrix(queues)
   }
 }
