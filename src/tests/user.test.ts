@@ -1,5 +1,5 @@
 import ty from "@xieyuheng/ty"
-import { p } from "../api"
+import { v } from "../api"
 import { Table } from "../table"
 
 const user = Table.create({
@@ -11,4 +11,4 @@ const user = Table.create({
 })
 
 user.i({ id: 1, name: "xieyuheng" })
-user.i({ id: 2, name: p`name` })
+user.i({ id: 2, name: v`name` })

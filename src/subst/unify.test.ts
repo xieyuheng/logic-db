@@ -1,32 +1,32 @@
 import assert from "assert"
-import { p } from "../api"
+import { v } from "../api"
 import { Value } from "../value"
 import { Subst } from "../subst"
 
 {
-  const x = p`x`
+  const x = v`x`
   const subst = Subst.create().unify(123, x)
   assert(subst)
   subst.assertFound(x, 123)
 }
 
 {
-  const x = p`x`
+  const x = v`x`
   const subst = Subst.create().unify({ name: "xieyuheng" }, x)
   assert(subst)
   subst.assertFound(x, { name: "xieyuheng" })
 }
 
 {
-  const x = p`x`
+  const x = v`x`
   const subst = Subst.create().unify({ name: "xieyuheng" }, { name: x })
   assert(subst)
   subst.assertFound(x, "xieyuheng")
 }
 
 {
-  const x = p`x`
-  const y = p`y`
+  const x = v`x`
+  const y = v`y`
   const subst = Subst.create().unify(
     { name: "xieyuheng", items: ["a", "b", "c"] },
     { name: x, items: ["a", y, "c"] }

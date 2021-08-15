@@ -1,4 +1,4 @@
-import { Table, p } from "../.."
+import { Table, v } from "../.."
 import ty from "@xieyuheng/ty"
 
 const male = new Table({
@@ -25,15 +25,14 @@ const pair = new Table({
   }),
 })
 
-pair.i({ male: p`male`, female: p`female` }, (v) => [
+pair.i({ male: v`male`, female: v`female` }, (v) => [
   male.o(v`male`),
   female.o(v`female`),
-
 ])
 
 console.log(pair.query({ male: "bertram", female: "lucinda" }))
 console.log(pair.query({ male: "bertram", female: "x" }))
-console.log(pair.query({ male: p`male`, female: p`female` }))
+console.log(pair.query({ male: v`male`, female: v`female` }))
 
 // pair.assert({ male: "bertram", female: "lucinda" })
 // pair.assert_not({ male: "apollo", female: "daphne" })
