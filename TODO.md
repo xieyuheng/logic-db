@@ -1,3 +1,9 @@
+- `Searching` -- `take`
+
+- `Table.query`
+
+- `Ctx`
+
 - goals -- and
 - goals -- or
 - goals -- not
@@ -5,9 +11,6 @@
 - goals -- eqv with proposition
 - goals -- not eqv
 - goals -- low level predicate
-
-- `Searching`
-- `Ctx`
 
 # later
 
