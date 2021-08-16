@@ -1,4 +1,4 @@
-# logic db
+# LogicDB
 
 Aims:
 - combine logic programming and database in ts/js
