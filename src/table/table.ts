@@ -40,15 +40,15 @@ export class Table<T> {
     return Goals.UnitGoal.create({ table: this, data })
   }
 
-  query(data: Logical<T>, opts?: { limit?: number }): Array<T> {
+  query(data: Logical<T>, opts: { limit?: number } = {}): Array<T> {
     const searching = new Searching([
       new GoalQueue(Subst.create(), [this.o(data)]),
     ])
 
-    if (opts?.limit) {
-      const results = searching
-        .take(opts?.limit)
-        .map((subst) => subst.reify(data))
+    const { limit } = opts
+
+    if (limit) {
+      const results = searching.take(limit).map((subst) => subst.reify(data))
       return results as unknown as Array<T>
     } else {
       const results = searching.all().map((subst) => subst.reify(data))
