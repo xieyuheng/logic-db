@@ -8,6 +8,10 @@ export type SearchOptions = {
   log?: boolean
 }
 
+// NOTE In implementation, we use array of queues to do search,
+//   but we should be thinking in terms of tree instead of queues,
+//   only by doing so, we can have a clear understanding of the implementation.
+
 export class Searching<T> {
   table: Table<T>
   queues: Array<GoalQueue>
