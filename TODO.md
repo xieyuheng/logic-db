@@ -1,13 +1,11 @@
-- `Ctx`
-
-- goals -- u -- Unifiable
-
 - goals -- and -- And
 - goals -- or -- Or
 - goals -- not -- Not
 
 - goals -- eqv with proposition
 - goals -- low level predicate
+
+- `Ctx` -- where to use?
 
 # later
 
