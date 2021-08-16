@@ -1,5 +1,3 @@
-- test Unifiable
-
 - goals -- and -- And
 - goals -- or -- Or
 

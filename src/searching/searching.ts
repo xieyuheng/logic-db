@@ -1,7 +1,7 @@
 import { GoalQueue } from "../goal-queue"
 import { Table } from "../table"
 import { Subst } from "../subst"
-import { Logical } from "../value"
+import { Logical, freshenValue } from "../value"
 
 export type SearchOptions = {
   limit?: number
@@ -36,6 +36,7 @@ export class Searching<T> {
     data: Logical<T>,
     opts: SearchOptions
   ): Searching<T> {
+    data = freshenValue(data) as Logical<T>
     const queues = [new GoalQueue(Subst.create(), [table.o(data)])]
     const searching = new Searching({ table, data, queues }, opts)
     return searching

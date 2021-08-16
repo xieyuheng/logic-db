@@ -5,6 +5,7 @@ import { Clause } from "../clause"
 import { Goal } from "../goal"
 import * as Goals from "../goals"
 import * as Clauses from "../clauses"
+import * as ut from "../ut"
 import { Schema } from "@xieyuheng/ty"
 
 export class Table<T> {
@@ -70,6 +71,22 @@ export class Table<T> {
           `but it is actually in the table.`,
           `  table: ${this.name}`,
           `  data: ${JSON.stringify(data)}`,
+        ].join("\n")
+      )
+    }
+  }
+
+  assertResults(data: Logical<T>, results: Array<Logical<T>>): void {
+    const found = this.find(data)
+    if (!ut.equal(found, results)) {
+      throw new Error(
+        [
+          `An assertion is made on the query results,`,
+          `but the found results is not equal to the asserted results.`,
+          `  table: ${this.name}`,
+          `  data: ${JSON.stringify(data)}`,
+          `  found    results: ${JSON.stringify(found)}`,
+          `  asserted results: ${JSON.stringify(results)}`,
         ].join("\n")
       )
     }
