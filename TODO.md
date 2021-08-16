@@ -2,6 +2,8 @@
 
 - fix recursive schemas -- `listSchema` and `natSchema` -- with new `ty`
 
+- be able to do query out of a table -- or join many tables
+
 - goals -- and -- And
 - goals -- or -- Or
 
