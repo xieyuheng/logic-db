@@ -3,7 +3,6 @@
 - fix recursive schemas -- `listSchema` and `natSchema` -- with new `ty`
 
 - worksheet-08-maximum-of-a-list.test.ts
-- worksheet-09-searching-a-cyclic-graph.test.ts
 
 - a-boston-high-tech-company.test.ts
 - logic-as-programs.test.ts
