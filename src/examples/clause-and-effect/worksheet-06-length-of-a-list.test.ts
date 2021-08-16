@@ -13,7 +13,7 @@ type List =
       cdr: List
     }
 
-function cons(car: List, cdr: List): List {
+function cons(car: Logical<List>, cdr: Logical<List>): Logical<List> {
   return { car, cdr }
 }
 
@@ -52,7 +52,7 @@ const length = new Table({
 
 length.i([null, zero])
 
-length.i([{ car: v`car`, cdr: v`cdr` }, v`length`], (v) => [
+length.i([cons(v`car`, v`cdr`), v`length`], (v) => [
   length.o([v`cdr`, v`cdr_length`]),
   eq(v`length`, succ(v`cdr_length`)),
 ])

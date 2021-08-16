@@ -1,4 +1,4 @@
-import { Table, v } from "../.."
+import { Logical, Table, v } from "../.."
 import ty from "@xieyuheng/ty"
 import { Schema } from "@xieyuheng/ty"
 
@@ -13,7 +13,7 @@ type List =
       cdr: List
     }
 
-function cons(car: List, cdr: List): List {
+function cons(car: Logical<List>, cdr: Logical<List>): Logical<List> {
   return { car, cdr }
 }
 
@@ -31,8 +31,8 @@ const member = new Table({
   schema: ty.tuple(listSchema(), listSchema()),
 })
 
-member.i([v`element`, { car: v`element`, cdr: v`cdr` }])
-member.i([v`element`, { car: v`car`, cdr: v`cdr` }], (v) => [
+member.i([v`element`, cons(v`element`, v`cdr`)])
+member.i([v`element`, cons(v`car`, v`cdr`)], (v) => [
   member.o([v`element`, v`cdr`]),
 ])
 
