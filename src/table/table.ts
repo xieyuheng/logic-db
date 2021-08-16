@@ -11,6 +11,12 @@ import { Schema } from "@xieyuheng/ty"
 // NOTE Our table is like prolog's predicate.
 // - We define predicate by writing down Horn clauses.
 // - A predicate describe relation between its arguments.
+// - Predicate can be defined by function and vice versa,
+//   however predicate is good at expressing relations,
+//   because it make no distinction between input and output.
+// - A clause is either a rule or a fact.
+//   The clauses that constitute a predicate denote logical alternatives:
+//   If any clause is true, then the whole predicate is true.
 
 export class Table<T> {
   clauses: Array<Clause<T>> = []
