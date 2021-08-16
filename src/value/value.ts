@@ -47,15 +47,18 @@ export function extractVars(value: Value): { [key: string]: Var } {
 // NOTE side-effect on vars
 export function freshenValue(
   value: Value,
-  vars: Map<number, Var> = new Map()
+  vars: Map<string, Var> = new Map()
 ): Value {
   if (value instanceof Var) {
-    const found = vars.get(value.id)
+    // NOTE We should use name as the key,
+    //   because in the same scope,
+    //   variables of the same name are the same variable.
+    const found = vars.get(value.name)
     if (found !== undefined) {
       return found
     } else {
       const v = new Var(value.name)
-      vars.set(v.id, v)
+      vars.set(v.name, v)
       return v
     }
   } else if (value instanceof Array) {
