@@ -1,4 +1,5 @@
-import { Goal, GoalQueue } from "../goal"
+import { Goal } from "../goal"
+import { GoalQueue } from "../goal-queue"
 import * as Clauses from "../clauses"
 import { Table } from "../table"
 import { Var, extractVars, freshenValue } from "../value"

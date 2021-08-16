@@ -1,7 +1,7 @@
 - `Ctx`
 
-- goals -- eq
-- goals -- ne
+- goals -- u -- UnifiableGoal
+- goals -- nu -- NotUnifiableGoal
 
 - goals -- and
 - goals -- or

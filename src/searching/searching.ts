@@ -1,4 +1,4 @@
-import { GoalQueue } from "../goal"
+import { GoalQueue } from "../goal-queue"
 import { Table } from "../table"
 import { Subst } from "../subst"
 import { Logical } from "../value"

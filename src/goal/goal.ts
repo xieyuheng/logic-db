@@ -1,4 +1,4 @@
-import { GoalQueue } from "../goal"
+import { GoalQueue } from "../goal-queue"
 import { Subst } from "../subst"
 
 export abstract class Goal {
