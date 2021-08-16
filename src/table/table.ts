@@ -1,4 +1,4 @@
-import { Logical, VariableFinder } from "../api"
+import { Logical, VariableFinder } from "../value"
 import { Searching } from "../searching"
 import { Ctx } from "../ctx"
 import { Clause } from "../clause"
@@ -88,7 +88,7 @@ export class Table<T> {
   }
 }
 
-type QueryOptions = {
+export type QueryOptions = {
   limit?: number
   log?: boolean
 }

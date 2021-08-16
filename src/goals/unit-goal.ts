@@ -3,7 +3,7 @@ import * as Clauses from "../clauses"
 import { Table } from "../table"
 import { Var, extractVars, freshenValue } from "../value"
 import { Ctx } from "../ctx"
-import { Logical, VariableFinder } from "../api"
+import { Logical, VariableFinder } from "../value"
 import { Subst } from "../subst"
 
 export class UnitGoal<T> extends Goal {

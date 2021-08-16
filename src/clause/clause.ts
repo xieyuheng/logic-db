@@ -1,4 +1,4 @@
-import { Logical } from "../api"
+import { Logical } from "../value"
 
 export abstract class Clause<T> {
   abstract data: Logical<T>

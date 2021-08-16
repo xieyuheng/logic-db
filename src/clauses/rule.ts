@@ -1,5 +1,5 @@
 import { Clause } from "../clause"
-import { Logical, VariableFinder } from "../api"
+import { Logical, VariableFinder } from "../value"
 import { Goal } from "../goal"
 import { Ctx } from "../ctx"
 

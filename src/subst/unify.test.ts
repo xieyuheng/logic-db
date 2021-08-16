@@ -1,5 +1,5 @@
 import assert from "assert"
-import { v } from "../api"
+import { v } from "../value"
 import { Value } from "../value"
 import { Subst } from "../subst"
 

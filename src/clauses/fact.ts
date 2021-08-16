@@ -1,5 +1,5 @@
 import { Clause } from "../clause"
-import { Logical } from "../api"
+import { Logical } from "../value"
 
 export class Fact<T> extends Clause<T> {
   data: Logical<T>

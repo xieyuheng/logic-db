@@ -1,7 +1,7 @@
 import { GoalQueue } from "../goal"
 import { Table } from "../table"
 import { Subst } from "../subst"
-import { Logical } from "../api"
+import { Logical } from "../value"
 
 export class Searching<T> {
   table: Table<T>

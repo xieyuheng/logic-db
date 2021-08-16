@@ -1,2 +1,2 @@
-export * from "./api"
-export { Table } from "./table"
+export * from "./value"
+export * from "./table"
