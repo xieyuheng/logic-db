@@ -1,6 +1,5 @@
 - well typed projection of query result -- with the help of `ty`
 
-- worksheet-06-length-of-a-list.test.ts
 - worksheet-08-maximum-of-a-list.test.ts
 - worksheet-09-searching-a-cyclic-graph.test.ts
 
