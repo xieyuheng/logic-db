@@ -1,6 +1,4 @@
-import { Logical, Table, v, ne } from "../.."
-import ty from "@xieyuheng/ty"
-import { Schema } from "@xieyuheng/ty"
+import { Logical, Table, Schema, v, ne, ty } from "../.."
 
 // NOTE
 // - video: https://www.youtube.com/watch?v=vdabv9EkYrY&ab_channel=ThePowerofProlog

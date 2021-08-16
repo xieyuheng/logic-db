@@ -1,7 +1,5 @@
-// import { Table, v, rest } from "../.."
+// import { Table, v, rest, ty, Schema } from "../.."
 // TODO use rest to support native array
-// import ty from "@xieyuheng/ty"
-// import { Schema } from "@xieyuheng/ty"
 
 // const member = new Table({
 //   name: "member",

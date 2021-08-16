@@ -1,6 +1,4 @@
-import { Logical, Table, v } from "../.."
-import ty from "@xieyuheng/ty"
-import { Schema } from "@xieyuheng/ty"
+import { Logical, Table, v, ty, Schema } from "../.."
 
 // prepare the lispy list
 

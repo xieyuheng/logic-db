@@ -1,6 +1,4 @@
-import { Logical, Table, v, ne } from "../.."
-import ty from "@xieyuheng/ty"
-import { Schema } from "@xieyuheng/ty"
+import { Logical, Table, v, ne, ty, Schema } from "../.."
 
 const a = new Table({
   name: "a",

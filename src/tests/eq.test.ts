@@ -1,5 +1,4 @@
-import { Table, v, eq } from ".."
-import ty from "@xieyuheng/ty"
+import { Table, v, eq, ty } from ".."
 
 const pair = new Table({
   name: "pair",

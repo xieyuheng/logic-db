@@ -1,5 +1,4 @@
-import { Table, v, ne } from "../.."
-import ty from "@xieyuheng/ty"
+import { Table, v, ne, ty } from "../.."
 
 const drinks = new Table({
   name: "drinks",
