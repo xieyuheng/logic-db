@@ -25,6 +25,6 @@ const path = new Table({
 path.i([v`x`, v`x`])
 path.i([v`x`, v`y`], (v) => [a.o([v`x`, v`z`]), path.o([v`z`, v`y`])])
 
-console.log(path.query(["g", v`x`]))
-console.log(path.query([v`x`, "h"]))
-console.log(path.query([v`x`, v`y`]))
+console.log(path.find(["g", v`x`]))
+console.log(path.find([v`x`, "h"]))
+console.log(path.find([v`x`, v`y`]))

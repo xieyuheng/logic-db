@@ -30,18 +30,13 @@ pair.i({ male: v`male`, female: v`female` }, (v) => [
   female.o(v`female`),
 ])
 
-console.log(pair.query({ male: "bertram", female: "lucinda" }))
-console.log(pair.query({ male: "bertram", female: "x" }))
-console.log(pair.query({ male: v`male`, female: v`female` }))
+pair.assert({ male: "bertram", female: "lucinda" })
+pair.assert({ male: "bertram", female: "lucinda" })
+pair.assertNot({ male: "apollo", female: "daphne" })
 
-// TODO
-
-// pair.assert({ male: "bertram", female: "lucinda" })
-// pair.assert_not({ male: "apollo", female: "daphne" })
-
-// pair.query_log(10)({ male: "percival", female: "?female" })
-// pair.query_log(10)({ male: "camilla", female: "?female" })
-// pair.query_log(10)({ male: "?male", female: "lucinda" })
-// pair.query_log(10)({ male: "?x", female: "?x" })
-// pair.query_log(10)({ male: "?male", female: "fido" })
-// pair.query_log(10)({ male: "?male", female: "?female" })
+pair.find({ male: "percival", female: v`female` }, { log: true })
+pair.find({ male: "camilla", female: v`female` }, { log: true })
+pair.find({ male: v`male`, female: "lucinda" }, { log: true })
+pair.find({ male: v`x`, female: v`x` }, { log: true })
+pair.find({ male: v`male`, female: "fido" }, { log: true })
+pair.find({ male: v`male`, female: v`female` }, { log: true })

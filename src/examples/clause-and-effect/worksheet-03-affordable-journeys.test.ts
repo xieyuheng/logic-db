@@ -36,6 +36,6 @@ affordable.i([v`x`, v`y`], (v) => [
   adjacent.o([v`z`, v`y`]),
 ])
 
-console.log(affordable.query([v`to_kent`, "kent"]))
-console.log(affordable.query(["sussex", v`to_sussex`]))
-console.log(affordable.query([v`x`, v`y`]))
+affordable.find([v`to_kent`, "kent"], { log: true })
+affordable.find(["sussex", v`to_sussex`], { log: true })
+affordable.find([v`x`, v`y`], { log: true })

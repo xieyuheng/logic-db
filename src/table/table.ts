@@ -40,12 +40,10 @@ export class Table<T> {
     return Goals.UnitGoal.create({ table: this, data })
   }
 
-  query(data: Logical<T>, opts: { limit?: number } = {}): Array<Logical<T>> {
-    const searching = new Searching([
-      new GoalQueue(Subst.create(), [this.o(data)]),
-    ])
+  find(data: Logical<T>, opts: QueryOptions = {}): Array<Logical<T>> {
+    const { limit, log } = opts
 
-    const { limit } = opts
+    const searching = Searching.forData(this, data, { log })
 
     if (limit) {
       const results = searching.take(limit).map((subst) => subst.reify(data))
@@ -55,4 +53,42 @@ export class Table<T> {
       return results as Array<Logical<T>>
     }
   }
+
+  get(data: Logical<T>): Logical<T> | undefined {
+    const [result] = this.find(data, { limit: 1 })
+    return result
+  }
+
+  assert(data: Logical<T>): void {
+    const result = this.get(data)
+    if (result === undefined) {
+      throw new Error(
+        [
+          `An assertion is made that the data is in the table,`,
+          `but it is actually not in the table.`,
+          `  table: ${this.name}`,
+          `  data: ${JSON.stringify(data)}`,
+        ].join("\n")
+      )
+    }
+  }
+
+  assertNot(data: Logical<T>): void {
+    const result = this.get(data)
+    if (result !== undefined) {
+      throw new Error(
+        [
+          `An assertion is made that the data is **not** in the table,`,
+          `but it is actually in the table.`,
+          `  table: ${this.name}`,
+          `  data: ${JSON.stringify(data)}`,
+        ].join("\n")
+      )
+    }
+  }
+}
+
+type QueryOptions = {
+  limit?: number
+  log?: boolean
 }
