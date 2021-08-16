@@ -16,10 +16,15 @@
 
 # examples
 
-- worksheet-08-maximum-of-a-list.test.ts
-- water-jug-problem.test.ts
-- a-boston-high-tech-company.test.ts
-- logic-as-programs.test.ts
+- clause-and-effect
+  - worksheet-08-maximum-of-a-list.test.ts
+
+- the-power-of-prolog
+  - water-jug-problem.test.ts
+
+- sicp
+  - a-boston-high-tech-company.test.ts
+  - logic-as-programs.test.ts
 
 # later
 
