@@ -2,11 +2,6 @@
 
 - fix recursive schemas -- `listSchema` and `natSchema` -- with new `ty`
 
-- worksheet-08-maximum-of-a-list.test.ts
-
-- a-boston-high-tech-company.test.ts
-- logic-as-programs.test.ts
-
 - goals -- and -- And
 - goals -- or -- Or
 
@@ -18,6 +13,13 @@
 - goals -- low level predicate
 
 - `Ctx` -- where to use?
+
+# examples
+
+- worksheet-08-maximum-of-a-list.test.ts
+- water-jug-problem.test.ts
+- a-boston-high-tech-company.test.ts
+- logic-as-programs.test.ts
 
 # later
 
