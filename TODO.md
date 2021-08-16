@@ -1,4 +1,4 @@
-- well typed projection of query result
+- well typed projection of query result -- with the help of `ty`
 
 - goals -- and -- And
 - goals -- or -- Or
