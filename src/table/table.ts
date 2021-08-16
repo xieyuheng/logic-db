@@ -2,12 +2,9 @@ import { Logical, VariableFinder } from "../value"
 import { Searching, SearchOptions } from "../searching"
 import { Ctx } from "../ctx"
 import { Clause } from "../clause"
-import { Subst } from "../subst"
-import { Value } from "../value"
-import { Goal, GoalQueue } from "../goal"
+import { Goal } from "../goal"
 import * as Goals from "../goals"
 import * as Clauses from "../clauses"
-import ty from "@xieyuheng/ty"
 import { Schema } from "@xieyuheng/ty"
 
 export class Table<T> {
