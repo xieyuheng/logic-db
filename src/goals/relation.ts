@@ -7,7 +7,7 @@ import { Ctx } from "../ctx"
 import { Logical, VariableFinder } from "../value"
 import { Subst } from "../subst"
 
-export class UnitGoal<T> extends Goal {
+export class Relation<T> extends Goal {
   table: Table<T>
   data: Logical<T>
 
@@ -17,8 +17,8 @@ export class UnitGoal<T> extends Goal {
     this.data = opts.data
   }
 
-  static create<T>(opts: { table: Table<T>; data: Logical<T> }): UnitGoal<T> {
-    return new UnitGoal(opts)
+  static create<T>(opts: { table: Table<T>; data: Logical<T> }): Relation<T> {
+    return new Relation(opts)
   }
 
   evaluate(subst: Subst): Array<GoalQueue> {

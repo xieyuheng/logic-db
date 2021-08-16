@@ -1,1 +1,1 @@
-export * from "./unit-goal"
+export * from "./relation"

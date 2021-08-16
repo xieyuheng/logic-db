@@ -1,11 +1,11 @@
 - `Ctx`
 
-- goals -- u -- UnifiableGoal
-- goals -- nu -- NotUnifiableGoal
+- goals -- u -- Unifiable
+- goals -- nu -- NotUnifiable
 
-- goals -- and
-- goals -- or
-- goals -- not
+- goals -- and -- And
+- goals -- or -- Or
+- goals -- not -- Not
 
 - goals -- eqv with proposition
 - goals -- low level predicate
