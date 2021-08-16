@@ -1,8 +1,10 @@
 # LogicDB
 
-Aims:
-- combine logic programming and database in ts/js
-- practical and simple API
+Embedding a Prolog-like logic programming language in JavasScript and TypeScript.
+
+- Well typed relation in TypeScript.
+- Combining logic programming and database management.
+- Practical and simple API.
 
 ## Contributing
 
