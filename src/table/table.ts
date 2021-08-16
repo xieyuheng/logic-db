@@ -47,7 +47,7 @@ export class Table<T> {
 
     if (opts?.limit) {
       const results = searching
-        .take(opts?.limit || 100)
+        .take(opts?.limit)
         .map((subst) => subst.reify(data))
       return results as unknown as Array<T>
     } else {
