@@ -18,11 +18,6 @@ export class Table<T> {
     this.schema = opts.schema
   }
 
-  static create<T>(opts: { name: string; schema: Schema<T> }): Table<T> {
-    const { name, schema } = opts
-    return new Table({ name, schema })
-  }
-
   i(
     data: Logical<T>,
     premises?: (v: VariableFinder, ctx: Ctx) => Array<Goal>
