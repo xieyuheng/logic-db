@@ -45,10 +45,14 @@ export class Table<T> {
       new GoalQueue(Subst.create(), [this.o(data)]),
     ])
 
-    const results = searching
-      .take(opts?.limit || 100)
-      .map((subst) => subst.reify(data))
-
-    return results as unknown as Array<T>
+    if (opts?.limit) {
+      const results = searching
+        .take(opts?.limit || 100)
+        .map((subst) => subst.reify(data))
+      return results as unknown as Array<T>
+    } else {
+      const results = searching.all().map((subst) => subst.reify(data))
+      return results as unknown as Array<T>
+    }
   }
 }

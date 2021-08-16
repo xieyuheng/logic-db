@@ -21,6 +21,20 @@ export class Searching {
     }
   }
 
+  all(): Array<Subst> {
+    const array = []
+    while (true) {
+      let subst = this.next()
+      if (subst === null) {
+        break
+      } else {
+        array.push(subst)
+      }
+    }
+
+    return array
+  }
+
   take(limit: number): Array<Subst> {
     const array = []
     while (limit > 0) {
