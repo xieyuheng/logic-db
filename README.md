@@ -2,8 +2,9 @@
 
 Embedding a Prolog-like logic programming language in JavasScript and TypeScript.
 
-- Well typed relation in TypeScript.
 - Combining logic programming and database management.
+- Can declare relations between JSON documents.
+- Well typed relation in TypeScript.
 - Practical and simple API.
 
 ## Install
