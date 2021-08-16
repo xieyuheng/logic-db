@@ -42,8 +42,8 @@ member.assertNot(["joe", cons("marx", cons("darwin", cons("freud", null)))])
 member.assertResults(
   [v`element`, cons("paul", cons("john", null))],
   [
-    ["paul", { car: "paul", cdr: { car: "john", cdr: null } }],
-    ["john", { car: "paul", cdr: { car: "john", cdr: null } }],
+    ["paul", cons("paul", cons("john", null))],
+    ["john", cons("paul", cons("john", null))],
   ]
 )
 

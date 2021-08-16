@@ -1,5 +1,7 @@
 - well typed projection of query result -- with the help of `ty`
 
+- fix recursive schemas -- `listSchema` and `natSchema` -- with new `ty`
+
 - worksheet-08-maximum-of-a-list.test.ts
 - worksheet-09-searching-a-cyclic-graph.test.ts
 
@@ -27,3 +29,9 @@
 - `Connection`
 
 - error handling
+
+# maybe
+
+- use rest to support native array ?
+
+  - test by worksheet-05-array-member
