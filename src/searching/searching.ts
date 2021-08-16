@@ -50,13 +50,14 @@ export class Searching<T> {
       if (queues === null) {
         if (this.log) {
           const result = queue.subst.reify(this.data)
-          console.log({
-            table: this.table.name,
-            data: this.data,
-            result,
-            limit: this.limit,
-            count: ++this.count,
-          })
+          // console.log({
+          //   table: this.table.name,
+          //   data: this.data,
+          //   result,
+          //   limit: this.limit,
+          //   count: ++this.count,
+          // })
+          console.log(this.table.name, ++this.count, result)
         }
         return queue.subst
       }

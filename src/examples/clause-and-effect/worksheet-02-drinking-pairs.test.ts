@@ -1,4 +1,4 @@
-import { Table, v } from "../.."
+import { Table, v, nu } from "../.."
 import ty from "@xieyuheng/ty"
 
 const drinks = new Table({
@@ -28,7 +28,7 @@ const pair = new Table({
 pair.i({ p1: v`p1`, p2: v`p2`, alcohol: v`alcohol` }, (v) => [
   drinks.o({ person: v`p1`, alcohol: v`alcohol` }),
   drinks.o({ person: v`p2`, alcohol: v`alcohol` }),
-  // ne(v`p1`, v`p2`),
+  nu(v`p1`, v`p2`),
 ])
 
 pair.find({ p1: v`x`, p2: "mary", alcohol: "gin" }, { log: true })

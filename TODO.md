@@ -1,7 +1,6 @@
 - `Ctx`
 
 - goals -- u -- Unifiable
-- goals -- nu -- NotUnifiable
 
 - goals -- and -- And
 - goals -- or -- Or

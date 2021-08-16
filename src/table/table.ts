@@ -34,7 +34,7 @@ export class Table<T> {
   }
 
   o(data: Logical<T>): Goal {
-    return Goals.Relation.create({ table: this, data })
+    return new Goals.Relation({ table: this, data })
   }
 
   find(data: Logical<T>, opts: SearchOptions = {}): Array<Logical<T>> {

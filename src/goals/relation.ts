@@ -17,10 +17,6 @@ export class Relation<T> extends Goal {
     this.data = opts.data
   }
 
-  static create<T>(opts: { table: Table<T>; data: Logical<T> }): Relation<T> {
-    return new Relation(opts)
-  }
-
   evaluate(subst: Subst): Array<GoalQueue> {
     const queues: Array<GoalQueue> = []
 
