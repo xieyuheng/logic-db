@@ -8,6 +8,10 @@ import * as Clauses from "../clauses"
 import * as ut from "../ut"
 import { Schema } from "@xieyuheng/ty"
 
+// NOTE Our table is like prolog's predicate.
+// - We define predicate by writing down Horn clauses.
+// - A predicate describe relation between its arguments.
+
 export class Table<T> {
   clauses: Array<Clause<T>> = []
   name: string
