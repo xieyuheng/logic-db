@@ -1,5 +1,5 @@
 import { Logical, VariableFinder } from "../value"
-import { Searching } from "../searching"
+import { Searching, SearchOptions } from "../searching"
 import { Ctx } from "../ctx"
 import { Clause } from "../clause"
 import { Subst } from "../subst"
@@ -40,18 +40,9 @@ export class Table<T> {
     return Goals.UnitGoal.create({ table: this, data })
   }
 
-  find(data: Logical<T>, opts: QueryOptions = {}): Array<Logical<T>> {
-    const { limit, log } = opts
-
-    const searching = Searching.forData(this, data, { log })
-
-    if (limit) {
-      const results = searching.take(limit).map((subst) => subst.reify(data))
-      return results as Array<Logical<T>>
-    } else {
-      const results = searching.all().map((subst) => subst.reify(data))
-      return results as Array<Logical<T>>
-    }
+  find(data: Logical<T>, opts: SearchOptions = {}): Array<Logical<T>> {
+    const searching = Searching.forData(this, data, opts)
+    return searching.find()
   }
 
   get(data: Logical<T>): Logical<T> | undefined {
@@ -86,9 +77,4 @@ export class Table<T> {
       )
     }
   }
-}
-
-export type QueryOptions = {
-  limit?: number
-  log?: boolean
 }
