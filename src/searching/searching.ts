@@ -49,6 +49,7 @@ export class Searching<T> {
       if (queue === undefined) return null
       const queues = queue.step()
       if (queues === null) {
+        this.count++
         if (this.log) {
           const result = queue.subst.reify(this.data)
           // console.log({
@@ -56,9 +57,9 @@ export class Searching<T> {
           //   data: this.data,
           //   result,
           //   limit: this.limit,
-          //   count: ++this.count,
+          //   count: this.count,
           // })
-          console.log(this.table.name, ++this.count, result)
+          console.log(this.table.name, this.count, result)
         }
         return queue.subst
       }

@@ -1,3 +1,5 @@
+- well typed projection of query result
+
 - goals -- and -- And
 - goals -- or -- Or
 
