@@ -43,20 +43,26 @@ export class Table<T> {
     return new Goals.Relation({ table: this, data })
   }
 
-  find(
-    data: Logical<T>,
-    opts: SearchOptions & { log?: boolean } = {}
-  ): Array<Logical<T>> {
+  query(goals: Array<Goal>, opts: QueryOptions = {}): Array<Logical<T>> {
+    const searching = Searching.forGoals(goals, opts)
+    const solutions = searching.find()
+    // const results = solutions.map((subst) => subst.reify(data) as Logical<T>)
+    // if (opts.log) {
+    //   console.log(results)
+    // }
+    // return results
+    throw new Error("TODO")
+  }
+
+  find(data: Logical<T>, opts: QueryOptions = {}): Array<Logical<T>> {
     data = freshenValue(data) as Logical<T>
     const goal = this.o(data)
     const searching = Searching.forGoals([this.o(data)], opts)
     const solutions = searching.find()
     const results = solutions.map((subst) => subst.reify(data) as Logical<T>)
-
     if (opts.log) {
       console.log(results)
     }
-
     return results
   }
 
@@ -108,4 +114,8 @@ export class Table<T> {
       )
     }
   }
+}
+
+type QueryOptions = SearchOptions & {
+  log?: boolean
 }

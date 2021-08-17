@@ -1,9 +1,11 @@
+- well typed projection of query result -- with the help of `ty`
+
+- validate insertion -- we need to accept `Var` -- with the help of hooks in `Schema.validate`
+
 - be able to do query out of a table -- or join many tables
 
 - goals -- and -- And
 - goals -- or -- Or
-
-- well typed projection of query result -- with the help of `ty`
 
 - prolog's `dif` can find the least different subterm.
 
