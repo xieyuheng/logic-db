@@ -1,11 +1,17 @@
-- well typed projection of query result -- with the help of `ty`
-
-- fix recursive schemas -- `listSchema` and `natSchema` -- with new `ty`
+- `searching` -- should be more general -- instead of only searching for data
 
 - be able to do query out of a table -- or join many tables
 
 - goals -- and -- And
 - goals -- or -- Or
+
+- well typed projection of query result -- with the help of `ty`
+
+- prolog's `dif` can find the least different subterm.
+
+  - but our `ne` can not.
+
+- fix recursive schemas -- `listSchema` and `natSchema` -- with new `ty`
 
 - goals -- not -- Not
 

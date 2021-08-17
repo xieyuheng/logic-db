@@ -82,3 +82,19 @@ export function v(strs: TemplateStringsArray): Var {
   const [name] = strs
   return new Var(name)
 }
+
+// NOTE side-effect on vars
+export function createVariableFinder(vars: {
+  [key: string]: Var
+}): VariableFinder {
+  return (strs) => {
+    const found = vars[strs[0]]
+    if (found !== undefined) {
+      return found
+    } else {
+      const variable = new Var(strs[0])
+      vars[variable.name] = variable
+      return variable
+    }
+  }
+}

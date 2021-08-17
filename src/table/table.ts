@@ -43,9 +43,16 @@ export class Table<T> {
     return new Goals.Relation({ table: this, data })
   }
 
-  find(data: Logical<T>, opts: SearchOptions = {}): Array<Logical<T>> {
+  find(
+    data: Logical<T>,
+    opts: SearchOptions & { log?: boolean } = {}
+  ): Array<Logical<T>> {
     const searching = Searching.forData(this, data, opts)
-    return searching.find()
+    const results = searching.find()
+    if (opts.log) {
+      console.log(results)
+    }
+    return results
   }
 
   get(data: Logical<T>): Logical<T> | undefined {

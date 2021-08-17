@@ -2,7 +2,7 @@ import { Goal } from "../goal"
 import { GoalQueue } from "../goal-queue"
 import * as Clauses from "../clauses"
 import { Table } from "../table"
-import { Var, extractVars, freshenValue } from "../value"
+import { Var, extractVars, freshenValue, createVariableFinder } from "../value"
 import { Ctx } from "../ctx"
 import { Logical, VariableFinder } from "../value"
 import { Subst } from "../subst"
@@ -38,19 +38,5 @@ export class Relation<T> extends Goal {
     }
 
     return queues
-  }
-}
-
-// NOTE side-effect on vars
-function createVariableFinder(vars: { [key: string]: Var }): VariableFinder {
-  return (strs) => {
-    const found = vars[strs[0]]
-    if (found !== undefined) {
-      return found
-    } else {
-      const variable = new Var(strs[0])
-      vars[variable.name] = variable
-      return variable
-    }
   }
 }

@@ -1,7 +1,14 @@
 import { GoalQueue } from "../goal-queue"
 import { Table } from "../table"
+import { Goal } from "../goal"
 import { Subst } from "../subst"
-import { Logical, freshenValue } from "../value"
+import {
+  Value,
+  Logical,
+  freshenValue,
+  VariableFinder,
+  createVariableFinder,
+} from "../value"
 
 export type SearchOptions = {
   limit?: number
@@ -13,16 +20,15 @@ export type SearchOptions = {
 //   only by doing so, we can have a clear understanding of the implementation.
 
 export class Searching<T> {
-  table: Table<T>
+  table?: Table<T>
   queues: Array<GoalQueue>
   data: Logical<T>
   limit?: number
-  log: boolean
   count: number = 0
 
   constructor(
     input: {
-      table: Table<T>
+      table?: Table<T>
       queues: Array<GoalQueue>
       data: Logical<T>
     },
@@ -32,7 +38,6 @@ export class Searching<T> {
     this.queues = input.queues
     this.data = input.data
     this.limit = opts.limit
-    this.log = opts.log || false
   }
 
   static forData<T>(
@@ -54,17 +59,6 @@ export class Searching<T> {
       const queues = queue.step()
       if (queues === null) {
         this.count++
-        if (this.log) {
-          const result = queue.subst.reify(this.data)
-          // console.log({
-          //   table: this.table.name,
-          //   data: this.data,
-          //   result,
-          //   limit: this.limit,
-          //   count: this.count,
-          // })
-          console.log(this.table.name, this.count, result)
-        }
         return queue.subst
       }
       // NOTE about searching
