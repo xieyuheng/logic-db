@@ -1,37 +1,30 @@
-import { Logical, Table, v, ty, Schema } from "../.."
+import { Logical, Table, v, ty, Schema, Var } from "../.."
 
 // prepare the lispy list
 
-type List =
-  | string
-  | number
-  | null
-  | {
-      car: List
-      cdr: List
-    }
+type List<T> = null | { head: T | Var; tail: List<T> | Var }
 
-function cons(car: Logical<List>, cdr: Logical<List>): Logical<List> {
-  return { car, cdr }
+function cons<T>(head: T | Var, tail: List<T> | Var): List<T> {
+  return { head, tail }
 }
 
-function listSchema(): Schema<List> {
-  return ty.union(
-    ty.union(ty.string(), ty.number()),
-    // TODO ty can not handle recursive schema
-    // ty.union(ty.null(), ty.object({ car: listSchema(), cdr: listSchema() }))
-    ty.union(ty.null(), ty.object({ car: ty.any(), cdr: ty.any() }))
-  )
+function listSchema<T>(itemSchema: Schema<T>): Schema<List<T>> {
+  const nullSchema = ty.null()
+  const consSchema = ty.object({
+    head: itemSchema,
+    tail: ty.lazy(() => listSchema(itemSchema)),
+  })
+  return ty.union(nullSchema, consSchema)
 }
 
 const member = new Table({
   name: "member",
-  schema: ty.tuple(listSchema(), listSchema()),
+  schema: ty.tuple(ty.string(), listSchema(ty.string())),
 })
 
-member.i([v`element`, cons(v`element`, v`cdr`)])
-member.i([v`element`, cons(v`car`, v`cdr`)], (v) => [
-  member.o([v`element`, v`cdr`]),
+member.i([v`element`, cons(v`element`, v`tail`)])
+member.i([v`element`, cons(v`head`, v`tail`)], (v) => [
+  member.o([v`element`, v`tail`]),
 ])
 
 member.assert(["john", cons("paul", cons("john", null))])

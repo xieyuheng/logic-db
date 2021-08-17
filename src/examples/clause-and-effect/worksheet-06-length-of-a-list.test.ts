@@ -38,9 +38,9 @@ function succ(n: Logical<Nat>): Logical<Nat> {
 }
 
 function natSchema(): Schema<Nat> {
-  // TODO ty can not handle recursive schema
-  // ty.union(ty.same("zero"), ty.object({ prev: natSchema() }))
-  return ty.union(ty.same("zero"), ty.object({ prev: ty.any() }))
+  const zeroSchema = ty.same("zero" as const)
+  const succSchema = ty.object({ prev: ty.lazy(natSchema) })
+  return ty.union(zeroSchema, succSchema)
 }
 
 const length = new Table({
