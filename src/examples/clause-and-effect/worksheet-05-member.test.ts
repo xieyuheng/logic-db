@@ -2,11 +2,7 @@ import { Logical, Table, v, ty, Schema, Var } from "../.."
 
 // prepare the lispy list
 
-type List<T> = null | { head: T | Var; tail: List<T> | Var }
-
-function cons<T>(head: T | Var, tail: List<T> | Var): List<T> {
-  return { head, tail }
-}
+type List<T> = null | { head: T; tail: List<T> }
 
 function listSchema<T>(itemSchema: Schema<T>): Schema<List<T>> {
   const nullSchema = ty.null()
@@ -22,19 +18,31 @@ const member = new Table({
   schema: ty.tuple(ty.string(), listSchema(ty.string())),
 })
 
-member.i([v`element`, cons(v`element`, v`tail`)])
-member.i([v`element`, cons(v`head`, v`tail`)], (v) => [
+member.i([v`element`, { head: v`element`, tail: v`tail` }])
+member.i([v`element`, { head: v`head`, tail: v`tail` }], (v) => [
   member.o([v`element`, v`tail`]),
 ])
 
-member.assert(["john", cons("paul", cons("john", null))])
-member.assertNot(["joe", cons("marx", cons("darwin", cons("freud", null)))])
+member.assert(["john", { head: "paul", tail: { head: "john", tail: null } }])
+member.assertNot([
+  "joe",
+  {
+    head: "marx",
+    tail: {
+      head: "darwin",
+      tail: {
+        head: "freud",
+        tail: null,
+      },
+    },
+  },
+])
 
 member.assertResults(
-  [v`element`, cons("paul", cons("john", null))],
+  [v`element`, { head: "paul", tail: { head: "john", tail: null } }],
   [
-    ["paul", cons("paul", cons("john", null))],
-    ["john", cons("paul", cons("john", null))],
+    ["paul", { head: "paul", tail: { head: "john", tail: null } }],
+    ["john", { head: "paul", tail: { head: "john", tail: null } }],
   ]
 )
 
