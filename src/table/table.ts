@@ -1,4 +1,4 @@
-import { Logical, VariableFinder } from "../value"
+import { Logical, freshenValue, VariableFinder } from "../value"
 import { Searching, SearchOptions } from "../searching"
 import { Ctx } from "../ctx"
 import { Clause } from "../clause"
@@ -47,11 +47,16 @@ export class Table<T> {
     data: Logical<T>,
     opts: SearchOptions & { log?: boolean } = {}
   ): Array<Logical<T>> {
-    const searching = Searching.forData(this, data, opts)
-    const results = searching.find()
+    data = freshenValue(data) as Logical<T>
+    const goal = this.o(data)
+    const searching = Searching.forGoals([this.o(data)], opts)
+    const solutions = searching.find()
+    const results = solutions.map((subst) => subst.reify(data) as Logical<T>)
+
     if (opts.log) {
       console.log(results)
     }
+
     return results
   }
 

@@ -20,34 +20,23 @@ export type SearchOptions = {
 //   only by doing so, we can have a clear understanding of the implementation.
 
 export class Searching<T> {
-  table?: Table<T>
   queues: Array<GoalQueue>
-  data: Logical<T>
   limit?: number
   count: number = 0
 
   constructor(
     input: {
-      table?: Table<T>
       queues: Array<GoalQueue>
-      data: Logical<T>
     },
     opts: SearchOptions
   ) {
-    this.table = input.table
     this.queues = input.queues
-    this.data = input.data
     this.limit = opts.limit
   }
 
-  static forData<T>(
-    table: Table<T>,
-    data: Logical<T>,
-    opts: SearchOptions
-  ): Searching<T> {
-    data = freshenValue(data) as Logical<T>
-    const queues = [new GoalQueue(Subst.create(), [table.o(data)])]
-    const searching = new Searching({ table, data, queues }, opts)
+  static forGoals<T>(goals: Array<Goal>, opts: SearchOptions): Searching<T> {
+    const queues = [new GoalQueue(Subst.create(), goals)]
+    const searching = new Searching({ queues }, opts)
     return searching
   }
 
@@ -68,15 +57,14 @@ export class Searching<T> {
     }
   }
 
-  find(): Array<Logical<T>> {
-    const results = []
+  find(): Array<Subst> {
+    const solutions = []
     while (true) {
-      let subst = this.next()
+      const subst = this.next()
       if (subst === null) break
-      const result = subst.reify(this.data) as Logical<T>
-      results.push(result)
+      solutions.push(subst)
     }
 
-    return results
+    return solutions
   }
 }

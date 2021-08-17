@@ -1,5 +1,3 @@
-- `searching` -- should be more general -- instead of only searching for data
-
 - be able to do query out of a table -- or join many tables
 
 - goals -- and -- And
