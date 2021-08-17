@@ -33,10 +33,6 @@ type Nat = "zero" | { prev: Nat }
 
 const zero: Nat = "zero"
 
-function succ(n: Logical<Nat>): Logical<Nat> {
-  return { prev: n }
-}
-
 function natSchema(): Schema<Nat> {
   const zeroSchema = ty.same("zero" as const)
   const succSchema = ty.object({ prev: ty.lazy(natSchema) })
@@ -52,12 +48,12 @@ length.i([null, zero])
 
 length.i([cons(v`car`, v`cdr`), v`length`], (v) => [
   length.o([v`cdr`, v`cdr_length`]),
-  eq(v`length`, succ(v`cdr_length`)),
+  eq(v`length`, { prev: v`cdr_length` }),
 ])
 
 length.assertResults(
   [cons("apple", cons("pear", null)), v`length`],
-  [[cons("apple", cons("pear", null)), succ(succ("zero"))]]
+  [[cons("apple", cons("pear", null)), { prev: { prev: "zero" } }]]
 )
 
-length.find([v`list`, succ(succ(zero))], { log: true })
+length.find([v`list`, { prev: { prev: "zero" } }], { log: true })
