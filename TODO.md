@@ -1,6 +1,7 @@
-- validate insertion -- we need to accept `Var` -- with the help of hooks in `Schema.validate`
+- validate insertion -- we need to accept `Var`
 
-  - with the help of `ty`
+  - use `ty.guard` to handle `Var`
+  - how to handle `Logical<T>`?
 
 - well typed projection of query result -- with the help of `ty`
 

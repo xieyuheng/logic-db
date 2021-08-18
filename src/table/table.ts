@@ -1,4 +1,4 @@
-import { Logical, freshenValue, VariableFinder } from "../value"
+import { Var, Logical, freshenValue, VariableFinder } from "../value"
 import { Searching, SearchOptions } from "../searching"
 import { Ctx } from "../ctx"
 import { Clause } from "../clause"
@@ -6,7 +6,7 @@ import { Goal } from "../goal"
 import * as Goals from "../goals"
 import * as Clauses from "../clauses"
 import * as ut from "../ut"
-import { Schema } from "@xieyuheng/ty"
+import ty, { Schema } from "@xieyuheng/ty"
 
 // NOTE Our table is like prolog's predicate.
 // - We define predicate by writing down Horn clauses.

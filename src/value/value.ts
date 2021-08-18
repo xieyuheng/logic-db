@@ -2,6 +2,10 @@ export class Var {
   id: number
   name: string
 
+  static guard(data: any): data is Var {
+    return data instanceof Var
+  }
+
   static counter = 0
 
   constructor(name: string) {
