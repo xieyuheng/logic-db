@@ -1,5 +1,3 @@
-- rename `Solver.find` to `Solver.solve`
-
 - rename `Table.find` to `Table.query`
 
 - `Table.find` -- filter out non-ground results

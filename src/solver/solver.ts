@@ -36,8 +36,7 @@ export class Solver<T> {
 
   static forGoals<T>(goals: Array<Goal>, opts: SolverOptions): Solver<T> {
     const queues = [new GoalQueue(Subst.create(), goals)]
-    const searching = new Solver({ queues }, opts)
-    return searching
+    return new Solver({ queues }, opts)
   }
 
   next(): Subst | null {
@@ -57,7 +56,7 @@ export class Solver<T> {
     }
   }
 
-  find(): Array<Subst> {
+  solve(): Array<Subst> {
     const solutions = []
     while (true) {
       const subst = this.next()

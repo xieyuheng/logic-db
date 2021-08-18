@@ -53,8 +53,8 @@ export class Table<T> {
   find(data: Logical<T>, opts: QueryOptions = {}): Array<Logical<T>> {
     data = freshenValue(data) as Logical<T>
     const goal = this.o(data)
-    const searching = Solver.forGoals([this.o(data)], opts)
-    const solutions = searching.find()
+    const solver = Solver.forGoals([this.o(data)], opts)
+    const solutions = solver.solve()
     const results = solutions.map((subst) => subst.reify(data) as Logical<T>)
     if (opts.log) {
       console.log(results)
