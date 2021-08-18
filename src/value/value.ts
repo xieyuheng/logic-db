@@ -10,6 +10,11 @@ export class Var {
   }
 }
 
+export function v(strs: TemplateStringsArray): Var {
+  const [name] = strs
+  return new Var(name)
+}
+
 export type Value =
   | Var
   | null
@@ -77,11 +82,6 @@ export function freshenValue(
 export type Logical<T> = Var | { [P in keyof T]: Logical<T[P]> }
 
 export type VariableFinder = (strs: TemplateStringsArray) => Var
-
-export function v(strs: TemplateStringsArray): Var {
-  const [name] = strs
-  return new Var(name)
-}
 
 // NOTE side-effect on vars
 export function createVariableFinder(vars: {
