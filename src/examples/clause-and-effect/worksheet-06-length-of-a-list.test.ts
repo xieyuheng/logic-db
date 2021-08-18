@@ -23,7 +23,7 @@ type Nat = "zero" | { prev: Nat }
 const zero: Nat = "zero"
 
 function natSchema(): Schema<Nat> {
-  const zeroSchema = ty.same("zero" as const)
+  const zeroSchema = ty.const("zero" as const)
   const succSchema = ty.object({ prev: ty.lazy(natSchema) })
   return ty.union(zeroSchema, succSchema)
 }
