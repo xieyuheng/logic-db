@@ -13,7 +13,7 @@ import { Goal } from "../goal"
 import * as Goals from "../goals"
 import * as Clauses from "../clauses"
 import * as ut from "../ut"
-import ty, { Schema } from "@xieyuheng/ty"
+import { Schema } from "@xieyuheng/ty"
 
 // NOTE Our table is like prolog's predicate.
 // - We define predicate by writing down Horn clauses.
@@ -48,25 +48,6 @@ export class Table<T> {
 
   o(data: Logical<T>): Goal {
     return new Goals.Relation({ table: this, data })
-  }
-
-  query(
-    vars: Array<Var>,
-    // (v: VariableFinder) => goals: Array<Goal>,
-    goals: Array<Goal>,
-    opts: QueryOptions = {}
-  ): Array<Record<string, Value>> {
-    // TODO handle logical variable scope in goals -- by `(v) => [...]`
-    // const v = createVariableFinder()
-    // const searching = Searching.forGoals(goals(v), opts)
-    const searching = Searching.forGoals(goals, opts)
-    const solutions = searching.find()
-    // const results = solutions.map((subst) => subst.reify(data))
-    // if (opts.log) {
-    //   console.log(results)
-    // }
-    // return results
-    throw new Error("TODO")
   }
 
   find(data: Logical<T>, opts: QueryOptions = {}): Array<Logical<T>> {
@@ -133,4 +114,23 @@ export class Table<T> {
 
 type QueryOptions = SearchOptions & {
   log?: boolean
+}
+
+export function query(
+  vars: Array<Var>,
+  goals: (v: VariableFinder) => Array<Goal>,
+  opts: QueryOptions = {}
+): Array<Record<string, Value>> {
+  const varEntries: Array<[string, Var]> = vars.map((v) => [v.name, v])
+  const v = createVariableFinder(new Map(varEntries))
+  const searching = Searching.forGoals(goals(v), opts)
+  const solutions = searching.find()
+  const results = solutions.map(
+    (subst) =>
+      subst.reify(Object.fromEntries(varEntries)) as Record<string, Value>
+  )
+  if (opts.log) {
+    console.log(results)
+  }
+  return results
 }

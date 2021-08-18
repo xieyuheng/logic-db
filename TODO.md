@@ -1,13 +1,4 @@
-- validate insertion -- we need to accept `Var`
-
-  - use `ty.guard` to handle `Var`
-  - how to handle `Logical<T>`?
-
-- well typed `projection` of query result -- with the help of `ty`
-
-- `groundProjection`
-
-- be able to do query out of a table -- or join many tables
+- well typed `groundProjection`
 
 - goals -- and -- And
 - goals -- or -- Or
@@ -38,6 +29,15 @@
   - logic-as-programs.test.ts
 
 # later
+
+- well typed `projection` of query result -- with the help of `ty`
+
+  - we need to accept `Var`
+
+- validate insertion -- we need to accept `Var`
+
+  - use `ty.guard` to handle `Var`
+  - how to handle `Logical<T>`?
 
 - `Db`
 - `Db` -- stream

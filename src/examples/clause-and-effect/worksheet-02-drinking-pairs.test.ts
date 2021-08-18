@@ -1,4 +1,4 @@
-import { Table, v, ne, ty } from "../.."
+import { query, Table, v, ne, ty } from "../.."
 
 const drinks = new Table({
   name: "drinks",
@@ -33,3 +33,11 @@ pair.i({ p1: v`p1`, p2: v`p2`, alcohol: v`alcohol` }, (v) => [
 pair.find({ p1: v`x`, p2: "mary", alcohol: "gin" }, { log: true })
 pair.find({ p1: v`x`, p2: v`y`, alcohol: "gin" }, { log: true })
 pair.find({ p1: v`x`, p2: v`y`, alcohol: v`alcohol` }, { log: true })
+
+query(
+  [v`x`, v`y`],
+  (v) => [pair.o({ p1: v`x`, p2: v`y`, alcohol: v`alcohol` })],
+  {
+    log: true,
+  }
+)
