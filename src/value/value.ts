@@ -33,23 +33,27 @@ export function isObject(x: Value): x is { [key: string]: Value } {
   return typeof x === "object" && x !== null && !(x instanceof Array)
 }
 
-export function extractVars(value: Value): { [key: string]: Var } {
+export function extractVars(value: Value): Map<string, Var> {
   if (value instanceof Var) {
-    return { [value.name]: value }
+    return new Map([[value.name, value]])
   } else if (value instanceof Array) {
-    let vars = {}
+    const vars = new Map()
     for (const e of value) {
-      vars = { ...vars, ...extractVars(e) }
+      for (const [name, v] of extractVars(e)) {
+        vars.set(name, v)
+      }
     }
     return vars
   } else if (isObject(value)) {
-    let vars = {}
+    const vars = new Map()
     for (const k in value) {
-      vars = { ...vars, ...extractVars(value[k]) }
+      for (const [name, v] of extractVars(value[k])) {
+        vars.set(name, v)
+      }
     }
     return vars
   } else {
-    return {}
+    return new Map()
   }
 }
 
@@ -88,16 +92,14 @@ export type Logical<T> = Var | { [P in keyof T]: Logical<T[P]> }
 export type VariableFinder = (strs: TemplateStringsArray) => Var
 
 // NOTE side-effect on vars
-export function createVariableFinder(vars: {
-  [key: string]: Var
-}): VariableFinder {
+export function createVariableFinder(vars: Map<string, Var>): VariableFinder {
   return (strs) => {
-    const found = vars[strs[0]]
+    const found = vars.get(strs[0])
     if (found !== undefined) {
       return found
     } else {
       const variable = new Var(strs[0])
-      vars[variable.name] = variable
+      vars.set(variable.name, variable)
       return variable
     }
   }

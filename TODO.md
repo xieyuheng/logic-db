@@ -3,7 +3,9 @@
   - use `ty.guard` to handle `Var`
   - how to handle `Logical<T>`?
 
-- well typed projection of query result -- with the help of `ty`
+- well typed `projection` of query result -- with the help of `ty`
+
+- `groundProjection`
 
 - be able to do query out of a table -- or join many tables
 

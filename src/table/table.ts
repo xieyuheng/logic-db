@@ -1,4 +1,11 @@
-import { Var, Logical, freshenValue, VariableFinder } from "../value"
+import {
+  Var,
+  Value,
+  Logical,
+  freshenValue,
+  VariableFinder,
+  createVariableFinder,
+} from "../value"
 import { Searching, SearchOptions } from "../searching"
 import { Ctx } from "../ctx"
 import { Clause } from "../clause"
@@ -43,10 +50,18 @@ export class Table<T> {
     return new Goals.Relation({ table: this, data })
   }
 
-  query(goals: Array<Goal>, opts: QueryOptions = {}): Array<Logical<T>> {
+  query(
+    vars: Array<Var>,
+    // (v: VariableFinder) => goals: Array<Goal>,
+    goals: Array<Goal>,
+    opts: QueryOptions = {}
+  ): Array<Record<string, Value>> {
+    // TODO handle logical variable scope in goals -- by `(v) => [...]`
+    // const v = createVariableFinder()
+    // const searching = Searching.forGoals(goals(v), opts)
     const searching = Searching.forGoals(goals, opts)
     const solutions = searching.find()
-    // const results = solutions.map((subst) => subst.reify(data) as Logical<T>)
+    // const results = solutions.map((subst) => subst.reify(data))
     // if (opts.log) {
     //   console.log(results)
     // }
