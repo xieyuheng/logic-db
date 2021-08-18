@@ -1,4 +1,4 @@
-import { query, Table, v, ne, ty } from "../.."
+import Logic, { Table, v, ne, ty } from "../.."
 
 const drinks = new Table({
   name: "drinks",
@@ -34,7 +34,7 @@ pair.find({ p1: v`x`, p2: "mary", alcohol: "gin" }, { log: true })
 pair.find({ p1: v`x`, p2: v`y`, alcohol: "gin" }, { log: true })
 pair.find({ p1: v`x`, p2: v`y`, alcohol: v`alcohol` }, { log: true })
 
-query(
+Logic.query(
   [v`x`, v`y`],
   (v) => [pair.o({ p1: v`x`, p2: v`y`, alcohol: v`alcohol` })],
   {

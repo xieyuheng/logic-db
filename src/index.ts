@@ -1,4 +1,5 @@
 export * from "./api"
+
 export * from "./value"
 export * from "./table"
 
@@ -13,3 +14,6 @@ export const ne = Goals.NotUnifiable.create
 
 export { default as ty } from "@xieyuheng/ty"
 export { Schema } from "@xieyuheng/ty"
+
+import * as API from "./api"
+export default API

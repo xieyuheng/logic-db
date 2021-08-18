@@ -1,4 +1,14 @@
-- well typed `groundProjection`
+- rename `Searching` to `Solver`
+
+- rename `Table.find` to `Table.query`
+
+- `Table.find` -- filter out non-ground results
+
+  - well typed projection -- with the help of `ty` schema
+
+- `Logic.find` -- filter out non-ground results
+
+  - well typed projection -- with the help of `ty` schema
 
 - goals -- and -- And
 - goals -- or -- Or
