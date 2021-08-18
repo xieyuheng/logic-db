@@ -6,7 +6,7 @@ import {
   VariableFinder,
   createVariableFinder,
 } from "../value"
-import { Searching, SearchOptions } from "../searching"
+import { Solver, SolverOptions } from "../solver"
 import { Ctx } from "../ctx"
 import { Clause } from "../clause"
 import { Goal } from "../goal"
@@ -53,7 +53,7 @@ export class Table<T> {
   find(data: Logical<T>, opts: QueryOptions = {}): Array<Logical<T>> {
     data = freshenValue(data) as Logical<T>
     const goal = this.o(data)
-    const searching = Searching.forGoals([this.o(data)], opts)
+    const searching = Solver.forGoals([this.o(data)], opts)
     const solutions = searching.find()
     const results = solutions.map((subst) => subst.reify(data) as Logical<T>)
     if (opts.log) {
@@ -112,6 +112,6 @@ export class Table<T> {
   }
 }
 
-type QueryOptions = SearchOptions & {
+type QueryOptions = SolverOptions & {
   log?: boolean
 }

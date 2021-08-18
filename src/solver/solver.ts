@@ -10,7 +10,7 @@ import {
   createVariableFinder,
 } from "../value"
 
-export type SearchOptions = {
+export type SolverOptions = {
   limit?: number
   log?: boolean
 }
@@ -19,7 +19,7 @@ export type SearchOptions = {
 //   but we should be thinking in terms of tree instead of queues,
 //   only by doing so, we can have a clear understanding of the implementation.
 
-export class Searching<T> {
+export class Solver<T> {
   queues: Array<GoalQueue>
   limit?: number
   count: number = 0
@@ -28,15 +28,15 @@ export class Searching<T> {
     input: {
       queues: Array<GoalQueue>
     },
-    opts: SearchOptions
+    opts: SolverOptions
   ) {
     this.queues = input.queues
     this.limit = opts.limit
   }
 
-  static forGoals<T>(goals: Array<Goal>, opts: SearchOptions): Searching<T> {
+  static forGoals<T>(goals: Array<Goal>, opts: SolverOptions): Solver<T> {
     const queues = [new GoalQueue(Subst.create(), goals)]
-    const searching = new Searching({ queues }, opts)
+    const searching = new Solver({ queues }, opts)
     return searching
   }
 

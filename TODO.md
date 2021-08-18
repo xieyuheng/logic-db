@@ -1,4 +1,4 @@
-- rename `Searching` to `Solver`
+- rename `Solver.find` to `Solver.solve`
 
 - rename `Table.find` to `Table.query`
 

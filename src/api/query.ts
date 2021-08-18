@@ -1,8 +1,8 @@
 import { Var, Value, VariableFinder, createVariableFinder } from "../value"
-import { Searching, SearchOptions } from "../searching"
+import { Solver, SolverOptions } from "../solver"
 import { Goal } from "../goal"
 
-type QueryOptions = SearchOptions & {
+type QueryOptions = SolverOptions & {
   log?: boolean
 }
 
@@ -13,7 +13,7 @@ export function query(
 ): Array<Record<string, Value>> {
   const varEntries: Array<[string, Var]> = vars.map((v) => [v.name, v])
   const v = createVariableFinder(new Map(varEntries))
-  const searching = Searching.forGoals(goals(v), opts)
+  const searching = Solver.forGoals(goals(v), opts)
   const solutions = searching.find()
   const results = solutions.map(
     (subst) =>
