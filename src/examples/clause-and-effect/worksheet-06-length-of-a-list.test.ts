@@ -2,26 +2,15 @@ import { Logical, Table, v, eq, ty, Schema } from "../.."
 
 // prepare the lispy list
 
-type List =
-  | string
-  | number
-  | null
-  | {
-      car: List
-      cdr: List
-    }
+type List<T> = null | { head: T; tail: List<T> }
 
-function cons(car: Logical<List>, cdr: Logical<List>): Logical<List> {
-  return { car, cdr }
-}
-
-function listSchema(): Schema<List> {
-  return ty.union(
-    ty.union(ty.string(), ty.number()),
-    // TODO ty can not handle recursive schema
-    // ty.union(ty.null(), ty.object({ car: listSchema(), cdr: listSchema() }))
-    ty.union(ty.null(), ty.object({ car: ty.any(), cdr: ty.any() }))
-  )
+function listSchema<T>(itemSchema: Schema<T>): Schema<List<T>> {
+  const nullSchema = ty.null()
+  const consSchema = ty.object({
+    head: itemSchema,
+    tail: ty.lazy(() => listSchema(itemSchema)),
+  })
+  return ty.union(nullSchema, consSchema)
 }
 
 // prepare the nat
@@ -41,19 +30,24 @@ function natSchema(): Schema<Nat> {
 
 const length = new Table({
   name: "length",
-  schema: ty.tuple(listSchema(), natSchema()),
+  schema: ty.tuple(listSchema(ty.string()), natSchema()),
 })
 
 length.i([null, zero])
 
-length.i([cons(v`car`, v`cdr`), v`length`], (v) => [
-  length.o([v`cdr`, v`cdr_length`]),
-  eq(v`length`, { prev: v`cdr_length` }),
+length.i([{ head: v`head`, tail: v`tail` }, v`length`], (v) => [
+  length.o([v`tail`, v`tail_length`]),
+  eq(v`length`, { prev: v`tail_length` }),
 ])
 
 length.assertResults(
-  [cons("apple", cons("pear", null)), v`length`],
-  [[cons("apple", cons("pear", null)), { prev: { prev: "zero" } }]]
+  [{ head: "apple", tail: { head: "pear", tail: null } }, v`length`],
+  [
+    [
+      { head: "apple", tail: { head: "pear", tail: null } },
+      { prev: { prev: "zero" } },
+    ],
+  ]
 )
 
 length.find([v`list`, { prev: { prev: "zero" } }], { log: true })

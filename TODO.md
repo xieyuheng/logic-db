@@ -1,5 +1,3 @@
-- fix recursive schemas -- `listSchema` and `natSchema` -- with new `ty`
-
 - well typed projection of query result -- with the help of `ty`
 
 - validate insertion -- we need to accept `Var` -- with the help of hooks in `Schema.validate`
