@@ -30,9 +30,9 @@ pair.i({ p1: v`p1`, p2: v`p2`, alcohol: v`alcohol` }, (v) => [
   ne(v`p1`, v`p2`),
 ])
 
-pair.find({ p1: v`x`, p2: "mary", alcohol: "gin" }, { log: true })
-pair.find({ p1: v`x`, p2: v`y`, alcohol: "gin" }, { log: true })
-pair.find({ p1: v`x`, p2: v`y`, alcohol: v`alcohol` }, { log: true })
+pair.query({ p1: v`x`, p2: "mary", alcohol: "gin" }, { log: true })
+pair.query({ p1: v`x`, p2: v`y`, alcohol: "gin" }, { log: true })
+pair.query({ p1: v`x`, p2: v`y`, alcohol: v`alcohol` }, { log: true })
 
 Logic.query(
   [v`x`, v`y`],

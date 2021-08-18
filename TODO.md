@@ -1,10 +1,8 @@
-- rename `Table.find` to `Table.query`
-
-- `Table.find` -- filter out non-ground results
+- `Logic.find` -- filter out non-ground results
 
   - well typed projection -- with the help of `ty` schema
 
-- `Logic.find` -- filter out non-ground results
+- `Table.find` -- filter out non-ground results
 
   - well typed projection -- with the help of `ty` schema
 

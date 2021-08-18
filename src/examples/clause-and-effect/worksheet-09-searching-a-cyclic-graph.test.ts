@@ -70,15 +70,15 @@ path.i([v`x`, v`y`, v`occurs`], (v) => [
   path.o([v`z`, v`y`, cons(v`z`, v`occurs`)]),
 ])
 
-path.find(["f", "f", null], { log: true })
-path.find(["a", "c", null], { log: true })
-path.find(["g", "e", null], { log: true })
+path.query(["f", "f", null], { log: true })
+path.query(["a", "c", null], { log: true })
+path.query(["g", "e", null], { log: true })
 
-path.find(["g", v`x`, null], { log: true })
-path.find([v`x`, "h", null], { log: true })
+path.query(["g", v`x`, null], { log: true })
+path.query([v`x`, "h", null], { log: true })
 
-path.find(["g", "c", null], { log: true })
-path.find(["g", "c", cons("f", null)], { log: true })
+path.query(["g", "c", null], { log: true })
+path.query(["g", "c", cons("f", null)], { log: true })
 
-path.find(["a", v`x`, cons("f", cons("d", null))], { log: true })
-path.find(["a", v`x`, null], { log: true })
+path.query(["a", v`x`, cons("f", cons("d", null))], { log: true })
+path.query(["a", v`x`, null], { log: true })

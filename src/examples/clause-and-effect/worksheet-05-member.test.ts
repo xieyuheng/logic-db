@@ -47,7 +47,7 @@ member.assertResults(
 )
 
 {
-  const results = member.find(["foo", v`list`], { limit: 3 })
+  const results = member.query(["foo", v`list`], { limit: 3 })
   for (const result of results) {
     console.log(JSON.stringify(result))
   }

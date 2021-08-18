@@ -50,4 +50,4 @@ length.assertResults(
   ]
 )
 
-length.find([v`list`, { prev: { prev: "zero" } }], { log: true })
+length.query([v`list`, { prev: { prev: "zero" } }], { log: true })

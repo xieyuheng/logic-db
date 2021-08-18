@@ -50,7 +50,7 @@ export class Table<T> {
     return new Goals.Relation({ table: this, data })
   }
 
-  find(data: Logical<T>, opts: QueryOptions = {}): Array<Logical<T>> {
+  query(data: Logical<T>, opts: QueryOptions = {}): Array<Logical<T>> {
     data = freshenValue(data) as Logical<T>
     const goal = this.o(data)
     const solver = Solver.forGoals([this.o(data)], opts)
@@ -63,7 +63,7 @@ export class Table<T> {
   }
 
   get(data: Logical<T>): Logical<T> | undefined {
-    const [result] = this.find(data, { limit: 1 })
+    const [result] = this.query(data, { limit: 1 })
     return result
   }
 
@@ -96,7 +96,7 @@ export class Table<T> {
   }
 
   assertResults(data: Logical<T>, results: Array<Logical<T>>): void {
-    const found = this.find(data)
+    const found = this.query(data)
     if (!ut.equal(found, results)) {
       throw new Error(
         [

@@ -24,6 +24,6 @@ const path = new Table({
 path.i([v`x`, v`x`])
 path.i([v`x`, v`y`], (v) => [a.o([v`x`, v`z`]), path.o([v`z`, v`y`])])
 
-path.find(["g", v`x`], { log: true })
-path.find([v`x`, "h"], { log: true })
-path.find([v`x`, v`y`], { log: true })
+path.query(["g", v`x`], { log: true })
+path.query([v`x`, "h"], { log: true })
+path.query([v`x`, v`y`], { log: true })
