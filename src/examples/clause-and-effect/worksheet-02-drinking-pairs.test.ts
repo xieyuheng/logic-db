@@ -35,9 +35,20 @@ pair.query({ p1: v`x`, p2: v`y`, alcohol: "gin" }, { log: true })
 pair.query({ p1: v`x`, p2: v`y`, alcohol: v`alcohol` }, { log: true })
 
 Logic.query(
-  [v`x`, v`y`],
   (v) => [pair.o({ p1: v`x`, p2: v`y`, alcohol: v`alcohol` })],
+  ["x", "y"],
   {
     log: true,
   }
 )
+
+// {
+//   type Result = { x: string; y: string }
+//   const results: Array<Result> = Logic.find(
+//     (v) => [pair.o({ p1: v`x`, p2: v`y`, alcohol: v`alcohol` })],
+//     { x: ty.string(), y: ty.string() },
+//     {
+//       log: true,
+//     }
+//   )
+// }
