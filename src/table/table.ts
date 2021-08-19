@@ -6,7 +6,7 @@ import {
   VariableFinder,
   createVariableFinder,
 } from "../value"
-import { Solver, SolverOptions } from "../solver"
+import { Solver } from "../solver"
 import { Ctx } from "../ctx"
 import { Clause } from "../clause"
 import { Goal } from "../goal"
@@ -50,11 +50,11 @@ export class Table<T> {
     return new Goals.Relation({ table: this, data })
   }
 
-  query(data: Logical<T>, opts: QueryOptions = {}): Array<Logical<T>> {
+  query(data: Logical<T>, opts: { limit?: number } = {}): Array<Logical<T>> {
     data = freshenValue(data) as Logical<T>
 
-    const solver = Solver.forGoals([this.o(data)], opts)
-    const solutions = solver.solve()
+    const solver = Solver.forGoals([this.o(data)])
+    const solutions = solver.solve({ limit: opts.limit })
     const results = solutions.map((subst) => subst.reify(data) as Logical<T>)
     return results
   }
@@ -62,12 +62,12 @@ export class Table<T> {
   find<R>(
     data: Logical<T>,
     varSchemas: { [P in keyof R]: Schema<R[P]> },
-    opts: QueryOptions = {}
+    opts: { limit?: number } = {}
   ): Array<R> {
     data = freshenValue(data) as Logical<T>
 
-    const solver = Solver.forGoals([this.o(data)], opts)
-    const solutions = solver.solve()
+    const solver = Solver.forGoals([this.o(data)])
+    const solutions = solver.solve({ limit: opts.limit })
 
     const results = []
     const v = createVariableFinder(extractVars(data))
@@ -140,8 +140,4 @@ export class Table<T> {
       )
     }
   }
-}
-
-type QueryOptions = SolverOptions & {
-  log?: boolean
 }

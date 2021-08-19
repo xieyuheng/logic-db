@@ -1,4 +1,5 @@
-- no `SolverOptions` when creating solver -- pass `limit` to `solver.solve`
+- refactor `Logic.find` & `Logic.query`
+- refactor `Table.find` & `Table.query`
 
 - goals -- `Not`
 

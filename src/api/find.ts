@@ -1,21 +1,19 @@
 import { Var, VariableFinder, createVariableFinder } from "../value"
-import { Solver, SolverOptions } from "../solver"
+import { Solver } from "../solver"
 import { Goal } from "../goal"
 import ty, { Schema, Errors } from "@xieyuheng/ty"
 import * as ut from "../ut"
 
-type QueryOptions = SolverOptions
-
 export function find<T>(
   goals: (v: VariableFinder) => Array<Goal>,
   varSchemas: { [P in keyof T]: Schema<T[P]> },
-  opts: QueryOptions = {}
+  opts: { limit?: number } = {}
 ): Array<T> {
   const vars = Object.keys(varSchemas).map((name) => new Var(name))
   const varEntries: Array<[string, Var]> = vars.map((v) => [v.name, v])
   const v = createVariableFinder(new Map(varEntries))
-  const searching = Solver.forGoals(goals(v), opts)
-  const solutions = searching.solve()
+  const searching = Solver.forGoals(goals(v))
+  const solutions = searching.solve({ limit: opts.limit })
   const results = []
   for (const subst of solutions) {
     const result = subst.reify(Object.fromEntries(varEntries))
@@ -37,9 +35,9 @@ export function assertFindResults<T>(
   goals: (v: VariableFinder) => Array<Goal>,
   varSchemas: { [P in keyof T]: Schema<T[P]> },
   results: Array<T>,
-  opts: QueryOptions = {}
+  opts: { limit?: number } = {}
 ): void {
-  const found = find(goals, varSchemas, opts)
+  const found = find(goals, varSchemas, { limit: opts.limit })
   if (!ut.equal(found, results)) {
     throw new Error(
       [
