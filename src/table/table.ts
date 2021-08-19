@@ -133,7 +133,7 @@ export class Table<T> {
     }
   }
 
-  assertResults(data: Logical<T>, results: Array<Logical<T>>): void {
+  assertQueryResults(data: Logical<T>, results: Array<Logical<T>>): void {
     const found = this.query(data)
     if (!ut.equal(found, results)) {
       throw new Error(

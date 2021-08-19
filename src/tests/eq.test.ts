@@ -15,7 +15,7 @@ pair.i(["c", "a"])
 pair.i(["c", "b"])
 pair.i(["c", "c"])
 
-pair.assertResults(
+pair.assertQueryResults(
   [v`x`, v`x`],
   [
     ["a", "a"],
@@ -31,7 +31,7 @@ const eq_pair = new Logic.Table({
 
 eq_pair.i([v`x`, v`y`], (v) => [pair.o([v`x`, v`y`]), eq(v`x`, v`y`)])
 
-eq_pair.assertResults(
+eq_pair.assertQueryResults(
   [v`x`, v`y`],
   [
     ["a", "a"],

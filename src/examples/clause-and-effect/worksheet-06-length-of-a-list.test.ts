@@ -14,7 +14,7 @@ length.i([{ head: v`head`, tail: v`tail` }, v`length`], (v) => [
   eq(v`length`, { prev: v`tail_length` }),
 ])
 
-length.assertResults(
+length.assertQueryResults(
   [{ head: "apple", tail: { head: "pear", tail: null } }, v`length`],
   [
     [

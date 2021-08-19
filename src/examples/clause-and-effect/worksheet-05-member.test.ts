@@ -26,7 +26,7 @@ member.assertNot([
   },
 ])
 
-member.assertResults(
+member.assertQueryResults(
   [v`element`, { head: "paul", tail: { head: "john", tail: null } }],
   [
     ["paul", { head: "paul", tail: { head: "john", tail: null } }],

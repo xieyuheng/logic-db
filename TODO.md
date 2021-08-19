@@ -1,6 +1,6 @@
 - goals -- `Not`
 
-  - [question] this will break the definition of horn clause?
+- [question] this will break the definition of horn clause?
 
 - goals -- eqv with proposition
 - goals -- low level predicate
