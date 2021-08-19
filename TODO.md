@@ -1,3 +1,5 @@
+- no `opts.log` -- just use `console.log`
+
 - goals -- `Not`
 
 - [question] this will break the definition of horn clause?
