@@ -89,10 +89,10 @@ export function freshenValue(
 
 export type Logical<T> = Var | { [P in keyof T]: Logical<T[P]> }
 
-export type VariableFinder = (strs: TemplateStringsArray) => Var
+export type VarFinder = (strs: TemplateStringsArray) => Var
 
 // NOTE side-effect on vars
-export function createVariableFinder(vars: Map<string, Var>): VariableFinder {
+export function createVarFinder(vars: Map<string, Var>): VarFinder {
   return (strs) => {
     const found = vars.get(strs[0])
     if (found !== undefined) {

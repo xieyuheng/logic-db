@@ -1,17 +1,17 @@
-import { Var, VariableFinder, createVariableFinder } from "../value"
+import { Var, VarFinder, createVarFinder } from "../value"
 import { Solver } from "../solver"
 import { Goal } from "../goal"
 import ty, { Schema, Errors } from "@xieyuheng/ty"
 import * as ut from "../ut"
 
 export function find<T>(
-  goals: (v: VariableFinder) => Array<Goal>,
+  goals: (v: VarFinder) => Array<Goal>,
   varSchemas: { [P in keyof T]: Schema<T[P]> },
   opts: { limit?: number } = {}
 ): Array<T> {
   const vars = Object.keys(varSchemas).map((name) => new Var(name))
   const varEntries: Array<[string, Var]> = vars.map((v) => [v.name, v])
-  const v = createVariableFinder(new Map(varEntries))
+  const v = createVarFinder(new Map(varEntries))
   const searching = Solver.forGoals(goals(v))
   const solutions = searching.solve({ limit: opts.limit })
   const results = []
@@ -32,7 +32,7 @@ export function find<T>(
 }
 
 export function assertFindResults<T>(
-  goals: (v: VariableFinder) => Array<Goal>,
+  goals: (v: VarFinder) => Array<Goal>,
   varSchemas: { [P in keyof T]: Schema<T[P]> },
   results: Array<T>,
   opts: { limit?: number } = {}

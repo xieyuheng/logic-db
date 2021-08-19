@@ -6,8 +6,8 @@ import {
   Value,
   Logical,
   freshenValue,
-  VariableFinder,
-  createVariableFinder,
+  VarFinder,
+  createVarFinder,
 } from "../value"
 
 // NOTE In implementation, we use array of queues to do search,

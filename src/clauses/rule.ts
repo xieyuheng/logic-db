@@ -1,15 +1,15 @@
 import { Clause } from "../clause"
-import { Logical, VariableFinder } from "../value"
+import { Logical, VarFinder } from "../value"
 import { Goal } from "../goal"
 import { Ctx } from "../ctx"
 
 export class Rule<T> extends Clause<T> {
   data: Logical<T>
-  premises: (v: VariableFinder, ctx: Ctx) => Array<Goal>
+  premises: (v: VarFinder, ctx: Ctx) => Array<Goal>
 
   constructor(opts: {
     data: Logical<T>
-    premises: (v: VariableFinder, ctx: Ctx) => Array<Goal>
+    premises: (v: VarFinder, ctx: Ctx) => Array<Goal>
   }) {
     super()
     this.data = opts.data
@@ -18,7 +18,7 @@ export class Rule<T> extends Clause<T> {
 
   static create<T>(opts: {
     data: Logical<T>
-    premises: (v: VariableFinder, ctx: Ctx) => Array<Goal>
+    premises: (v: VarFinder, ctx: Ctx) => Array<Goal>
   }): Rule<T> {
     return new Rule(opts)
   }

@@ -3,8 +3,8 @@ import {
   Logical,
   extractVars,
   freshenValue,
-  VariableFinder,
-  createVariableFinder,
+  VarFinder,
+  createVarFinder,
 } from "../value"
 import { Solver } from "../solver"
 import { Ctx } from "../ctx"
@@ -37,7 +37,7 @@ export class Table<T> {
 
   i(
     data: Logical<T>,
-    premises?: (v: VariableFinder, ctx: Ctx) => Array<Goal>
+    premises?: (v: VarFinder, ctx: Ctx) => Array<Goal>
   ): void {
     if (premises) {
       this.clauses.push(Clauses.Rule.create({ data, premises }))
@@ -55,6 +55,7 @@ export class Table<T> {
 
     const solver = Solver.forGoals([this.o(data)])
     const solutions = solver.solve({ limit: opts.limit })
+
     const results = solutions.map((subst) => subst.reify(data) as Logical<T>)
     return results
   }
@@ -70,7 +71,7 @@ export class Table<T> {
     const solutions = solver.solve({ limit: opts.limit })
 
     const results = []
-    const v = createVariableFinder(extractVars(data))
+    const v = createVarFinder(extractVars(data))
     const varEntries = Object.keys(varSchemas).map((name) => [
       name,
       v([name] as unknown as TemplateStringsArray),
