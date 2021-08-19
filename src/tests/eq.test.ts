@@ -1,6 +1,6 @@
-import { Table, v, eq, ty } from ".."
+import Logic, { v, eq, ty } from ".."
 
-const pair = new Table({
+const pair = new Logic.Table({
   name: "pair",
   schema: ty.tuple(ty.string(), ty.string()),
 })
@@ -24,7 +24,7 @@ pair.assertResults(
   ]
 )
 
-const eq_pair = new Table({
+const eq_pair = new Logic.Table({
   name: "eq_pair",
   schema: ty.tuple(ty.string(), ty.string()),
 })

@@ -1,6 +1,6 @@
-import Logic, { Table, v, ne, ty } from "../.."
+import Logic, { v, ne, ty } from "../.."
 
-const drinks = new Table({
+const drinks = new Logic.Table({
   name: "drinks",
   schema: ty.object({
     person: ty.string(),
@@ -15,7 +15,7 @@ drinks.i({ person: "john", alcohol: "gin" })
 drinks.i({ person: "fred", alcohol: "gin" })
 drinks.i({ person: "fred", alcohol: "vodka" })
 
-const pair = new Table({
+const pair = new Logic.Table({
   name: "pair",
   schema: ty.object({
     p1: ty.string(),

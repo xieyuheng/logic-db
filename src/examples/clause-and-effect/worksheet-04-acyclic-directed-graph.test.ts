@@ -1,6 +1,6 @@
-import { Table, v, ty } from "../.."
+import Logic, { v, ty } from "../.."
 
-const a = new Table({
+const a = new Logic.Table({
   name: "a",
   schema: ty.tuple(ty.string(), ty.string()),
 })
@@ -16,7 +16,7 @@ a.i(["b", "f"])
 a.i(["b", "c"])
 a.i(["f", "c"])
 
-const path = new Table({
+const path = new Logic.Table({
   name: "path",
   schema: ty.tuple(ty.string(), ty.string()),
 })

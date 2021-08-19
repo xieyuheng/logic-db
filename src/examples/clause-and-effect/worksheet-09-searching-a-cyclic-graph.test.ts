@@ -1,6 +1,6 @@
-import { Logical, Table, v, ne, ty, Schema } from "../.."
+import Logic, { Logical, v, ne, ty, Schema } from "../.."
 
-const a = new Table({
+const a = new Logic.Table({
   name: "a",
   schema: ty.tuple(ty.string(), ty.string()),
 })
@@ -47,7 +47,7 @@ function listSchema(): Schema<List> {
   )
 }
 
-const legal = new Table({
+const legal = new Logic.Table({
   name: "legal",
   schema: ty.tuple(ty.string(), listSchema()),
 })
@@ -58,7 +58,7 @@ legal.i([v`z`, cons(v`car`, v`cdr`)], (v) => [
   legal.o([v`z`, v`cdr`]),
 ])
 
-const path = new Table({
+const path = new Logic.Table({
   name: "path",
   schema: ty.tuple(ty.string(), ty.string(), listSchema()),
 })

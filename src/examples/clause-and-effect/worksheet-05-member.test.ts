@@ -1,4 +1,4 @@
-import { Logical, Table, v, ty, Schema, Var } from "../.."
+import Logic, { Logical, v, ty, Schema, Var } from "../.."
 
 // prepare the lispy list
 
@@ -13,7 +13,7 @@ function listSchema<T>(itemSchema: Schema<T>): Schema<List<T>> {
   return ty.union(nullSchema, consSchema)
 }
 
-const member = new Table({
+const member = new Logic.Table({
   name: "member",
   schema: ty.tuple(ty.string(), listSchema(ty.string())),
 })

@@ -1,9 +1,9 @@
-import { Logical, Table, Schema, v, ne, ty } from "../.."
+import Logic, { Logical, Schema, v, ne, ty } from "../.."
 
 // NOTE
 // - video: https://www.youtube.com/watch?v=vdabv9EkYrY&ab_channel=ThePowerofProlog
 
-const jug = new Table({
+const jug = new Logic.Table({
   name: "jug",
   schema: ty.object({
     id: ty.string(),

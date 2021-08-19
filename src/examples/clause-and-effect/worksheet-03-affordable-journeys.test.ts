@@ -1,6 +1,6 @@
-import { Table, v, ty } from "../.."
+import Logic, { v, ty } from "../.."
 
-const border = new Table({
+const border = new Logic.Table({
   name: "border",
   schema: ty.tuple(ty.string(), ty.string()),
 })
@@ -17,7 +17,7 @@ border.i(["wiltshire", "berkshire"])
 
 // to get symmetry
 
-const adjacent = new Table({
+const adjacent = new Logic.Table({
   name: "adjacent",
   schema: ty.tuple(ty.string(), ty.string()),
 })
@@ -25,7 +25,7 @@ const adjacent = new Table({
 adjacent.i([v`x`, v`y`], (v) => [border.o([v`x`, v`y`])])
 adjacent.i([v`x`, v`y`], (v) => [border.o([v`y`, v`x`])])
 
-const affordable = new Table({
+const affordable = new Logic.Table({
   name: "affordable",
   schema: ty.tuple(ty.string(), ty.string()),
 })

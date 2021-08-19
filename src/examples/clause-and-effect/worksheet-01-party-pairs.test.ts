@@ -1,6 +1,6 @@
-import { Table, v, ty } from "../.."
+import Logic, { v, ty } from "../.."
 
-const male = new Table({
+const male = new Logic.Table({
   name: "male",
   schema: ty.string(),
 })
@@ -8,7 +8,7 @@ const male = new Table({
 male.i("bertram")
 male.i("percival")
 
-const female = new Table({
+const female = new Logic.Table({
   name: "female",
   schema: ty.string(),
 })
@@ -16,7 +16,7 @@ const female = new Table({
 female.i("lucinda")
 female.i("camilla")
 
-const pair = new Table({
+const pair = new Logic.Table({
   name: "pair",
   schema: ty.object({
     male: ty.string(),

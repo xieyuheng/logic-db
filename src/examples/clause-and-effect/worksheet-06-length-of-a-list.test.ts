@@ -1,4 +1,4 @@
-import { Logical, Table, v, eq, ty, Schema } from "../.."
+import Logic, { Logical, v, eq, ty, Schema } from "../.."
 
 // prepare the lispy list
 
@@ -28,7 +28,7 @@ function natSchema(): Schema<Nat> {
   return ty.union(zeroSchema, succSchema)
 }
 
-const length = new Table({
+const length = new Logic.Table({
   name: "length",
   schema: ty.tuple(listSchema(ty.string()), natSchema()),
 })
