@@ -1,4 +1,4 @@
-- goals -- `Or`
+- improve testing
 
 - goals -- `Not`
 
