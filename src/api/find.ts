@@ -1,4 +1,4 @@
-import { Var, Value, VariableFinder, createVariableFinder } from "../value"
+import { Var, VariableFinder, createVariableFinder } from "../value"
 import { Solver, SolverOptions } from "../solver"
 import { Goal } from "../goal"
 import ty, { Schema, Errors } from "@xieyuheng/ty"

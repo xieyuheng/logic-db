@@ -1,6 +1,5 @@
 import {
   Var,
-  Value,
   Logical,
   extractVars,
   freshenValue,
