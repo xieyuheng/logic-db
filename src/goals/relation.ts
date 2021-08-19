@@ -2,7 +2,7 @@ import { Goal } from "../goal"
 import { GoalQueue } from "../goal-queue"
 import * as Clauses from "../clauses"
 import { Table } from "../table"
-import { Var, extractVars, freshenValue, createVarFinder } from "../value"
+import { Var, freshenValue } from "../value"
 import { Ctx } from "../ctx"
 import { Logical, VarFinder } from "../value"
 import { Subst } from "../subst"
@@ -27,8 +27,7 @@ export class Relation<T> extends Goal {
         if (clause instanceof Clauses.Fact) {
           queues.push(new GoalQueue(newSubst, []))
         } else if (clause instanceof Clauses.Rule) {
-          const vars = extractVars(data)
-          const v = createVarFinder(vars)
+          const v = Var.createVarFinder(Var.extractVarMap(data))
           const ctx = new Ctx(newSubst)
           queues.push(new GoalQueue(newSubst, clause.premises(v, ctx)))
         } else {

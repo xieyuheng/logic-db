@@ -1,11 +1,4 @@
-import {
-  Var,
-  Logical,
-  extractVars,
-  freshenValue,
-  VarFinder,
-  createVarFinder,
-} from "../value"
+import { Var, Logical, freshenValue, VarFinder } from "../value"
 import { Solver } from "../solver"
 import { Ctx } from "../ctx"
 import { Clause } from "../clause"
@@ -71,7 +64,7 @@ export class Table<T> {
     const solutions = solver.solve({ limit: opts.limit })
 
     const results = []
-    const v = createVarFinder(extractVars(data))
+    const v = Var.createVarFinder(Var.extractVarMap(data))
     const varEntries = Object.keys(varSchemas).map((name) => [
       name,
       v([name] as unknown as TemplateStringsArray),

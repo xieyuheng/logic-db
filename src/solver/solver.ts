@@ -1,14 +1,6 @@
 import { GoalQueue } from "../goal-queue"
-import { Table } from "../table"
 import { Goal } from "../goal"
 import { Subst } from "../subst"
-import {
-  Value,
-  Logical,
-  freshenValue,
-  VarFinder,
-  createVarFinder,
-} from "../value"
 
 // NOTE In implementation, we use array of queues to do search,
 //   but we should be thinking in terms of tree instead of queues,

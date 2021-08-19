@@ -1,4 +1,4 @@
-import { Var, VarFinder, createVarFinder } from "../value"
+import { Var, VarFinder } from "../value"
 import { Solver } from "../solver"
 import { Goal } from "../goal"
 import ty, { Schema, Errors } from "@xieyuheng/ty"
@@ -11,7 +11,7 @@ export function find<T>(
 ): Array<T> {
   const vars = Object.keys(varSchemas).map((name) => new Var(name))
   const varEntries: Array<[string, Var]> = vars.map((v) => [v.name, v])
-  const v = createVarFinder(new Map(varEntries))
+  const v = Var.createVarFinder(new Map(varEntries))
   const searching = Solver.forGoals(goals(v))
   const solutions = searching.solve({ limit: opts.limit })
   const results = []
