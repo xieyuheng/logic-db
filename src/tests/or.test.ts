@@ -1,5 +1,4 @@
 import Logic, { v, and, or, eq, ty } from ".."
-import * as ut from "../ut"
 
 Logic.assertFindResults(
   (v) => [
