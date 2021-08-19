@@ -2,9 +2,7 @@ import { Var, Value, VariableFinder, createVariableFinder } from "../value"
 import { Solver, SolverOptions } from "../solver"
 import { Goal } from "../goal"
 
-type QueryOptions = SolverOptions & {
-  log?: boolean
-}
+type QueryOptions = SolverOptions
 
 export function query(
   goals: (v: VariableFinder) => Array<Goal>,
@@ -21,10 +19,6 @@ export function query(
     (subst) =>
       subst.reify(Object.fromEntries(varEntries)) as Record<string, Value>
   )
-
-  if (opts.log) {
-    console.log(results)
-  }
 
   return results
 }

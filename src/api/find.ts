@@ -4,9 +4,7 @@ import { Goal } from "../goal"
 import ty, { Schema, Errors } from "@xieyuheng/ty"
 import * as ut from "../ut"
 
-type QueryOptions = SolverOptions & {
-  log?: boolean
-}
+type QueryOptions = SolverOptions
 
 export function find<T>(
   goals: (v: VariableFinder) => Array<Goal>,
@@ -30,10 +28,6 @@ export function find<T>(
         throw error
       }
     }
-  }
-
-  if (opts.log) {
-    console.log(results)
   }
 
   return results

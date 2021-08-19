@@ -24,4 +24,4 @@ length.assertQueryResults(
   ]
 )
 
-length.query([v`list`, { prev: { prev: "zero" } }], { log: true })
+console.log(length.query([v`list`, { prev: { prev: "zero" } }]))

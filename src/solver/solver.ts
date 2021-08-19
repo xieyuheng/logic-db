@@ -12,7 +12,6 @@ import {
 
 export type SolverOptions = {
   limit?: number
-  log?: boolean
 }
 
 // NOTE In implementation, we use array of queues to do search,

@@ -56,11 +56,6 @@ export class Table<T> {
     const solver = Solver.forGoals([this.o(data)], opts)
     const solutions = solver.solve()
     const results = solutions.map((subst) => subst.reify(data) as Logical<T>)
-
-    if (opts.log) {
-      console.log(results)
-    }
-
     return results
   }
 
@@ -80,6 +75,7 @@ export class Table<T> {
       name,
       v([name] as unknown as TemplateStringsArray),
     ])
+
     for (const subst of solutions) {
       const result = subst.reify(Object.fromEntries(varEntries))
       try {
@@ -91,10 +87,6 @@ export class Table<T> {
           throw error
         }
       }
-    }
-
-    if (opts.log) {
-      console.log(results)
     }
 
     return results

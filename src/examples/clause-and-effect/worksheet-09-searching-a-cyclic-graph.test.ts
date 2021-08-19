@@ -45,17 +45,17 @@ path.i([v`x`, v`y`, v`occurs`], (v) => [
   path.o([v`z`, v`y`, { head: v`z`, tail: v`occurs` }]),
 ])
 
-path.query(["f", "f", null], { log: true })
-path.query(["a", "c", null], { log: true })
-path.query(["g", "e", null], { log: true })
+console.log(path.query(["f", "f", null]))
+console.log(path.query(["a", "c", null]))
+console.log(path.query(["g", "e", null]))
 
-path.query(["g", v`x`, null], { log: true })
-path.query([v`x`, "h", null], { log: true })
+console.log(path.query(["g", v`x`, null]))
+console.log(path.query([v`x`, "h", null]))
 
-path.query(["g", "c", null], { log: true })
-path.query(["g", "c", { head: "f", tail: null }], { log: true })
+console.log(path.query(["g", "c", null]))
+console.log(path.query(["g", "c", { head: "f", tail: null }]))
 
-path.query(["a", v`x`, { head: "f", tail: { head: "d", tail: null } }], {
-  log: true,
-})
-path.query(["a", v`x`, null], { log: true })
+console.log(
+  path.query(["a", v`x`, { head: "f", tail: { head: "d", tail: null } }])
+)
+console.log(path.query(["a", v`x`, null]))

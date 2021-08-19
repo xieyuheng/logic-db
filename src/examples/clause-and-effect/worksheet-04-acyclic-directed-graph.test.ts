@@ -24,6 +24,6 @@ const path = new Logic.Table({
 path.i([v`x`, v`x`])
 path.i([v`x`, v`y`], (v) => [a.o([v`x`, v`z`]), path.o([v`z`, v`y`])])
 
-path.query(["g", v`x`], { log: true })
-path.query([v`x`, "h"], { log: true })
-path.query([v`x`, v`y`], { log: true })
+console.log(path.query(["g", v`x`]))
+console.log(path.query([v`x`, "h"]))
+console.log(path.query([v`x`, v`y`]))

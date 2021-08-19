@@ -1,4 +1,4 @@
-- no `opts.log` -- just use `console.log`
+- no `SolverOptions` when creating solver -- pass `limit` to `solver.solve`
 
 - goals -- `Not`
 
