@@ -22,8 +22,10 @@ export function query(
     (subst) =>
       subst.reify(Object.fromEntries(varEntries)) as Record<string, Value>
   )
+
   if (opts.log) {
     console.log(results)
   }
+
   return results
 }

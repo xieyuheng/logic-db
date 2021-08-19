@@ -34,5 +34,6 @@ export function find<T>(
   if (opts.log) {
     console.log(results)
   }
+
   return results
 }

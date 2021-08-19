@@ -1,7 +1,3 @@
-- `Table.find` -- filter out non-ground results
-
-  - well typed projection -- with the help of `ty` schema
-
 - goals -- and -- And
 - goals -- or -- Or
 

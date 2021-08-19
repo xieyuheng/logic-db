@@ -2,6 +2,7 @@ import {
   Var,
   Value,
   Logical,
+  extractVars,
   freshenValue,
   VariableFinder,
   createVariableFinder,
@@ -13,7 +14,7 @@ import { Goal } from "../goal"
 import * as Goals from "../goals"
 import * as Clauses from "../clauses"
 import * as ut from "../ut"
-import ty, { Schema } from "@xieyuheng/ty"
+import ty, { Schema, Errors } from "@xieyuheng/ty"
 
 // NOTE Our table is like prolog's predicate.
 // - We define predicate by writing down Horn clauses.
@@ -52,13 +53,51 @@ export class Table<T> {
 
   query(data: Logical<T>, opts: QueryOptions = {}): Array<Logical<T>> {
     data = freshenValue(data) as Logical<T>
-    const goal = this.o(data)
+
     const solver = Solver.forGoals([this.o(data)], opts)
     const solutions = solver.solve()
     const results = solutions.map((subst) => subst.reify(data) as Logical<T>)
+
     if (opts.log) {
       console.log(results)
     }
+
+    return results
+  }
+
+  find<R>(
+    data: Logical<T>,
+    varSchemas: { [P in keyof R]: Schema<R[P]> },
+    opts: QueryOptions = {}
+  ): Array<R> {
+    data = freshenValue(data) as Logical<T>
+
+    const solver = Solver.forGoals([this.o(data)], opts)
+    const solutions = solver.solve()
+
+    const results = []
+    const v = createVariableFinder(extractVars(data))
+    const varEntries = Object.keys(varSchemas).map((name) => [
+      name,
+      v([name] as unknown as TemplateStringsArray),
+    ])
+    for (const subst of solutions) {
+      const result = subst.reify(Object.fromEntries(varEntries))
+      try {
+        results.push(ty.object(varSchemas).validate(result))
+      } catch (error) {
+        if (error instanceof Errors.InvalidData && error.data instanceof Var) {
+          // NOTE Ok
+        } else {
+          throw error
+        }
+      }
+    }
+
+    if (opts.log) {
+      console.log(results)
+    }
+
     return results
   }
 
