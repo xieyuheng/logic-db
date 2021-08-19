@@ -1,7 +1,3 @@
----
-tangle: a-boston-high-tech-company.js
----
-
 # A Boston high tech company
 
 In order to illustrate what the query system does,

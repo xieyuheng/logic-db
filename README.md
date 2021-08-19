@@ -60,11 +60,14 @@ console.log(pair.query({ p1: v`x`, p2: v`y`, alcohol: v`alcohol` }))
 [**Clause and Effect**](src/examples/clause-and-effect)
 - By William F. Cloeksin.
 
-[**SICP**](src/examples/sicp)
+[**Structure and Interpretation of Computer Programs (SICP)**](src/examples/sicp)
 - By Harold Abelson and Gerald Jay Sussman.
+- It has one section about logic programming:
+  - [sarabander-sicp](http://sarabander.github.io/sicp/html/4_002e4.xhtml#g_t4_002e4)
+  - [official](http://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-29.html#%_sec_4.4)
 
 [**The Power of Prolog**](src/examples/the-power-of-prolog)
-- By Markus Triska.
+- [An excellent modern teaching of Prolog](https://www.metalevel.at/prolog), by Markus Triska.
 
 ## API Docs
 

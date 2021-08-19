@@ -1,7 +1,3 @@
----
-tangle: logic-as-programs.js
----
-
 # Logic as programs
 
 Some examples about translating functions to logic relations.
