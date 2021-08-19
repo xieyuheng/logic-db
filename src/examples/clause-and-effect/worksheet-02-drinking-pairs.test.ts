@@ -42,13 +42,13 @@ Logic.query(
   }
 )
 
-// {
-//   type Result = { x: string; y: string }
-//   const results: Array<Result> = Logic.find(
-//     (v) => [pair.o({ p1: v`x`, p2: v`y`, alcohol: v`alcohol` })],
-//     { x: ty.string(), y: ty.string() },
-//     {
-//       log: true,
-//     }
-//   )
-// }
+{
+  type Result = { x: string; y: string }
+  const results: Array<Result> = Logic.find(
+    (v) => [pair.o({ p1: v`x`, p2: v`y`, alcohol: v`alcohol` })],
+    { x: ty.string(), y: ty.string() },
+    {
+      log: true,
+    }
+  )
+}

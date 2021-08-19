@@ -1,7 +1,3 @@
-- `Logic.find` -- filter out non-ground results
-
-  - well typed projection -- with the help of `ty` schema
-
 - `Table.find` -- filter out non-ground results
 
   - well typed projection -- with the help of `ty` schema

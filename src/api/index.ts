@@ -10,7 +10,7 @@ export const ne = Goals.NotUnifiable.create
 
 // NOTE toplevel query
 export * from "./query"
-// export * from "./find"
+export * from "./find"
 
 // NOTE re-export dependencies
 export { default as ty, Schema } from "@xieyuheng/ty"
