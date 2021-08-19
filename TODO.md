@@ -1,7 +1,6 @@
-- goals -- and -- And
-- goals -- or -- Or
+- goals -- `Or`
 
-- goals -- not -- Not
+- goals -- `Not`
 
   - [question] this will break the definition of horn clause?
 

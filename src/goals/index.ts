@@ -1,3 +1,5 @@
 export * from "./relation"
 export * from "./unifiable"
 export * from "./not-unifiable"
+export * from "./and"
+// export * from "./or"

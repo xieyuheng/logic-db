@@ -7,6 +7,7 @@ import * as Goals from "../goals"
 
 export const eq = Goals.Unifiable.create
 export const ne = Goals.NotUnifiable.create
+export const and = Goals.And.create
 
 // NOTE toplevel query
 export * from "./query"
