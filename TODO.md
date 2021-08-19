@@ -9,10 +9,6 @@
 - goals -- and -- And
 - goals -- or -- Or
 
-- prolog's `dif` can find the least different subterm.
-
-  - but our `ne` can not.
-
 - goals -- not -- Not
 
   - [question] this will break the definition of horn clause?
@@ -44,6 +40,10 @@
 
   - use `ty.guard` to handle `Var`
   - how to handle `Logical<T>`?
+
+- prolog's `dif` can find the least different subterm.
+
+  - but our `ne` can not.
 
 - `Db`
 - `Db` -- stream
