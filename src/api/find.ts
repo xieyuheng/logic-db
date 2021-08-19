@@ -2,6 +2,7 @@ import { Var, VariableFinder, createVariableFinder } from "../value"
 import { Solver, SolverOptions } from "../solver"
 import { Goal } from "../goal"
 import ty, { Schema, Errors } from "@xieyuheng/ty"
+import * as ut from "../ut"
 
 type QueryOptions = SolverOptions & {
   log?: boolean
@@ -36,4 +37,23 @@ export function find<T>(
   }
 
   return results
+}
+
+export function assertFindResults<T>(
+  goals: (v: VariableFinder) => Array<Goal>,
+  varSchemas: { [P in keyof T]: Schema<T[P]> },
+  results: Array<T>,
+  opts: QueryOptions = {}
+): void {
+  const found = find(goals, varSchemas, opts)
+  if (!ut.equal(found, results)) {
+    throw new Error(
+      [
+        "I expect found to be equal to the given results,",
+        "but they are not the equal.",
+        `  found results: ${JSON.stringify(found)}`,
+        `  given results: ${JSON.stringify(results)}`,
+      ].join("\n")
+    )
+  }
 }

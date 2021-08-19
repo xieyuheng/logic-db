@@ -1,5 +1,3 @@
-- improve testing
-
 - goals -- `Not`
 
   - [question] this will break the definition of horn clause?

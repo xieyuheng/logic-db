@@ -1,8 +1,7 @@
-import assert from "assert"
 import Logic, { v, and, or, eq, ty } from ".."
 import * as ut from "../ut"
 
-const result = Logic.query(
+Logic.assertFindResults(
   (v) => [
     and(
       eq(v`x`, v`y`),
@@ -10,14 +9,10 @@ const result = Logic.query(
       or(eq(v`z`, "a"), eq(v`z`, "b"), eq(v`z`, "c"))
     ),
   ],
-  ["x", "y", "z"],
-  { log: true }
-)
-
-assert(
-  ut.equal(result, [
+  { x: ty.string(), y: ty.string(), z: ty.string() },
+  [
     { x: "a", y: "a", z: "a" },
     { x: "b", y: "b", z: "b" },
     { x: "c", y: "c", z: "c" },
-  ])
+  ]
 )
