@@ -1,17 +1,5 @@
 import Logic, { Logical, v, ty, Schema, Var } from "../.."
-
-// prepare the lispy list
-
-type List<T> = null | { head: T; tail: List<T> }
-
-function listSchema<T>(itemSchema: Schema<T>): Schema<List<T>> {
-  const nullSchema = ty.null()
-  const consSchema = ty.object({
-    head: itemSchema,
-    tail: ty.lazy(() => listSchema(itemSchema)),
-  })
-  return ty.union(nullSchema, consSchema)
-}
+import { List, listSchema } from "./list"
 
 const member = new Logic.Table({
   name: "member",

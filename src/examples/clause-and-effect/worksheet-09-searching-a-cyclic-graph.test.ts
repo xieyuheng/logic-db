@@ -1,4 +1,5 @@
 import Logic, { Logical, v, ne, ty, Schema } from "../.."
+import { List, listSchema } from "./list"
 
 const a = new Logic.Table({
   name: "a",
@@ -21,53 +22,27 @@ a.i(["f", "c"])
 
 // we need to avoid searching in a loop
 
-// prepare the lispy list
-
-// prepare the lispy list
-
-type List =
-  | string
-  | number
-  | null
-  | {
-      car: List
-      cdr: List
-    }
-
-function cons(car: Logical<List>, cdr: Logical<List>): Logical<List> {
-  return { car, cdr }
-}
-
-function listSchema(): Schema<List> {
-  return ty.union(
-    ty.union(ty.string(), ty.number()),
-    // TODO ty can not handle recursive schema
-    // ty.union(ty.null(), ty.object({ car: listSchema(), cdr: listSchema() }))
-    ty.union(ty.null(), ty.object({ car: ty.any(), cdr: ty.any() }))
-  )
-}
-
 const legal = new Logic.Table({
   name: "legal",
-  schema: ty.tuple(ty.string(), listSchema()),
+  schema: ty.tuple(ty.string(), listSchema(ty.string())),
 })
 
 legal.i([v`z`, null])
-legal.i([v`z`, cons(v`car`, v`cdr`)], (v) => [
-  ne(v`z`, v`car`),
-  legal.o([v`z`, v`cdr`]),
+legal.i([v`z`, { head: v`head`, tail: v`tail` }], (v) => [
+  ne(v`z`, v`head`),
+  legal.o([v`z`, v`tail`]),
 ])
 
 const path = new Logic.Table({
   name: "path",
-  schema: ty.tuple(ty.string(), ty.string(), listSchema()),
+  schema: ty.tuple(ty.string(), ty.string(), listSchema(ty.string())),
 })
 
 path.i([v`x`, v`x`, v`occurs`])
 path.i([v`x`, v`y`, v`occurs`], (v) => [
   a.o([v`x`, v`z`]),
   legal.o([v`z`, v`occurs`]),
-  path.o([v`z`, v`y`, cons(v`z`, v`occurs`)]),
+  path.o([v`z`, v`y`, { head: v`z`, tail: v`occurs` }]),
 ])
 
 path.query(["f", "f", null], { log: true })
@@ -78,7 +53,9 @@ path.query(["g", v`x`, null], { log: true })
 path.query([v`x`, "h", null], { log: true })
 
 path.query(["g", "c", null], { log: true })
-path.query(["g", "c", cons("f", null)], { log: true })
+path.query(["g", "c", { head: "f", tail: null }], { log: true })
 
-path.query(["a", v`x`, cons("f", cons("d", null))], { log: true })
+path.query(["a", v`x`, { head: "f", tail: { head: "d", tail: null } }], {
+  log: true,
+})
 path.query(["a", v`x`, null], { log: true })
