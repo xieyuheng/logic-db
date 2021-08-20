@@ -119,13 +119,15 @@ export class Table<T> {
     }
   }
 
-  assertQueryResults(opts: {
+  assertFindResults<R>(opts: {
     data: Logical<T>
-    results: Array<Logical<T>>
+    projections: { [P in keyof R]: Schema<R[P]> }
+    results: Array<R>
+    limit?: number
   }): void {
-    const { data, results } = opts
+    const { data, projections, results, limit } = opts
 
-    const found = this.query(data)
+    const found = this.find(data, projections, { limit })
     if (!ut.equal(found, results)) {
       throw new Error(
         [

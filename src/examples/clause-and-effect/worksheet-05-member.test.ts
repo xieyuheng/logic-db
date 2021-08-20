@@ -29,12 +29,12 @@ member.assertNotFound([
   },
 ])
 
-member.assertQueryResults({
+member.assertFindResults({
   data: [v`element`, { head: "paul", tail: { head: "john", tail: null } }],
-  results: [
-    ["paul", { head: "paul", tail: { head: "john", tail: null } }],
-    ["john", { head: "paul", tail: { head: "john", tail: null } }],
-  ],
+  projections: {
+    element: ty.string(),
+  },
+  results: [{ element: "paul" }, { element: "john" }],
 })
 
 {

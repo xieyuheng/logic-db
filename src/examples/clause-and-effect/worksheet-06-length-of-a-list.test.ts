@@ -14,14 +14,12 @@ length.i([{ head: v`head`, tail: v`tail` }, v`length`], (v) => [
   eq(v`length`, { prev: v`tail_length` }),
 ])
 
-length.assertQueryResults({
+length.assertFindResults({
   data: [{ head: "apple", tail: { head: "pear", tail: null } }, v`length`],
-  results: [
-    [
-      { head: "apple", tail: { head: "pear", tail: null } },
-      { prev: { prev: "zero" } },
-    ],
-  ],
+  projections: {
+    length: natSchema(),
+  },
+  results: [{ length: { prev: { prev: "zero" } } as Nat }],
 })
 
 console.log(length.query([v`list`, "zero"]))
