@@ -30,7 +30,7 @@
 
 - the solver should explain its resolution strategy in "procedural reading" style.
 
-# relational algebra
+# relational algebra & higher dimensional algebra
 
 - we can do relational algebra in prolog,
   by saying along which logic variable
