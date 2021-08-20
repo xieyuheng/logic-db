@@ -22,6 +22,10 @@
   - a-boston-high-tech-company.test.ts
   - logic-as-programs.test.ts
 
+# writing proof by hand
+
+- if we use named clause, we can use the name to express choice, and write proof by hand.
+
 # later
 
 - well typed `projection` of query result -- with the help of `ty`
