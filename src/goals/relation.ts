@@ -27,7 +27,7 @@ export class Relation<T> extends Goal {
         if (clause instanceof Clauses.Fact) {
           queues.push(new GoalQueue(newSubst, []))
         } else if (clause instanceof Clauses.Rule) {
-          const v = Var.createVarFinder(Var.extractVarMap(data))
+          const v = Var.finderFromVarMap(Var.extractVarMap(data))
           const ctx = new Ctx(newSubst)
           queues.push(new GoalQueue(newSubst, clause.premises(v, ctx)))
         } else {

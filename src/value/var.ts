@@ -16,7 +16,7 @@ export class Var {
   }
 
   // NOTE side-effect on map
-  static createVarFinder(map: Map<string, Var>): VarFinder {
+  static finderFromVarMap(map: Map<string, Var>): VarFinder {
     return (strs) => {
       const found = map.get(strs[0])
       if (found !== undefined) {

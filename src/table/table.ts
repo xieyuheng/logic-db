@@ -49,8 +49,7 @@ export class Table<T> {
     const solver = Solver.forGoals([this.o(data)])
     const solutions = solver.solve({ limit: opts.limit })
 
-    const results = solutions.map((subst) => subst.reify(data) as Logical<T>)
-    return results
+    return solutions.map((subst) => subst.reify(data) as Logical<T>)
   }
 
   find<R>(
@@ -60,30 +59,21 @@ export class Table<T> {
   ): Array<R> {
     data = freshenValue(data) as Logical<T>
 
-    const solver = Solver.forGoals([this.o(data)])
-    const solutions = solver.solve({ limit: opts.limit })
-
-    const results = []
-    const v = Var.createVarFinder(Var.extractVarMap(data))
-    const varEntries = Object.keys(varSchemas).map((name) => [
+    const v = Var.finderFromVarMap(Var.extractVarMap(data))
+    const varNames = Object.keys(varSchemas)
+    const varEntries = varNames.map((name) => [
       name,
       v([name] as unknown as TemplateStringsArray),
     ])
 
-    for (const subst of solutions) {
-      const result = subst.reify(Object.fromEntries(varEntries))
-      try {
-        results.push(ty.object(varSchemas).validate(result))
-      } catch (error) {
-        if (error instanceof Errors.InvalidData && error.data instanceof Var) {
-          // NOTE Ok
-        } else {
-          throw error
-        }
-      }
-    }
+    const solver = Solver.forGoals([this.o(data)])
+    const solutions = solver.solve({ limit: opts.limit })
 
-    return results
+    return solutions
+      .map((subst) => subst.reify(Object.fromEntries(varEntries)))
+      .filter((result) =>
+        ty.object(varSchemas).isValid(result)
+      ) as unknown as Array<R>
   }
 
   get(data: Logical<T>): Logical<T> | undefined {

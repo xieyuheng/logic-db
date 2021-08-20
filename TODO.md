@@ -1,6 +1,3 @@
-- refactor `Logic.find` & `Logic.query`
-- refactor `Table.find` & `Table.query`
-
 - goals -- `Not`
 
 - [question] this will break the definition of horn clause?
