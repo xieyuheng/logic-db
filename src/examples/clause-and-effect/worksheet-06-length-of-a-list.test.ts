@@ -24,4 +24,6 @@ length.assertQueryResults(
   ]
 )
 
+console.log(length.query([v`list`, "zero"]))
+console.log(length.query([v`list`, { prev: "zero" }]))
 console.log(length.query([v`list`, { prev: { prev: "zero" } }]))
