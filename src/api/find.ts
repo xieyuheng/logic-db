@@ -31,13 +31,15 @@ export function find<T>(
   return results
 }
 
-export function assertFindResults<T>(
-  goals: (v: VarFinder) => Array<Goal>,
-  varSchemas: { [P in keyof T]: Schema<T[P]> },
-  results: Array<T>,
-  opts: { limit?: number } = {}
-): void {
-  const found = find(goals, varSchemas, { limit: opts.limit })
+export function assertFindResults<T>(opts: {
+  goals: (v: VarFinder) => Array<Goal>
+  projections: { [P in keyof T]: Schema<T[P]> }
+  results: Array<T>
+  limit?: number
+}): void {
+  const { goals, projections, results, limit } = opts
+
+  const found = find(goals, projections, { limit })
   if (!ut.equal(found, results)) {
     throw new Error(
       [

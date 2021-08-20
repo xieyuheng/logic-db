@@ -15,14 +15,14 @@ pair.i(["c", "a"])
 pair.i(["c", "b"])
 pair.i(["c", "c"])
 
-pair.assertQueryResults(
-  [v`x`, v`x`],
-  [
+pair.assertQueryResults({
+  data: [v`x`, v`x`],
+  results: [
     ["a", "a"],
     ["b", "b"],
     ["c", "c"],
-  ]
-)
+  ],
+})
 
 const eq_pair = new Logic.Table({
   name: "eq_pair",
@@ -31,11 +31,11 @@ const eq_pair = new Logic.Table({
 
 eq_pair.i([v`x`, v`y`], (v) => [pair.o([v`x`, v`y`]), eq(v`x`, v`y`)])
 
-eq_pair.assertQueryResults(
-  [v`x`, v`y`],
-  [
+eq_pair.assertQueryResults({
+  data: [v`x`, v`y`],
+  results: [
     ["a", "a"],
     ["b", "b"],
     ["c", "c"],
-  ]
-)
+  ],
+})

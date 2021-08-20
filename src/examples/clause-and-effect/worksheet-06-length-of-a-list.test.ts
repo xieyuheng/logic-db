@@ -14,15 +14,15 @@ length.i([{ head: v`head`, tail: v`tail` }, v`length`], (v) => [
   eq(v`length`, { prev: v`tail_length` }),
 ])
 
-length.assertQueryResults(
-  [{ head: "apple", tail: { head: "pear", tail: null } }, v`length`],
-  [
+length.assertQueryResults({
+  data: [{ head: "apple", tail: { head: "pear", tail: null } }, v`length`],
+  results: [
     [
       { head: "apple", tail: { head: "pear", tail: null } },
       { prev: { prev: "zero" } },
     ],
-  ]
-)
+  ],
+})
 
 console.log(length.query([v`list`, "zero"]))
 console.log(length.query([v`list`, { prev: "zero" }]))

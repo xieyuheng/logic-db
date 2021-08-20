@@ -11,8 +11,11 @@ member.i([v`element`, { head: v`head`, tail: v`tail` }], (v) => [
   member.o([v`element`, v`tail`]),
 ])
 
-member.assert(["john", { head: "paul", tail: { head: "john", tail: null } }])
-member.assertNot([
+member.assertFound([
+  "john",
+  { head: "paul", tail: { head: "john", tail: null } },
+])
+member.assertNotFound([
   "joe",
   {
     head: "marx",
@@ -26,13 +29,13 @@ member.assertNot([
   },
 ])
 
-member.assertQueryResults(
-  [v`element`, { head: "paul", tail: { head: "john", tail: null } }],
-  [
+member.assertQueryResults({
+  data: [v`element`, { head: "paul", tail: { head: "john", tail: null } }],
+  results: [
     ["paul", { head: "paul", tail: { head: "john", tail: null } }],
     ["john", { head: "paul", tail: { head: "john", tail: null } }],
-  ]
-)
+  ],
+})
 
 {
   const results = member.query(["foo", v`list`], { limit: 3 })

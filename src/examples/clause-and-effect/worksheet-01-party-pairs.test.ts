@@ -29,9 +29,9 @@ pair.i({ male: v`male`, female: v`female` }, (v) => [
   female.o(v`female`),
 ])
 
-pair.assert({ male: "bertram", female: "lucinda" })
-pair.assert({ male: "bertram", female: "lucinda" })
-pair.assertNot({ male: "apollo", female: "daphne" })
+pair.assertFound({ male: "bertram", female: "lucinda" })
+pair.assertFound({ male: "bertram", female: "lucinda" })
+pair.assertNotFound({ male: "apollo", female: "daphne" })
 
 console.log(pair.query({ male: "percival", female: v`female` }))
 console.log(pair.query({ male: "camilla", female: v`female` }))
