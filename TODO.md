@@ -7,6 +7,10 @@
 
 - `Ctx` -- where to use?
 
+# interface for unification
+
+- be able to define new class which can do unification
+
 # examples
 
 - clause-and-effect

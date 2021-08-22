@@ -58,7 +58,7 @@ console.log(pair.query({ p1: v`x`, p2: v`y`, alcohol: v`alcohol` }))
 ## Examples
 
 [**Clause and Effect**](src/examples/clause-and-effect)
-- By William F. Cloeksin.
+- By William F. Clocksin.
 
 [**Structure and Interpretation of Computer Programs (SICP)**](src/examples/sicp)
 - By Harold Abelson and Gerald Jay Sussman.
