@@ -81,7 +81,7 @@ export class Table<T> {
     return result
   }
 
-  assertFound(data: Logical<T>): void {
+  assertSuccess(data: Logical<T>): void {
     const result = this.get(data)
     if (result === undefined) {
       throw new Error(
@@ -95,7 +95,7 @@ export class Table<T> {
     }
   }
 
-  assertNotFound(data: Logical<T>): void {
+  assertFailure(data: Logical<T>): void {
     const result = this.get(data)
     if (result !== undefined) {
       throw new Error(

@@ -11,11 +11,11 @@ member.i([v`element`, { head: v`head`, tail: v`tail` }], (v) => [
   member.o([v`element`, v`tail`]),
 ])
 
-member.assertFound([
+member.assertSuccess([
   "john",
   { head: "paul", tail: { head: "john", tail: null } },
 ])
-member.assertNotFound([
+member.assertFailure([
   "joe",
   {
     head: "marx",

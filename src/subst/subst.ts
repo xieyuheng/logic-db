@@ -170,7 +170,7 @@ export class Subst {
   }
 
   // NOTE for testing
-  assertFound(v: Var, value: Value): void {
+  assertSuccess(v: Var, value: Value): void {
     const found = this.find(v)
 
     if (found === undefined) {

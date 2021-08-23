@@ -6,21 +6,21 @@ import { Subst } from "../subst"
   const x = v`x`
   const subst = Subst.create().unify(123, x)
   assert(subst)
-  subst.assertFound(x, 123)
+  subst.assertSuccess(x, 123)
 }
 
 {
   const x = v`x`
   const subst = Subst.create().unify({ name: "xieyuheng" }, x)
   assert(subst)
-  subst.assertFound(x, { name: "xieyuheng" })
+  subst.assertSuccess(x, { name: "xieyuheng" })
 }
 
 {
   const x = v`x`
   const subst = Subst.create().unify({ name: "xieyuheng" }, { name: x })
   assert(subst)
-  subst.assertFound(x, "xieyuheng")
+  subst.assertSuccess(x, "xieyuheng")
 }
 
 {
@@ -31,6 +31,6 @@ import { Subst } from "../subst"
     { name: x, items: ["a", y, "c"] }
   )
   assert(subst)
-  subst.assertFound(x, "xieyuheng")
-  subst.assertFound(y, "b")
+  subst.assertSuccess(x, "xieyuheng")
+  subst.assertSuccess(y, "b")
 }
