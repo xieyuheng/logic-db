@@ -1,4 +1,4 @@
-import Logic, { v, ty } from "../.."
+import Logic, { v, ty, and } from "../.."
 
 // In order to illustrate what the query system does,
 // we will show how it can be used to manage the database of personnel records
@@ -452,3 +452,48 @@ computer_dept_slave.i({ slave: v`slave` }, (v) => [
 computer_dept_slave.query({
   slave: v`slave`,
 })
+
+// TODO We do not have `not` yet.
+
+const bigshot = new Logic.Table({
+  name: "bigshot",
+  schema: ty.object({
+    name: ty.string(),
+    dept: ty.string(),
+  }),
+})
+
+// bigshot.i({ name: v`name`, dept: v`dept` }, (v) => [
+//   job.o({ name: v`name`, dept: v`dept` }),
+//   not(
+//     and(
+//       supervisor.o({ slave: v`name`, master: v`z` }),
+//       job.o({ name: v`z`, dept: v`dept` })
+//     )
+//   ),
+// ])
+
+// bigshot.query({
+//   name: v`name`,
+//   dept: v`dept`,
+// })
+
+// TODO We do not have `assert` yet.
+
+const not_so_poor = new Logic.Table({
+  name: "not_so_poor",
+  schema: ty.object({
+    name: ty.string(),
+    amount: ty.number(),
+  }),
+})
+
+// not_so_poor.i({ name: v`name`, amount: v`amount` }, (v, ctx) => [
+//   salary.o({ name: v`name`, amount: v`amount` }),
+//   assert(ctx.get(v`amount`) >= 40000),
+// ])
+
+// not_so_poor.query({
+//   name: v`name`,
+//   amount: v`amount`,
+// })
