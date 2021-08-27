@@ -1,44 +1,48 @@
-- goals -- `Not`
+goals -- `Not`
 
-- [question] this will break the definition of horn clause?
+[question] this will break the definition of horn clause?
 
-- goals -- eqv with proposition
-- goals -- low level predicate
+goals -- eqv with proposition
+goals -- low level predicate
 
-- `Ctx` -- where to use?
+`Ctx` -- where to use?
 
 # interface for unification
 
-- be able to define new class which can do unification
+be able to define new class which can do unification
+
+# procedural reading
+
+the solver should explain its resolution strategy in "procedural reading" style.
 
 # examples
 
-- clause-and-effect
-  - worksheet-08-maximum-of-a-list.test.ts
+clause-and-effect
+- worksheet-08-maximum-of-a-list.test.ts
 
-- the-power-of-prolog
-  - water-jug-problem.test.ts
+the-power-of-prolog
+- water-jug-problem.test.ts
 
-- sicp
-  - a-boston-high-tech-company.test.ts
-  - logic-as-programs.test.ts
+sicp
+- a-boston-high-tech-company.test.ts
+- logic-as-programs.test.ts
 
 # later
 
-- well typed `projection` of query result -- with the help of `ty`
+well typed `projection` of query result -- with the help of `ty`
 
-  - we need to accept `Var`
+- we need to accept `Var`
 
-- validate insertion -- we need to accept `Var`
+validate insertion -- we need to accept `Var`
 
-  - use `ty.guard` to handle `Var`
-  - how to handle `Logical<T>`?
+- use `ty.guard` to handle `Var`
+- how to handle `Logical<T>`?
 
-- prolog's `dif` can find the least different subterm.
+prolog's `dif` can find the least different subterm.
 
-  - but our `ne` can not.
+- but our `ne` can not.
 
-- `Db`
+`Db`
 - `Db` -- stream
 - `Db` -- cache
 - `Db` -- index
@@ -48,6 +52,6 @@
 
 # maybe
 
-- use rest to support native array ?
+use rest to support native array ?
 
-  - test by worksheet-05-array-member
+- test by worksheet-05-array-member
