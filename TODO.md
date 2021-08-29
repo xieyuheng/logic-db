@@ -8,11 +8,19 @@
 
 - higher order predicate
 
+- `Ctx` -- where to use?
+
+# CLP
+
 - `dif` -- base CLP
 
 - CLP for `int`
 
-- `Ctx` -- where to use?
+- CLP is re-defining equal, what is its related to quotient type?
+
+# alpha-kanren
+
+- learn about alpha-kanren -- is it related to higher order unification?
 
 # interface for unification
 
