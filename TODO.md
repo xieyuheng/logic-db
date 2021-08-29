@@ -18,6 +18,8 @@
 
 - CLP is re-defining equal, what is its related to quotient type?
 
+# DCG
+
 # alpha-kanren
 
 - learn about alpha-kanren -- is it related to higher order unification?
