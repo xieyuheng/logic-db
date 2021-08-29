@@ -1,39 +1,25 @@
 import Logic, { Logical, v, ty, Schema, Var } from "../.."
-import { List, listSchema } from "./list"
+import { List, listSchema, cons } from "./list"
 
 const member = new Logic.Table({
   name: "member",
   schema: ty.tuple(ty.string(), listSchema(ty.string())),
 })
 
-member.i([v`element`, { head: v`element`, tail: v`tail` }])
-member.i([v`element`, { head: v`head`, tail: v`tail` }], (v) => [
+member.i([v`element`, cons<string>(v`element`, v`tail`)])
+member.i([v`element`, cons<string>(v`head`, v`tail`)], (v) => [
   member.o([v`element`, v`tail`]),
 ])
 
-member.assertSuccess([
-  "john",
-  { head: "paul", tail: { head: "john", tail: null } },
-])
+member.assertSuccess(["john", cons("paul", cons<string>("john", null))])
 member.assertFailure([
   "joe",
-  {
-    head: "marx",
-    tail: {
-      head: "darwin",
-      tail: {
-        head: "freud",
-        tail: null,
-      },
-    },
-  },
+  cons("marx", cons("darwin", cons<string>("freud", null))),
 ])
 
 member.assertFindResults({
-  data: [v`element`, { head: "paul", tail: { head: "john", tail: null } }],
-  projections: {
-    element: ty.string(),
-  },
+  data: [v`element`, cons("paul", cons<string>("john", null))],
+  projections: { element: ty.string() },
   results: [{ element: "paul" }, { element: "john" }],
 })
 

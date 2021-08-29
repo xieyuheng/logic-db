@@ -1,6 +1,13 @@
-import { ty, Schema } from "../.."
+import { Logical, ty, Schema } from "../.."
 
 export type List<T> = null | { head: T; tail: List<T> }
+
+export function cons<T>(
+  head: Logical<T>,
+  tail: Logical<List<T>>
+): Logical<List<T>> {
+  return { head, tail }
+}
 
 export function listSchema<T>(itemSchema: Schema<T>): Schema<List<T>> {
   const nullSchema = ty.null()
