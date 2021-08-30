@@ -1,3 +1,5 @@
+- use abstraction over `Logical<T>` -- even we have to write type annotations
+
 - goals -- `Not`
 
   - [question] this will break the definition of horn clause?
