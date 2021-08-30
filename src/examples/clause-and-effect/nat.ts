@@ -1,4 +1,4 @@
-import { ty, Schema } from "../.."
+import { ty, Schema, Logical } from "../.."
 
 // prepare the nat
 //   for we can not deal with native js number logically yet ...
@@ -8,6 +8,10 @@ import { ty, Schema } from "../.."
 export type Nat = "zero" | { prev: Nat }
 
 export const zero: Nat = "zero"
+
+export function add1(prev: Logical<Nat>): Logical<Nat> {
+  return { prev }
+}
 
 export function natSchema(): Schema<Nat> {
   const zeroSchema = ty.const("zero" as const)
