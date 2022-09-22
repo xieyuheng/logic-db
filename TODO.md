@@ -1,9 +1,3 @@
-update typescript project setup
-
-use vitest
-
-add concrete syntax
-
 # old
 
 goals -- `Not`
