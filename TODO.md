@@ -1,74 +1,82 @@
-- goals -- `Not`
+update typescript project setup
 
-  - [question] this will break the definition of horn clause?
-    - learn more about resolution and logic purity
+use vitest
 
-- goals -- eqv with proposition
-- goals -- low level predicate
+add concrete syntax
 
-- higher order predicate
+# old
 
-- `Ctx` -- where to use?
+goals -- `Not`
+
+- [question] this will break the definition of horn clause?
+  - learn more about resolution and logic purity
+
+goals -- eqv with proposition
+goals -- low level predicate
+
+higher order predicate
+
+`Ctx` -- where to use?
 
 # CLP
 
-- `dif` -- base CLP
+`dif` -- base CLP
 
-- CLP for `int`
+CLP for `int`
 
-- CLP is re-defining equal, what is its related to quotient type?
+CLP is re-defining equal, what is its related to quotient type?
 
 # DCG
 
 # alpha-kanren
 
-- learn about alpha-kanren -- is it related to higher order unification?
+learn about alpha-kanren -- is it related to higher order unification?
 
 # interface for unification
 
-- be able to define new class which can do unification
+be able to define new class which can do unification
 
 # procedural reading
 
-- the solver should explain its resolution strategy in "procedural reading" style.
+the solver should explain its resolution strategy in "procedural reading" style.
 
 # examples
 
-- clause-and-effect
-  - worksheet-08-maximum-of-a-list.test.ts
+clause-and-effect
+- worksheet-08-maximum-of-a-list.test.ts
 
-- the-power-of-prolog
-  - water-jug-problem.test.ts
+the-power-of-prolog
+- water-jug-problem.test.ts
 
-- sicp
-  - a-boston-high-tech-company.test.ts
-  - logic-as-programs.test.ts
+sicp
+- a-boston-high-tech-company.test.ts
+- logic-as-programs.test.ts
 
 # later
 
-- well typed `projection` of query result -- with the help of `ty`
+well typed `projection` of query result -- with the help of `ty`
 
-  - we need to accept `Var`
+- we need to accept `Var`
 
-- validate insertion -- we need to accept `Var`
+validate insertion -- we need to accept `Var`
 
-  - use `ty.guard` to handle `Var`
-  - how to handle `Logical<T>`?
+- use `ty.guard` to handle `Var`
+- how to handle `Logical<T>`?
 
-- prolog's `dif` can find the least different subterm.
+prolog's `dif` can find the least different subterm.
 
-  - but our `ne` can not.
+- but our `ne` can not.
 
-- `Db`
-  - `Db` -- stream
-  - `Db` -- cache
-  - `Db` -- index
-  - `Connection`
+`Db`
+- `Db` -- stream
+- `Db` -- cache
+- `Db` -- index
+- `Connection`
 
-- error handling
+error handling
 
 # maybe
 
-- use rest to support native array ?
+use rest to support native array ?
 
-  - test by worksheet-05-array-member
+- test by worksheet-05-array-member
